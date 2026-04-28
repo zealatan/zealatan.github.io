@@ -1,0 +1,1 @@
+"axi_lite_regfile_tb" -debug "typical" -s "axi_lite_regfile_tb_sim" 

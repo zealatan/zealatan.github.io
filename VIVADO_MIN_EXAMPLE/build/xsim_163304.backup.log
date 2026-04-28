@@ -1,0 +1,45 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Tue Apr 28 19:58:31 2026
+# Process ID: 163304
+# Current directory: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build
+# Command line: xsim -mode tcl -source {xsim.dir/axi_lite_regfile_tb_sim/xsim_script.tcl}
+# Log file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.log
+# Journal file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.jou
+# Running On: DESKTOP-FAIRVEG, OS: Linux, CPU Frequency: 2496.000 MHz, CPU Physical cores: 6, Host memory: 8134 MB
+#-----------------------------------------------------------
+source xsim.dir/axi_lite_regfile_tb_sim/xsim_script.tcl
+# xsim {axi_lite_regfile_tb_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+[CHK] t=95000  phase=reset_release
+[INFO] Test 1: reset defaults
+[PASS]             reset_default reg[0]  got=0x00000000
+[PASS]             reset_default reg[1]  got=0x00000000
+[PASS]             reset_default reg[2]  got=0x00000000
+[PASS]             reset_default reg[3]  got=0x00000000
+[CHK] t=210000  phase=write_allones
+[INFO] Test 2: write all-ones
+[PASS]                   allones reg[0]  got=0xffffffff
+[PASS]                   allones reg[1]  got=0xffffffff
+[PASS]                   allones reg[2]  got=0xffffffff
+[PASS]                   allones reg[3]  got=0xffffffff
+[CHK] t=450000  phase=write_unique
+[INFO] Test 3: unique values
+[PASS]                    unique reg[0]  got=0xa5a50000
+[PASS]                    unique reg[1]  got=0xa5a50001
+[PASS]                    unique reg[2]  got=0xa5a50002
+[PASS]                    unique reg[3]  got=0xa5a50003
+[CHK] t=690000  phase=write_allzeros
+[INFO] Test 4: write all-zeros
+[PASS]                  allzeros reg[0]  got=0x00000000
+[PASS]                  allzeros reg[1]  got=0x00000000
+[PASS]                  allzeros reg[2]  got=0x00000000
+[PASS]                  allzeros reg[3]  got=0x00000000
+[PASS] axi_lite_regfile_tb  16/16 checks passed
+[DONE] simulation complete at t=930000
+$finish called at time : 930 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axi_lite_regfile_tb.sv" Line 210
+exit
+INFO: [Common 17-206] Exiting xsim at Tue Apr 28 19:58:51 2026...
