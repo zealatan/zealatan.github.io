@@ -365,3 +365,5 @@ selectGraphicalView(RDIResource.RDIViews_WAVEFORM_VIEWER, 363, 388); // b
 // TclEventType: WAVEFORM_MOVE_CURSOR
 selectButton(RDIResource.GraphicalView_ZOOM_FIT, "Waveform Viewer_zoom_fit"); // B
 // TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// WARNING: HEventQueue.dispatchEvent() is taking  1197 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,513 MB. GUI used memory: 65 MB. Current time: 4/29/26, 11:33:26 AM CEST
