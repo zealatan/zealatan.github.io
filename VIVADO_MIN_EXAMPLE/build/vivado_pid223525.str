@@ -368,3 +368,51 @@ selectButton(RDIResource.GraphicalView_ZOOM_FIT, "Waveform Viewer_zoom_fit"); //
 // WARNING: HEventQueue.dispatchEvent() is taking  1197 ms.
 // HMemoryUtils.trashcanNow. Engine heap size: 1,513 MB. GUI used memory: 65 MB. Current time: 4/29/26, 11:33:26 AM CEST
 // HMemoryUtils.trashcanNow. Engine heap size: 1,513 MB. GUI used memory: 63 MB. Current time: 4/29/26, 12:03:25 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,513 MB. GUI used memory: 62 MB. Current time: 4/29/26, 12:33:25 PM CEST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,513 MB. GUI used memory: 101 MB. Current time: 4/29/26, 12:50:19 PM CEST
+// WARNING: HEventQueue.dispatchEvent() is taking  1339 ms.
+// TclEventType: SIMULATION_UPDATE_SCOPE_TREE
+// TclEventType: SIMULATION_UPDATE_STACKS
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// HMemoryUtils.trashcanNow. Engine heap size: 1,513 MB. GUI used memory: 75 MB. Current time: 4/29/26, 12:50:35 PM CEST
+// TclEventType: SIMULATION_UPDATE_SCOPE_TREE
+// TclEventType: SIMULATION_UPDATE_STACKS
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// Elapsed time: 6512 seconds
+selectTreeTable(PAResourceQtoS.SimulationObjectsPanel_SIMULATION_OBJECTS_TREE_TABLE, "bresp[1:0] ; 0 ; Array", 9, "bresp[1:0]", 0, true); // c - Node
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+selectTreeTable(PAResourceQtoS.SimulationObjectsPanel_SIMULATION_OBJECTS_TREE_TABLE, "bvalid ; 0 ; Logic", 10, "bvalid", 0, false); // c
+selectTreeTable(PAResourceQtoS.SimulationObjectsPanel_SIMULATION_OBJECTS_TREE_TABLE, "awvalid ; 0 ; Logic", 3, "awvalid", 0, false); // c
+selectGraphicalView(RDIResource.RDIViews_WAVEFORM_VIEWER, 201, 268); // b
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_SELECTED_WAVE_OBJECT_NAMES
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_SELECTED_WAVE_OBJECT_NAMES
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// TclEventType: WAVEFORM_MOVE_CURSOR
+// HMemoryUtils.trashcanNow. Engine heap size: 1,535 MB. GUI used memory: 112 MB. Current time: 4/29/26, 12:52:22 PM CEST
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+selectTreeTable(PAResourceQtoS.SimulationObjectsPanel_SIMULATION_OBJECTS_TREE_TABLE, "awready ; 1 ; Logic", 4, "awready", 0, false); // c
+// TclEventType: SIMULATION_UPDATE_OBJECT_TREE
+selectTreeTable(PAResourceQtoS.SimulationObjectsPanel_SIMULATION_OBJECTS_TREE_TABLE, "wstrb[3:0] ; f ; Array", 6, "wstrb[3:0]", 0, true); // c - Node
+collapseTree(RDIResource.WaveformNameTree_WAVEFORM_NAME_TREE, "[true, awaddr[31:0]]", 2); // m
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_SELECTED_WAVE_OBJECT_NAMES
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_SELECTED_WAVE_OBJECT_NAMES
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// HMemoryUtils.trashcanNow. Engine heap size: 1,535 MB. GUI used memory: 108 MB. Current time: 4/29/26, 12:52:28 PM CEST
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// HMemoryUtils.trashcanNow. Engine heap size: 1,535 MB. GUI used memory: 71 MB. Current time: 4/29/26, 12:52:29 PM CEST
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// HMemoryUtils.trashcanNow. Engine heap size: 1,535 MB. GUI used memory: 71 MB. Current time: 4/29/26, 12:52:30 PM CEST
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// HMemoryUtils.trashcanNow. Engine heap size: 1,535 MB. GUI used memory: 71 MB. Current time: 4/29/26, 12:52:30 PM CEST
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// Elapsed time: 14 seconds
+selectButton(RDIResource.HPopupTitle_CLOSE, (String) null); // j
