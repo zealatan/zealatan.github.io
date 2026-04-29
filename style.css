@@ -394,6 +394,32 @@ li {
 }
 
 /* =========================
+   Demo Video
+   ========================= */
+
+.video-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+  background: #fafafa;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.045);
+}
+
+.video-card video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  background: #000;
+}
+
+.video-caption {
+  margin: 12px 0 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* =========================
    Education & Publications
    ========================= */
 
