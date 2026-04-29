@@ -139,6 +139,11 @@ li {
   margin-bottom: 6px;
 }
 
+.clean-list li {
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
 /* =========================
    Professional Experience
    ========================= */
@@ -164,6 +169,10 @@ li {
 
 .experience-item.orange {
   border-left-color: #f97316;
+}
+
+.experience-item.purple {
+  border-left-color: #8b5cf6;
 }
 
 .experience-header {
@@ -301,6 +310,19 @@ li {
   margin-bottom: 12px;
 }
 
+.small-text {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================
+   Languages
+   ========================= */
+
+.language-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 /* =========================
    Global Links / Footer
    ========================= */
@@ -335,6 +357,10 @@ footer {
   }
 
   .education-publication-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .language-grid {
     grid-template-columns: 1fr;
   }
 }
