@@ -13,3 +13,4 @@
 start_gui
 source xsim.dir/axi_lite_regfile_tb_sim/xsim_script.tcl
 add_wave {{/axi_lite_regfile_tb/aclk}} {{/axi_lite_regfile_tb/aresetn}} {{/axi_lite_regfile_tb/awaddr}} {{/axi_lite_regfile_tb/awvalid}} {{/axi_lite_regfile_tb/awready}} {{/axi_lite_regfile_tb/wdata}} {{/axi_lite_regfile_tb/wstrb}} {{/axi_lite_regfile_tb/wvalid}} {{/axi_lite_regfile_tb/wready}} {{/axi_lite_regfile_tb/bresp}} {{/axi_lite_regfile_tb/bvalid}} {{/axi_lite_regfile_tb/bready}} {{/axi_lite_regfile_tb/araddr}} {{/axi_lite_regfile_tb/arvalid}} {{/axi_lite_regfile_tb/arready}} {{/axi_lite_regfile_tb/rdata}} {{/axi_lite_regfile_tb/rresp}} {{/axi_lite_regfile_tb/rvalid}} {{/axi_lite_regfile_tb/rready}} {{/axi_lite_regfile_tb/pass_count}} {{/axi_lite_regfile_tb/fail_count}} {{/axi_lite_regfile_tb/last_bresp}} {{/axi_lite_regfile_tb/last_rresp}} {{/axi_lite_regfile_tb/rd}} 
+run all

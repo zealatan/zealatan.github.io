@@ -80,3 +80,91 @@ current_fileset: Time (s): cpu = 00:00:29 ; elapsed = 00:00:14 . Memory (MB): pe
 # xsim {axi_lite_regfile_tb_sim} -autoloadwcfg
 Time resolution is 1 ps
 add_wave {{/axi_lite_regfile_tb/aclk}} {{/axi_lite_regfile_tb/aresetn}} {{/axi_lite_regfile_tb/awaddr}} {{/axi_lite_regfile_tb/awvalid}} {{/axi_lite_regfile_tb/awready}} {{/axi_lite_regfile_tb/wdata}} {{/axi_lite_regfile_tb/wstrb}} {{/axi_lite_regfile_tb/wvalid}} {{/axi_lite_regfile_tb/wready}} {{/axi_lite_regfile_tb/bresp}} {{/axi_lite_regfile_tb/bvalid}} {{/axi_lite_regfile_tb/bready}} {{/axi_lite_regfile_tb/araddr}} {{/axi_lite_regfile_tb/arvalid}} {{/axi_lite_regfile_tb/arready}} {{/axi_lite_regfile_tb/rdata}} {{/axi_lite_regfile_tb/rresp}} {{/axi_lite_regfile_tb/rvalid}} {{/axi_lite_regfile_tb/rready}} {{/axi_lite_regfile_tb/pass_count}} {{/axi_lite_regfile_tb/fail_count}} {{/axi_lite_regfile_tb/last_bresp}} {{/axi_lite_regfile_tb/last_rresp}} {{/axi_lite_regfile_tb/rd}} 
+run all
+[CHK] t=95000  phase=reset_release
+[INFO] Test 1: reset defaults
+[PASS]                       reset_default reg[0]  got=0x00000000
+[PASS]                    rresp OKAY reset reg[0]  resp=2'b00
+[PASS]                       reset_default reg[1]  got=0x00000000
+[PASS]                    rresp OKAY reset reg[1]  resp=2'b00
+[PASS]                       reset_default reg[2]  got=0x00000000
+[PASS]                    rresp OKAY reset reg[2]  resp=2'b00
+[PASS]                       reset_default reg[3]  got=0x00000000
+[PASS]                    rresp OKAY reset reg[3]  resp=2'b00
+[CHK] t=210000  phase=write_allones
+[INFO] Test 2: write all-ones + bresp/rresp
+[PASS]                  bresp OKAY allones reg[0]  resp=2'b00
+[PASS]                             allones reg[0]  got=0xffffffff
+[PASS]                  rresp OKAY allones reg[0]  resp=2'b00
+[PASS]                  bresp OKAY allones reg[1]  resp=2'b00
+[PASS]                             allones reg[1]  got=0xffffffff
+[PASS]                  rresp OKAY allones reg[1]  resp=2'b00
+[PASS]                  bresp OKAY allones reg[2]  resp=2'b00
+[PASS]                             allones reg[2]  got=0xffffffff
+[PASS]                  rresp OKAY allones reg[2]  resp=2'b00
+[PASS]                  bresp OKAY allones reg[3]  resp=2'b00
+[PASS]                             allones reg[3]  got=0xffffffff
+[PASS]                  rresp OKAY allones reg[3]  resp=2'b00
+[CHK] t=450000  phase=write_unique
+[INFO] Test 3: unique values
+[PASS]                   bresp OKAY unique reg[0]  resp=2'b00
+[PASS]                   bresp OKAY unique reg[1]  resp=2'b00
+[PASS]                   bresp OKAY unique reg[2]  resp=2'b00
+[PASS]                   bresp OKAY unique reg[3]  resp=2'b00
+[PASS]                              unique reg[0]  got=0xa5a50000
+[PASS]                   rresp OKAY unique reg[0]  resp=2'b00
+[PASS]                              unique reg[1]  got=0xa5a50001
+[PASS]                   rresp OKAY unique reg[1]  resp=2'b00
+[PASS]                              unique reg[2]  got=0xa5a50002
+[PASS]                   rresp OKAY unique reg[2]  resp=2'b00
+[PASS]                              unique reg[3]  got=0xa5a50003
+[PASS]                   rresp OKAY unique reg[3]  resp=2'b00
+[CHK] t=690000  phase=write_allzeros
+[INFO] Test 4: write all-zeros
+[PASS]                 bresp OKAY allzeros reg[0]  resp=2'b00
+[PASS]                            allzeros reg[0]  got=0x00000000
+[PASS]                 rresp OKAY allzeros reg[0]  resp=2'b00
+[PASS]                 bresp OKAY allzeros reg[1]  resp=2'b00
+[PASS]                            allzeros reg[1]  got=0x00000000
+[PASS]                 rresp OKAY allzeros reg[1]  resp=2'b00
+[PASS]                 bresp OKAY allzeros reg[2]  resp=2'b00
+[PASS]                            allzeros reg[2]  got=0x00000000
+[PASS]                 rresp OKAY allzeros reg[2]  resp=2'b00
+[PASS]                 bresp OKAY allzeros reg[3]  resp=2'b00
+[PASS]                            allzeros reg[3]  got=0x00000000
+[PASS]                 rresp OKAY allzeros reg[3]  resp=2'b00
+[CHK] t=930000  phase=wstrb
+[INFO] Test 5: partial WSTRB byte-lane writes on reg[0]
+[PASS]                      bresp OKAY wstrb seed  resp=2'b00
+[PASS]                      bresp OKAY wstrb=0001  resp=2'b00
+[PASS]                  wstrb=0001: byte0 cleared  got=0xffffff00
+[PASS]                 rresp OKAY wstrb=0001 read  resp=2'b00
+[PASS]                      bresp OKAY wstrb=1000  resp=2'b00
+[PASS]              wstrb=1000: byte3 set to 0xAB  got=0xabffff00
+[PASS]                 rresp OKAY wstrb=1000 read  resp=2'b00
+[PASS]                      bresp OKAY wstrb=0110  resp=2'b00
+[PASS]               wstrb=0110: bytes1+2 updated  got=0xab341200
+[PASS]                 rresp OKAY wstrb=0110 read  resp=2'b00
+[CHK] t=1170000  phase=aw_before_w
+[INFO] Test 6: AW-before-W transaction (W_WAIT_W path)
+[PASS]              bresp OKAY aw_before_w reg[1]  resp=2'b00
+[PASS]                aw_before_w readback reg[1]  got=0xdeadbeef
+[PASS]              rresp OKAY aw_before_w reg[1]  resp=2'b00
+[PASS]             bresp OKAY aw_before_w cleanup  resp=2'b00
+[CHK] t=1270000  phase=w_before_aw
+[INFO] Test 7: W-before-AW transaction (W_WAIT_A path)
+[PASS]              bresp OKAY w_before_aw reg[2]  resp=2'b00
+[PASS]                w_before_aw readback reg[2]  got=0xcafef00d
+[PASS]              rresp OKAY w_before_aw reg[2]  resp=2'b00
+[PASS]             bresp OKAY w_before_aw cleanup  resp=2'b00
+[CHK] t=1370000  phase=invalid_addr
+[INFO] Test 8: invalid address 0x10 — RTL limitation: no addr decode
+[PASS]                 bresp OKAY pre-seed reg[0]  resp=2'b00
+[NOTE] 0x10 write  bresp=2'b00  (OKAY=00, SLVERR=10)
+[FAIL]   0x10 write: SLVERR expected per AXI spec  got=2'b00  exp=2'b10  [RTL_LIMITATION]
+[NOTE] 0x10 read   rdata=0x12345678  rresp=2'b00
+[FAIL]   0x10 read:  SLVERR expected per AXI spec  got=2'b00  exp=2'b10  [RTL_LIMITATION]
+[NOTE] reg[0]      value=0x12345678  (expect 0x12345678 if alias, 0xAAAAAAAA if SLVERR)
+[FAIL] axi_lite_regfile_tb  63/65 checks passed  (2 failure(s))
+[DONE] simulation complete at t=1520000
+$finish called at time : 1520 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axi_lite_regfile_tb.sv" Line 404
