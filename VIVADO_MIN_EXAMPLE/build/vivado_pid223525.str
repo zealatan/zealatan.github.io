@@ -221,3 +221,10 @@ floatFrame(PAResourceOtoP.PAViews_PROTOCOL_INSTANCES, "Objects"); // R
 // PAResourceOtoP.PAViews_PROTOCOL_INSTANCES: Objects: close view
 closeFrame(PAResourceOtoP.PAViews_PROTOCOL_INSTANCES, "Objects"); // R
 selectTreeTable(PAResourceQtoS.SimulationScopesPanel_SIMULATE_SCOPE_TABLE, null, -1, null, -1, false, false, false, false, true, false); // c - Popup Trigger
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS
+// Elapsed time: 88 seconds
+selectTree(RDIResource.WaveformNameTree_WAVEFORM_NAME_TREE, "[true, wstrb[3:0]]", 6, true); // m - Node
+// TclEventType: WAVEFORM_SELECTED_WAVE_OBJECT_NAMES
+// TclEventType: WAVEFORM_UPDATE_WAVEFORM
+// TclEventType: WAVEFORM_UPDATE_COMMANDS

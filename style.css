@@ -201,54 +201,51 @@ li {
 }
 
 /* =========================
-   Nested Roles inside Experience
+   Compact Roles inside Experience
    ========================= */
 
-.role-list {
+.compact-role-list {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  margin-top: 18px;
+  gap: 14px;
+  margin-top: 16px;
 }
 
-.role-item {
-  padding: 16px 18px;
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+.compact-role {
+  padding: 0 0 12px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.role-header {
+.compact-role:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.compact-role-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 16px;
   align-items: start;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
-.role-header h4 {
-  margin: 0;
-  font-size: 16px;
+.compact-role-header strong {
   color: #0f172a;
-  line-height: 1.35;
+  font-size: 15px;
 }
 
-.role-header span {
+.compact-role-header span {
   white-space: nowrap;
   color: #64748b;
   font-size: 13px;
   font-weight: 700;
-  padding-top: 2px;
 }
 
-.role-item ul {
-  margin: 8px 0 0;
-  padding-left: 22px;
-}
-
-.role-item li {
-  margin-bottom: 6px;
+.compact-role p {
+  margin: 0;
   color: #1e293b;
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 /* =========================
@@ -427,12 +424,12 @@ footer {
     white-space: normal;
   }
 
-  .role-header {
+  .compact-role-header {
     grid-template-columns: 1fr;
-    gap: 4px;
+    gap: 2px;
   }
 
-  .role-header span {
+  .compact-role-header span {
     white-space: normal;
   }
 
