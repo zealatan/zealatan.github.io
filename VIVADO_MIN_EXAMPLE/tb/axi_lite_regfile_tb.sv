@@ -230,6 +230,9 @@ module axi_lite_regfile_tb;
     logic [31:0] rd;
 
     initial begin
+        $dumpfile("../logs/axi_lite_regfile_tb.vcd");
+        $dumpvars(0, axi_lite_regfile_tb);
+
         awvalid = 1'b0; awaddr = '0;
         wvalid  = 1'b0; wdata  = '0; wstrb = '0;
         bready  = 1'b0;
