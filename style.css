@@ -254,50 +254,120 @@ li {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 20px;
+  align-items: stretch;
 }
 
-.card {
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 290px;
+  padding: 22px;
   border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 20px;
-  background: #fafafa;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  overflow: hidden;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: #2563eb;
 }
 
-.card h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
+.project-card.blue::before {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
 }
 
-.card h3 a {
-  color: #1e3a8a;
+.project-card.purple::before {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+
+.project-card.green::before {
+  background: linear-gradient(90deg, #16a34a, #4ade80);
+}
+
+.project-card.orange::before {
+  background: linear-gradient(90deg, #ea580c, #fb923c);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+  border-color: #d6dbe4;
+}
+
+.project-badge {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.project-card h3 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.project-card h3 a {
+  color: #0f172a;
   text-decoration: none;
 }
 
-.card h3 a:hover {
-  text-decoration: underline;
+.project-card h3 a:hover {
+  color: #1d4ed8;
 }
 
-.tags {
+.project-desc {
+  margin: 0 0 16px;
+  color: #475569;
   font-size: 14px;
-  color: #4b5563;
-  font-weight: 600;
-  margin-top: 12px;
+  line-height: 1.65;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+
+.project-tags span {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid #e2e8f0;
 }
 
 .project-link {
-  display: inline-block;
-  margin-top: 8px;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
   color: #2563eb;
   text-decoration: none;
+  font-size: 14px;
 }
 
 .project-link:hover {
@@ -310,7 +380,7 @@ li {
 
 .skill-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
@@ -323,41 +393,6 @@ li {
   color: #0f172a;
   font-size: 14px;
   font-weight: 700;
-}
-
-/* =========================
-   Independent Research
-   ========================= */
-
-.research-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-.research-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 20px;
-  background: #fafafa;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.research-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
-}
-
-.research-card h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #1e3a8a;
-  font-size: 18px;
-}
-
-.research-card p {
-  margin-bottom: 0;
-  color: #1e293b;
 }
 
 /* =========================
@@ -433,12 +468,16 @@ footer {
     white-space: normal;
   }
 
-  .skill-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .project-grid {
+    grid-template-columns: 1fr;
   }
 
-  .research-grid {
-    grid-template-columns: 1fr;
+  .project-card {
+    min-height: auto;
+  }
+
+  .skill-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .education-publication-grid {
@@ -493,6 +532,14 @@ footer {
 
   .section-title {
     font-size: 24px;
+  }
+
+  .project-card {
+    padding: 20px;
+  }
+
+  .project-card h3 {
+    font-size: 18px;
   }
 }
 

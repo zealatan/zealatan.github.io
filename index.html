@@ -17,11 +17,11 @@
       <h1>Bumhee Lee</h1>
 
       <p class="subtitle">
-        🔬 System Engineer / Research Assistant
+        🔬 SoC & RFSoC System Engineer / Research Assistant
       </p>
 
       <p class="tagline">
-         Modem Systems | FPGA Validation | AI-assisted Hardware Design
+        Real-time OFDM Transceivers | RFSoC | Modem Systems | FPGA Validation | AI/NPU Workloads | AI-assisted Hardware Design
       </p>
 
       <div class="links">
@@ -48,70 +48,16 @@
       </a>
     </section>
 
-
-  <!-- Featured Projects -->
+    <!-- About -->
     <section>
-      <h2 class="section-title">🚀 Featured Projects</h2>
+      <h2 class="section-title">👋 About</h2>
 
-      <div class="project-grid">
-
-        <div class="card">
-          <h3>
-             AI-assisted RTL/FPGA Workflow
-            </a>
-          </h3>
-
-          <p class="tags">
-            Verilog · SystemVerilog · Vivado · XSIM
-          </p>
-
-          <a class="project-link"
-             href="https://github.com/zealatan/zealatan.github.io/tree/main/VIVADO_MIN_EXAMPLE"
-             target="_blank"
-             rel="noopener noreferrer">
-            View on GitHub →
-          </a>
-        </div>
-
-        <div class="card">
-          <h3>
-              Hardware-aware ML for PHY Systems
-            </a>
-          </h3>
-
-          <p class="tags">
-            ML · PHY Systems · Synchronization · Hardware-aware Design
-          </p>
-
-          <a class="project-link"
-             href="https://github.com/zealatan"
-             target="_blank"
-             rel="noopener noreferrer">
-            View GitHub Profile →
-          </a>
-        </div>
-
-        <div class="card">
-          <h3>
-              Real-time OFDM PHY Architecture
-            </a>
-          </h3>
-
-          <p class="tags">
-            OFDM · RFSoC · Streaming PHY · Fixed-point
-          </p>
-
-          <a class="project-link"
-             href="https://github.com/zealatan"
-             target="_blank"
-             rel="noopener noreferrer">
-            View GitHub Profile →
-          </a>
-        </div>
-
-      </div>
+      <p>
+        I am a hardware-aware SoC and RFSoC system engineer who connects Samsung System LSI
+        experience in FPGA validation, modem protocol testing, and AI/NPU workloads with graduate
+        research in communication algorithms and RFSoC-based Gbps-class OFDM transceiver prototyping.
+      </p>
     </section>
-
 
     <!-- Professional Experience -->
     <section>
@@ -132,10 +78,17 @@
             <span class="experience-date">Aug 2023 – Present</span>
           </div>
 
-          <p class="experience-meta">
+          <ul>
+            <li>
+              Architected RFSoC-based Gbps-class OFDM transceiver prototypes, integrating modem/PHY
+              algorithms, fixed-point modeling, streaming dataflow, and latency-aware hardware design.
+            </li>
+
+            <li>
               Validated real-time PHY systems through simulation, RFSoC prototyping, lab/OTA experiments,
               and a 28 GHz MU-MIMO platform with real-time control.
-         </p>
+            </li>
+          </ul>
         </div>
 
         <!-- Samsung -->
@@ -196,7 +149,138 @@
       </div>
     </section>
 
-  
+    <!-- Featured Projects -->
+    <section>
+      <h2 class="section-title">🚀 Featured Projects</h2>
+
+      <div class="project-grid">
+
+        <article class="project-card blue">
+          <span class="project-badge">Verification</span>
+
+          <h3>
+            <a href="https://github.com/zealatan"
+               target="_blank"
+               rel="noopener noreferrer">
+              AI-assisted RTL/FPGA Workflow
+            </a>
+          </h3>
+
+          <p class="project-desc">
+            Experimental workflow for using LLM agents to generate RTL, testbenches,
+            simulation scripts, verification plans, and hardware debug hypotheses.
+          </p>
+
+          <div class="project-tags">
+            <span>LLM Agents</span>
+            <span>RTL</span>
+            <span>Verification</span>
+            <span>FPGA</span>
+          </div>
+
+          <a class="project-link"
+             href="https://github.com/zealatan"
+             target="_blank"
+             rel="noopener noreferrer">
+            View GitHub Profile →
+          </a>
+        </article>
+
+        <article class="project-card purple">
+          <span class="project-badge">Wireless AI</span>
+
+          <h3>
+            <a href="https://github.com/zealatan"
+               target="_blank"
+               rel="noopener noreferrer">
+              Hardware-aware ML for PHY Systems
+            </a>
+          </h3>
+
+          <p class="project-desc">
+            Research direction on machine-learning-based PHY blocks that can be integrated
+            into practical baseband pipelines under latency and hardware constraints.
+          </p>
+
+          <div class="project-tags">
+            <span>ML</span>
+            <span>PHY</span>
+            <span>Synchronization</span>
+            <span>Hardware-aware</span>
+          </div>
+
+          <a class="project-link"
+             href="https://github.com/zealatan"
+             target="_blank"
+             rel="noopener noreferrer">
+            View GitHub Profile →
+          </a>
+        </article>
+
+        <article class="project-card green">
+          <span class="project-badge">Real-time PHY</span>
+
+          <h3>
+            <a href="https://github.com/zealatan"
+               target="_blank"
+               rel="noopener noreferrer">
+              Real-time OFDM PHY Architecture
+            </a>
+          </h3>
+
+          <p class="project-desc">
+            Real-time OFDM transceiver architecture work focused on streaming dataflow,
+            fixed-point effects, and FPGA/RFSoC implementation constraints.
+          </p>
+
+          <div class="project-tags">
+            <span>OFDM</span>
+            <span>RFSoC</span>
+            <span>Streaming PHY</span>
+            <span>Fixed-point</span>
+          </div>
+
+          <a class="project-link"
+             href="https://github.com/zealatan"
+             target="_blank"
+             rel="noopener noreferrer">
+            View GitHub Profile →
+          </a>
+        </article>
+
+        <article class="project-card orange">
+          <span class="project-badge">RTL Basics</span>
+
+          <h3>
+            <a href="https://github.com/zealatan/VIVADO_MIN_EXAMPLE"
+               target="_blank"
+               rel="noopener noreferrer">
+              Vivado Minimal RTL Examples
+            </a>
+          </h3>
+
+          <p class="project-desc">
+            Minimal RTL and SystemVerilog examples for Vivado XSIM-based simulation,
+            showing a compact and reproducible verification workflow.
+          </p>
+
+          <div class="project-tags">
+            <span>Verilog</span>
+            <span>SystemVerilog</span>
+            <span>Vivado</span>
+            <span>XSIM</span>
+          </div>
+
+          <a class="project-link"
+             href="https://github.com/zealatan/VIVADO_MIN_EXAMPLE"
+             target="_blank"
+             rel="noopener noreferrer">
+            View on GitHub →
+          </a>
+        </article>
+
+      </div>
+    </section>
 
     <!-- Technical Skills -->
     <section>
@@ -206,11 +290,14 @@
         <span>Wideband OFDM</span>
         <span>MIMO / Beamforming / RIS</span>
         <span>LTE / NR PHY</span>
+
         <span>USRP X410 / RFSoC</span>
-        <span>AXI4 / DMA / Streaming Pipelines</span>
+        <span>AXI4 / DMA</span>
+        <span>Streaming Pipelines</span>
+
         <span>Verilog / SystemVerilog</span>
-        <span>C / C++ </span>
-        <span>LLM Orchestration</span>
+        <span>C / C++ / Python</span>
+        <span>LLM Agents</span>
       </div>
     </section>
 
@@ -227,6 +314,11 @@
             <strong>M.Sc. in Communication and Multimedia Engineering</strong><br />
             Friedrich-Alexander-Universität Erlangen-Nürnberg, Germany<br />
             <span class="small-text">Oct 2019 – Dec 2022</span>
+          </p>
+
+          <p>
+            Master thesis on power-efficient RIS-assisted wireless power transfer algorithms,
+            achieving approximately 11% transmission power reduction in simulation.
           </p>
 
           <p>
@@ -249,6 +341,11 @@
           </p>
 
           <p>
+            Demonstrated a real-time 28 GHz MU-MIMO system with programmable beam control
+            and system-level validation capability.
+          </p>
+
+          <p>
             <a href="https://github.com/zealatan"
                target="_blank"
                rel="noopener noreferrer">
@@ -260,7 +357,16 @@
       </div>
     </section>
 
+    <!-- Languages -->
+    <section>
+      <h2 class="section-title">🌐 Languages</h2>
 
+      <div class="skill-grid language-grid">
+        <span>Korean · Native</span>
+        <span>English · Professional Working Proficiency</span>
+        <span>German · Basic</span>
+      </div>
+    </section>
 
     <!-- Footer -->
     <footer>
