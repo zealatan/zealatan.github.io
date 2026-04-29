@@ -47,7 +47,7 @@ body {
 
 .tagline {
   color: #e5e7eb;
-  max-width: 760px;
+  max-width: 780px;
   margin: 0 auto;
   font-size: 16px;
 }
@@ -146,11 +146,11 @@ li {
 .experience-list {
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 28px;
 }
 
 .experience-item {
-  padding-left: 16px;
+  padding-left: 18px;
   border-left: 4px solid #2563eb;
 }
 
@@ -163,10 +163,10 @@ li {
 }
 
 .experience-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 18px;
-  align-items: flex-start;
+  align-items: start;
 }
 
 .experience-item h3 {
@@ -176,16 +176,18 @@ li {
 }
 
 .experience-meta {
-  margin: 2px 0 8px;
+  margin: 3px 0 10px;
   color: #334155;
   font-size: 14px;
+  line-height: 1.45;
 }
 
 .experience-date {
   white-space: nowrap;
   color: #334155;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
+  padding-top: 2px;
 }
 
 .experience-item ul {
@@ -217,10 +219,10 @@ li {
 }
 
 .role-header {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 16px;
-  align-items: flex-start;
+  align-items: start;
   margin-bottom: 8px;
 }
 
@@ -228,6 +230,7 @@ li {
   margin: 0;
   font-size: 16px;
   color: #0f172a;
+  line-height: 1.35;
 }
 
 .role-header span {
@@ -235,6 +238,7 @@ li {
   color: #64748b;
   font-size: 13px;
   font-weight: 700;
+  padding-top: 2px;
 }
 
 .role-item ul {
@@ -415,7 +419,7 @@ footer {
 
 @media (max-width: 760px) {
   .experience-header {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 4px;
   }
 
@@ -424,7 +428,7 @@ footer {
   }
 
   .role-header {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 4px;
   }
 
