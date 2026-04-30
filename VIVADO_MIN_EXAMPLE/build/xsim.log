@@ -168,3 +168,7 @@ run all
 [FAIL] axi_lite_regfile_tb  63/65 checks passed  (2 failure(s))
 [DONE] simulation complete at t=1520000
 $finish called at time : 1520 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axi_lite_regfile_tb.sv" Line 404
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+exit
+INFO: [Common 17-206] Exiting xsim at Wed Apr 29 15:04:47 2026...
