@@ -2,85 +2,18 @@
 # xsim v2022.2 (64-bit)
 # SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
 # IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Start of session at: Wed Apr 29 10:07:02 2026
-# Process ID: 223525
+# Start of session at: Thu Apr 30 15:08:11 2026
+# Process ID: 29186
 # Current directory: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build
-# Command line: xsim -source {xsim.dir/axi_lite_regfile_tb_sim/xsim_script.tcl}
+# Command line: xsim -mode tcl -source {xsim.dir/axi_lite_regfile_tb_sim/xsim_script.tcl}
 # Log file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.log
 # Journal file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.jou
 # Running On: DESKTOP-FAIRVEG, OS: Linux, CPU Frequency: 2496.000 MHz, CPU Physical cores: 6, Host memory: 8134 MB
 #-----------------------------------------------------------
-start_gui
 source xsim.dir/axi_lite_regfile_tb_sim/xsim_script.tcl
-# set_param project.enableReportConfiguration 0
-# load_feature core
-# current_fileset
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:ac701:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/ac701/1.4/board.xml as part xc7a200tfbg676-2 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:k26c:part0:1.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/k26c/1.2/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:k26c:part0:1.3 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/k26c/1.3/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:k26c:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/k26c/1.4/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:k26i:part0:1.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/k26i/1.2/board.xml as part xck26-sfvc784-2lvi-i specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:k26i:part0:1.3 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/k26i/1.3/board.xml as part xck26-sfvc784-2lvi-i specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:k26i:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/k26i/1.4/board.xml as part xck26-sfvc784-2lvi-i specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kc705:part0:1.6 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kc705/1.6/board.xml as part xc7k325tffg900-2 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu105:part0:1.6 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu105/1.6/board.xml as part xcku040-ffva1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu105:part0:1.7 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu105/1.7/board.xml as part xcku040-ffva1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kcu1500:part0:1.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kcu1500/1.2/board.xml as part xcku115-flvb2104-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kr260_som:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kr260_som/1.0/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kr260_som:part0:1.1 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kr260_som/1.1/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kv260_som:part0:1.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kv260_som/1.2/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kv260_som:part0:1.3 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kv260_som/1.3/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:kv260_som:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/kv260_som/1.4/board.xml as part xck26-sfvc784-2lv-c specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:sp701:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/sp701/1.0/board.xml as part xc7s100fgga676-2 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:sp701:part0:1.1 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/sp701/1.1/board.xml as part xc7s100fgga676-2 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vc707:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vc707/1.4/board.xml as part xc7vx485tffg1761-2 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vc709:part0:1.8 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vc709/1.8/board.xml as part xc7vx690tffg1761-2 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:2.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/2.2/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.0/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.1 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.1/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190_newl:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190_newl/production/1.0/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu108:part0:1.6 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu108/1.6/board.xml as part xcvu095-ffva2104-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu108:part0:1.7 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu108/1.7/board.xml as part xcvu095-ffva2104-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vcu110:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vcu110/1.4/board.xml as part xcvu190-flgc2104-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vermeo_t1_mpsoc:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vermeo_t1_mpsoc/1.0/board.xml as part xczu19eg-ffvd1760-2l-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vermeo_t1_rfsoc:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vermeo_t1_rfsoc/1.0/board.xml as part xczu21dr-ffvd1156-2l-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:2.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/2.2/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.0/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.1 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.1/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180_newl:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180_newl/production/1.0/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/production/1.0/board.xml as part xcvp1202-vsva2785-2mp-e-s specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es:part0:1.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/es/1.2/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es_revb:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120_revb/es/1.0/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180_es:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/es/1.0/board.xml as part xcvp1802-lsvc4072-2mp-e-s-es1 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zc702:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zc702/1.4/board.xml as part xc7z020clg484-1 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zc706:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zc706/1.4/board.xml as part xc7z045ffg900-2 specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu102:part0:3.3 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu102/3.3/board.xml as part xczu9eg-ffvb1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu102:part0:3.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu102/3.4/board.xml as part xczu9eg-ffvb1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu104:part0:1.1 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu104/1.1/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu106:part0:2.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu106/2.4/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu106:part0:2.5 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu106/2.5/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu106:part0:2.6 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu106/2.6/board.xml as part xczu7ev-ffvc1156-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu111:part0:1.2 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu111/1.2/board.xml as part xczu28dr-ffvg1517-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu111:part0:1.3 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu111/1.3/board.xml as part xczu28dr-ffvg1517-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu111:part0:1.4 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu111/1.4/board.xml as part xczu28dr-ffvg1517-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu1275:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu1275/1.0/board.xml as part xczu29dr-ffvf1760-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu1285:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu1285/1.0/board.xml as part xczu39dr-ffvf1760-2-i specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208:part0:2.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208/production/2.0/board.xml as part xczu48dr-fsvg1517-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216:part0:2.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216/production/2.0/board.xml as part xczu49dr-ffvf1760-2-e specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670:part0:2.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670/2.0/board.xml as part xczu67dr-fsve1156-2-i specified in board_part file is either invalid or not available
-WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at //Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
-INFO: [IP_Flow 19-234] Refreshing IP repositories
-INFO: [IP_Flow 19-1704] No user IP repositories specified
-INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '//Vivado/2022.2/data/ip'.
-current_fileset: Time (s): cpu = 00:00:29 ; elapsed = 00:00:14 . Memory (MB): peak = 9670.148 ; gain = 485.051 ; free physical = 4215 ; free virtual = 7544
-# xsim {axi_lite_regfile_tb_sim} -autoloadwcfg
+# xsim {axi_lite_regfile_tb_sim} -autoloadwcfg -runall
 Time resolution is 1 ps
-add_wave {{/axi_lite_regfile_tb/aclk}} {{/axi_lite_regfile_tb/aresetn}} {{/axi_lite_regfile_tb/awaddr}} {{/axi_lite_regfile_tb/awvalid}} {{/axi_lite_regfile_tb/awready}} {{/axi_lite_regfile_tb/wdata}} {{/axi_lite_regfile_tb/wstrb}} {{/axi_lite_regfile_tb/wvalid}} {{/axi_lite_regfile_tb/wready}} {{/axi_lite_regfile_tb/bresp}} {{/axi_lite_regfile_tb/bvalid}} {{/axi_lite_regfile_tb/bready}} {{/axi_lite_regfile_tb/araddr}} {{/axi_lite_regfile_tb/arvalid}} {{/axi_lite_regfile_tb/arready}} {{/axi_lite_regfile_tb/rdata}} {{/axi_lite_regfile_tb/rresp}} {{/axi_lite_regfile_tb/rvalid}} {{/axi_lite_regfile_tb/rready}} {{/axi_lite_regfile_tb/pass_count}} {{/axi_lite_regfile_tb/fail_count}} {{/axi_lite_regfile_tb/last_bresp}} {{/axi_lite_regfile_tb/last_rresp}} {{/axi_lite_regfile_tb/rd}} 
-run all
+run -all
 [CHK] t=95000  phase=reset_release
 [INFO] Test 1: reset defaults
 [PASS]                       reset_default reg[0]  got=0x00000000
@@ -145,30 +78,107 @@ run all
 [PASS]                      bresp OKAY wstrb=0110  resp=2'b00
 [PASS]               wstrb=0110: bytes1+2 updated  got=0xab341200
 [PASS]                 rresp OKAY wstrb=0110 read  resp=2'b00
-[CHK] t=1170000  phase=aw_before_w
+[CHK] t=1170000  phase=wstrb_isolation
+[INFO] Test 5b: individual byte-lane isolation on reg[2]
+[PASS]            bresp OKAY wstrb_isolation seed  resp=2'b00
+[PASS]                   bresp OKAY wstrb_b0_only  resp=2'b00
+[PASS]      wstrb_b0_only: byte0=0x11 others=0xFF  got=0xffffff11
+[PASS]                   rresp OKAY wstrb_b0_only  resp=2'b00
+[PASS]                   bresp OKAY wstrb_b1_only  resp=2'b00
+[PASS] wstrb_b1_only: byte1=0x22 others unchanged  got=0xffff2211
+[PASS]                   rresp OKAY wstrb_b1_only  resp=2'b00
+[PASS]                   bresp OKAY wstrb_b2_only  resp=2'b00
+[PASS] wstrb_b2_only: byte2=0x33 others unchanged  got=0xff332211
+[PASS]                   rresp OKAY wstrb_b2_only  resp=2'b00
+[PASS]                   bresp OKAY wstrb_b3_only  resp=2'b00
+[PASS] wstrb_b3_only: byte3=0x44 others unchanged  got=0x44332211
+[PASS]                   rresp OKAY wstrb_b3_only  resp=2'b00
+[CHK] t=1470000  phase=aw_before_w
 [INFO] Test 6: AW-before-W transaction (W_WAIT_W path)
 [PASS]              bresp OKAY aw_before_w reg[1]  resp=2'b00
 [PASS]                aw_before_w readback reg[1]  got=0xdeadbeef
 [PASS]              rresp OKAY aw_before_w reg[1]  resp=2'b00
 [PASS]             bresp OKAY aw_before_w cleanup  resp=2'b00
-[CHK] t=1270000  phase=w_before_aw
+[CHK] t=1570000  phase=w_before_aw
 [INFO] Test 7: W-before-AW transaction (W_WAIT_A path)
 [PASS]              bresp OKAY w_before_aw reg[2]  resp=2'b00
 [PASS]                w_before_aw readback reg[2]  got=0xcafef00d
 [PASS]              rresp OKAY w_before_aw reg[2]  resp=2'b00
 [PASS]             bresp OKAY w_before_aw cleanup  resp=2'b00
-[CHK] t=1370000  phase=invalid_addr
-[INFO] Test 8: invalid address 0x10 — RTL limitation: no addr decode
+[CHK] t=1670000  phase=invalid_addr
+[INFO] Test 8: invalid address 0x10 — BRESP/RRESP=SLVERR, no alias
 [PASS]                 bresp OKAY pre-seed reg[0]  resp=2'b00
-[NOTE] 0x10 write  bresp=2'b00  (OKAY=00, SLVERR=10)
-[FAIL]   0x10 write: SLVERR expected per AXI spec  got=2'b00  exp=2'b10  [RTL_LIMITATION]
-[NOTE] 0x10 read   rdata=0x12345678  rresp=2'b00
-[FAIL]   0x10 read:  SLVERR expected per AXI spec  got=2'b00  exp=2'b10  [RTL_LIMITATION]
-[NOTE] reg[0]      value=0x12345678  (expect 0x12345678 if alias, 0xAAAAAAAA if SLVERR)
-[FAIL] axi_lite_regfile_tb  63/65 checks passed  (2 failure(s))
-[DONE] simulation complete at t=1520000
-$finish called at time : 1520 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axi_lite_regfile_tb.sv" Line 404
-close_sim
-INFO: [Simtcl 6-16] Simulation closed
+[PASS]                   0x10 write: BRESP=SLVERR  resp=2'b10
+[PASS]                    0x10 read: RRESP=SLVERR  resp=2'b10
+[PASS]    0x10 read: rdata=0x0 (no register leak)  got=0x00000000
+[PASS]         0x10 write did not alias to reg[0]  got=0xaaaaaaaa
+[CHK] t=1820000  phase=same_cycle_aw_w
+[INFO] Test 9: simultaneous AW+W same-cycle, W_IDLE->W_BRESP direct
+[PASS]               bresp OKAY same_cycle reg[3]  resp=2'b00
+[PASS]                 same_cycle readback reg[3]  got=0xbeefcafe
+[PASS]               rresp OKAY same_cycle reg[3]  resp=2'b00
+[PASS]              bresp OKAY same_cycle cleanup  resp=2'b00
+[CHK] t=1910000  phase=b_backpressure
+[INFO] Test 10: B-channel backpressure (bp=3 and bp=7)
+[PASS]             bresp OKAY bp_write bp3 reg[0]  resp=2'b00
+[PASS]             bresp OKAY bp_write bp7 reg[1]  resp=2'b00
+[PASS]                   bp_write readback reg[0]  got=0xba5eb000
+[PASS]        rresp OKAY bp_write readback reg[0]  resp=2'b00
+[PASS]                   bp_write readback reg[1]  got=0xc0def00d
+[PASS]        rresp OKAY bp_write readback reg[1]  resp=2'b00
+[PASS]         bresp OKAY bp_write cleanup reg[0]  resp=2'b00
+[PASS]         bresp OKAY bp_write cleanup reg[1]  resp=2'b00
+[CHK] t=2210000  phase=r_backpressure
+[INFO] Test 11: R-channel backpressure (bp=3 and bp=5)
+[PASS]            bresp OKAY bp_read setup reg[2]  resp=2'b00
+[PASS]            bresp OKAY bp_read setup reg[3]  resp=2'b00
+[PASS]                    bp_read bp3 reg[2] data  got=0xf00dcafe
+[PASS]              rresp OKAY bp_read bp3 reg[2]  resp=2'b00
+[PASS]                    bp_read bp5 reg[3] data  got=0xdead0001
+[PASS]              rresp OKAY bp_read bp5 reg[3]  resp=2'b00
+[PASS]          bresp OKAY bp_read cleanup reg[2]  resp=2'b00
+[PASS]          bresp OKAY bp_read cleanup reg[3]  resp=2'b00
+[CHK] t=2490000  phase=inv_addr_sweep
+[INFO] Test 12: invalid-address sweep, W_IDLE simultaneous path
+[PASS]           inv 0x14: seed bresp OKAY reg[1]  resp=2'b00
+[PASS]                     inv 0x14: BRESP=SLVERR  resp=2'b10
+[PASS]                     inv 0x14: RRESP=SLVERR  resp=2'b10
+[PASS]                        inv 0x14: rdata=0x0  got=0x00000000
+[PASS]                inv 0x14: reg[1] unmodified  got=0x5a5a1400
+[PASS]           inv 0xFF: seed bresp OKAY reg[3]  resp=2'b00
+[PASS]                     inv 0xFF: BRESP=SLVERR  resp=2'b10
+[PASS]                     inv 0xFF: RRESP=SLVERR  resp=2'b10
+[PASS]                        inv 0xFF: rdata=0x0  got=0x00000000
+[PASS]                inv 0xFF: reg[3] unmodified  got=0x5a5aff00
+[PASS]     inv 0x80000000: seed bresp OKAY reg[0]  resp=2'b00
+[PASS]               inv 0x80000000: BRESP=SLVERR  resp=2'b10
+[PASS]               inv 0x80000000: RRESP=SLVERR  resp=2'b10
+[PASS]                  inv 0x80000000: rdata=0x0  got=0x00000000
+[PASS]          inv 0x80000000: reg[0] unmodified  got=0x5a5a8000
+[CHK] t=2940000  phase=inv_addr_aw_first
+[INFO] Test 13: AW-before-W at invalid addresses (W_WAIT_W path)
+[PASS]         aw_first inv 0x14: seed bresp OKAY  resp=2'b00
+[PASS]            aw_first inv 0x14: BRESP=SLVERR  resp=2'b10
+[PASS]       aw_first inv 0x14: reg[1] unmodified  got=0x5a5a1413
+[PASS]         aw_first inv 0xFF: seed bresp OKAY  resp=2'b00
+[PASS]            aw_first inv 0xFF: BRESP=SLVERR  resp=2'b10
+[PASS]       aw_first inv 0xFF: reg[3] unmodified  got=0x5a5aff13
+[PASS]   aw_first inv 0x80000000: seed bresp OKAY  resp=2'b00
+[PASS]      aw_first inv 0x80000000: BRESP=SLVERR  resp=2'b10
+[PASS] aw_first inv 0x80000000: reg[0] unmodified  got=0x5a5a8013
+[CHK] t=3330000  phase=inv_addr_w_first
+[INFO] Test 14: W-before-AW at invalid addresses (W_WAIT_A path)
+[PASS]          w_first inv 0x14: seed bresp OKAY  resp=2'b00
+[PASS]             w_first inv 0x14: BRESP=SLVERR  resp=2'b10
+[PASS]        w_first inv 0x14: reg[1] unmodified  got=0x5a5a1414
+[PASS]          w_first inv 0xFF: seed bresp OKAY  resp=2'b00
+[PASS]             w_first inv 0xFF: BRESP=SLVERR  resp=2'b10
+[PASS]        w_first inv 0xFF: reg[3] unmodified  got=0x5a5aff14
+[PASS]    w_first inv 0x80000000: seed bresp OKAY  resp=2'b00
+[PASS]       w_first inv 0x80000000: BRESP=SLVERR  resp=2'b10
+[PASS]  w_first inv 0x80000000: reg[0] unmodified  got=0x5a5a8014
+[PASS] axi_lite_regfile_tb  133/133 checks passed
+[DONE] simulation complete at t=3720000
+$finish called at time : 3720 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axi_lite_regfile_tb.sv" Line 724
 exit
-INFO: [Common 17-206] Exiting xsim at Wed Apr 29 15:04:47 2026...
+INFO: [Common 17-206] Exiting xsim at Thu Apr 30 15:08:17 2026...

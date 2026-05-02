@@ -80,7 +80,12 @@ module axi_lite_regfile (
 
                 W_IDLE: begin
                     if (awvalid && wvalid) begin
-                        do_write(awaddr[3:2], wdata, wstrb);
+                        if (awaddr[31:4] == 28'h0) begin
+                            do_write(awaddr[3:2], wdata, wstrb);
+                            bresp <= 2'b00;
+                        end else begin
+                            bresp <= 2'b10;
+                        end
                         awready <= 1'b0;
                         wready  <= 1'b0;
                         bvalid  <= 1'b1;
@@ -99,7 +104,12 @@ module axi_lite_regfile (
 
                 W_WAIT_W: begin
                     if (wvalid) begin
-                        do_write(aw_latch[3:2], wdata, wstrb);
+                        if (aw_latch[31:4] == 28'h0) begin
+                            do_write(aw_latch[3:2], wdata, wstrb);
+                            bresp <= 2'b00;
+                        end else begin
+                            bresp <= 2'b10;
+                        end
                         wready <= 1'b0;
                         bvalid <= 1'b1;
                         wstate <= W_BRESP;
@@ -108,7 +118,12 @@ module axi_lite_regfile (
 
                 W_WAIT_A: begin
                     if (awvalid) begin
-                        do_write(awaddr[3:2], wd_latch, ws_latch);
+                        if (awaddr[31:4] == 28'h0) begin
+                            do_write(awaddr[3:2], wd_latch, ws_latch);
+                            bresp <= 2'b00;
+                        end else begin
+                            bresp <= 2'b10;
+                        end
                         awready <= 1'b0;
                         bvalid  <= 1'b1;
                         wstate  <= W_BRESP;
@@ -118,6 +133,7 @@ module axi_lite_regfile (
                 W_BRESP: begin
                     if (bready) begin
                         bvalid  <= 1'b0;
+                        bresp   <= 2'b00;
                         awready <= 1'b1;
                         wready  <= 1'b1;
                         wstate  <= W_IDLE;
@@ -150,7 +166,13 @@ module axi_lite_regfile (
 
                 R_IDLE: begin
                     if (arvalid) begin
-                        rdata   <= regs[araddr[3:2]];
+                        if (araddr[31:4] == 28'h0) begin
+                            rdata <= regs[araddr[3:2]];
+                            rresp <= 2'b00;
+                        end else begin
+                            rdata <= 32'h0;
+                            rresp <= 2'b10;
+                        end
                         rvalid  <= 1'b1;
                         arready <= 1'b0;
                         rstate  <= R_RVALID;
@@ -160,6 +182,7 @@ module axi_lite_regfile (
                 R_RVALID: begin
                     if (rready) begin
                         rvalid  <= 1'b0;
+                        rresp   <= 2'b00;
                         arready <= 1'b1;
                         rstate  <= R_IDLE;
                     end

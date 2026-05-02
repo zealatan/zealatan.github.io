@@ -2,8 +2,8 @@
 
 Project: VIVADO_MIN_EXAMPLE  
 Date created: 2026-04-28  
-Last updated: 2026-04-29  
-Scope: testbench and scripts only — no RTL modifications
+Last updated: 2026-04-30 (run 4 — extended invalid-address coverage)  
+Scope: testbench, scripts, and approved RTL patch
 
 ---
 
@@ -12,9 +12,9 @@ Scope: testbench and scripts only — no RTL modifications
 | Layer | File | Status |
 |-------|------|--------|
 | RTL | `rtl/and2.v` | pre-existing, untouched |
-| RTL | `rtl/axi_lite_regfile.v` | **DONE** — 4×32-bit AXI-lite slave |
+| RTL | `rtl/axi_lite_regfile.v` | **DONE** — 4×32-bit AXI-lite slave; address-decode fix applied |
 | TB | `tb/and2_tb.sv` | pre-existing, untouched |
-| TB | `tb/axi_lite_regfile_tb.sv` | **DONE** — register r/w, WSTRB, AW-first, W-first, invalid addr |
+| TB | `tb/axi_lite_regfile_tb.sv` | **DONE** — register r/w, WSTRB, byte-lane isolation, AW-first, W-first, same-cycle, invalid addr sweep (3 addresses × 3 orderings), B/R backpressure |
 | Script | `scripts/run_vivado_sim.sh` | pre-existing, untouched |
 | Script | `scripts/run_axi_regfile_sim.sh` | **DONE** — CI-safe with [FAIL] grep gate |
 | Smoke TB | `tb/smoke_tb.sv` | pending |
@@ -29,9 +29,9 @@ Scope: testbench and scripts only — no RTL modifications
 The placeholder AND gate (`rtl/and2.v`) is untouched.  
 The first real DUT — `rtl/axi_lite_regfile.v` — is implemented and verified.
 
-**Known RTL limitation:** No address decode logic. All 32-bit addresses are indexed
-by `awaddr[3:2]` only, so out-of-range addresses alias silently to one of the 4
-registers instead of returning SLVERR. See §8 below.
+**Address-decode fix applied (2026-04-30):** The RTL now checks `awaddr[31:4]==0`
+and `araddr[31:4]==0`. Out-of-range accesses return SLVERR and do not modify
+registers or leak register data. Valid addresses (0x00–0x0F) behave as before.
 
 ---
 
@@ -53,7 +53,7 @@ Checks:
 **Goal:** Verify every AXI-lite control register.
 
 **Implemented file:** `tb/axi_lite_regfile_tb.sv`  
-**Status:** DONE — 63/65 checks pass (2 are intentional RTL-limitation notes)
+**Status:** DONE — 133/133 checks pass (0 failures; RTL address-decode fix verified; extended invalid-address coverage added)
 
 ### Implemented test sequence
 
@@ -63,10 +63,17 @@ Checks:
 | 2 | Write all-ones + bresp/rresp | 12 | PASS |
 | 3 | Unique values per register + resp | 12 | PASS |
 | 4 | Write all-zeros + resp | 12 | PASS |
-| 5 | Partial WSTRB byte-lane writes | 9 | PASS |
+| 5 | Partial WSTRB byte-lane writes (reg[0]) | 10 | PASS |
+| 5b | Individual byte-lane isolation (reg[2]) | 13 | PASS |
 | 6 | AW-before-W (W_WAIT_W path) | 4 | PASS |
 | 7 | W-before-AW (W_WAIT_A path) | 4 | PASS |
-| 8 | Invalid address 0x10 | 2 | FAIL (RTL limitation — see §8) |
+| 8 | Invalid address 0x10 (SLVERR + no alias) | 5 | PASS (RTL fix applied) |
+| 9 | Simultaneous AW+W same-cycle (W_IDLE→W_BRESP) | 4 | PASS |
+| 10 | B-channel backpressure (bp=3 and bp=7) | 8 | PASS |
+| 11 | R-channel backpressure (bp=3 and bp=5) | 8 | PASS |
+| 12 | Invalid-addr sweep 0x14/0xFF/0x80000000 — W_IDLE simultaneous | 15 | PASS |
+| 13 | Invalid-addr AW-before-W 0x14/0xFF/0x80000000 — W_WAIT_W SLVERR | 9 | PASS |
+| 14 | Invalid-addr W-before-AW 0x14/0xFF/0x80000000 — W_WAIT_A SLVERR | 9 | PASS |
 
 ### Task design: negedge-drive / posedge-sample
 
@@ -151,25 +158,20 @@ and can be used to navigate waveforms without a GUI.
 
 ---
 
-## 8. RTL Limitation: No Address Decode
+## 8. Address Decode — FIXED (2026-04-30)
 
-**Symptom:** Writing or reading address `0x10` returns `bresp/rresp = 2'b00` (OKAY)
-instead of `2'b10` (SLVERR). The write silently modifies `reg[0]` because the RTL
-uses only `awaddr[3:2]` as the register index and `0x10[3:2] = 2'b00`.
+**Previous symptom:** Writes/reads to 0x10 returned OKAY and aliased to reg[0].
 
-**Evidence in log:**
+**Fix applied:** `rtl/axi_lite_regfile.v` now checks `addr[31:4] == 28'h0` in every
+write-commit branch (W_IDLE simultaneous, W_WAIT_W, W_WAIT_A) and the R_IDLE read
+branch. Invalid addresses return SLVERR without touching registers or leaking data.
+
+**Evidence in log (post-fix):**
 ```
-[FAIL] 0x10 write: SLVERR expected per AXI spec  got=2'b00  exp=2'b10  [RTL_LIMITATION]
-[FAIL] 0x10 read:  SLVERR expected per AXI spec  got=2'b00  exp=2'b10  [RTL_LIMITATION]
-[NOTE] reg[0] value=0x12345678  (alias confirmed)
+[PASS]   0x10 write: BRESP=SLVERR               resp=2'b10
+[PASS]   0x10 read: RRESP=SLVERR                resp=2'b10
+[PASS]   0x10 read: rdata=0x0 (no register leak) got=0x00000000
+[PASS]   0x10 write did not alias to reg[0]      got=0xaaaaaaaa
 ```
 
-**Decision required:**
-
-| Option | Action |
-|--------|--------|
-| A — document only | Leave RTL as-is; the 2 failures remain in the log as known limitations |
-| B — patch RTL | Add address-valid decode: if `awaddr[31:4] != 0`, drive `bresp = 2'b10` and skip the register write |
-
-Option B requires modifying `rtl/axi_lite_regfile.v` and updating the testbench
-to expect `SLVERR` (change `check_resp_note` → `check_resp` for test 8).
+No remaining known RTL limitations.
