@@ -95,6 +95,77 @@ Tests:
 - Test 2: three transactions at addr=0x04/0x08/0x0C with unique data (9 checks)
 - Test 3: out-of-range address 0x1000 — expect done=1, error=1 (2 checks)
 
+## Simple DMA Copy Engine
+
+Design:
+- RTL: rtl/simple_dma_copy.v
+- Testbench: tb/simple_dma_copy_tb.sv (instantiates tb/axi_mem_model.sv as slave)
+- Simulation script: scripts/run_simple_dma_copy_sim.sh
+
+### Implementation — 6-state FSM (read-first)
+
+| State | Action |
+|-------|--------|
+| IDLE | Wait for start; latch src_addr, dst_addr |
+| RD_ADDR | Drive arvalid; wait for arready |
+| RD_DATA | Drive rready; wait for rvalid; latch rdata/rresp; if rresp≠OKAY → DONE (abort) |
+| WR_ADDR | Drive awvalid+wvalid simultaneously; wait for awready&&wready |
+| WR_RESP | Drive bready; wait for bvalid; latch bresp |
+| DONE | Assert done=1 and error=read_err\|write_err for one cycle |
+
+AXI outputs (arvalid, rready, awvalid, wvalid, bready) are combinatorial from state.
+All data registers (src_lat, dst_lat, rdata_lat) and error flags are registered.
+wstrb=4'hF fixed; wlast=1; no burst/ID support.
+copied_data reflects the latched read data throughout and after the transaction.
+Read error aborts the copy — write phase is skipped, destination memory unchanged.
+
+### Verification Status (last run: 2026-05-02)
+
+16/16 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 355 ns.
+
+Tests:
+- Test 1: copy 0x00 → 0x10, verify copied_data and dst mem (4 checks)
+- Test 2: copy 0x04 → 0x20, verify copied_data and dst mem (4 checks)
+- Test 3: invalid src 0x1000 — error=1, dst mem[0x30>>2] unchanged (3 checks)
+- Test 4: invalid dst 0x2000 — error=1, copied_data=src, src unchanged, canary unchanged (5 checks)
+
+## N-Word DMA Copy Engine
+
+Design:
+- RTL: rtl/simple_dma_copy_nword.v
+- Testbench: tb/simple_dma_copy_nword_tb.sv (instantiates tb/axi_mem_model.sv as slave)
+- Simulation script: scripts/run_simple_dma_copy_nword_sim.sh
+
+### Implementation — 6-state FSM (read-first, loops over length_words)
+
+Inputs: aclk, aresetn, start, src_addr[31:0], dst_addr[31:0], length_words[15:0]
+Outputs: done, error, copied_count[15:0], last_copied_data[31:0]
+
+| State | Action |
+|-------|--------|
+| IDLE | Clear counters; latch src/dst/len; if len=0 → DONE; else → RD_ADDR |
+| RD_ADDR | Drive arvalid=cur_raddr; wait for arready |
+| RD_DATA | Drive rready; wait for rvalid; latch rdata/rresp; if rresp≠OKAY → DONE (abort) |
+| WR_ADDR | Drive awvalid+wvalid simultaneously; wait for awready&&wready |
+| WR_RESP | Drive bready; wait for bvalid; if bresp≠OKAY → DONE; else copied_count++; last word → DONE; else word_idx++, RD_ADDR |
+| DONE | Assert done=1 and error=read_err\|write_err for one cycle |
+
+cur_raddr = src_lat + word_idx×4 (combinatorial); cur_waddr = dst_lat + word_idx×4.
+wstrb=4'hF fixed; wlast=1; no burst/ID support.
+Read or write error aborts immediately — remaining words are skipped.
+copied_count reflects words successfully written (write response OKAY received).
+
+### Verification Status (last run: 2026-05-02)
+
+31/31 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 745 ns.
+
+Tests:
+- Test 1: length_words=0 — done immediately, no transfers, copied_count=0 (4 checks)
+- Test 2: length_words=1, copy 0x00→0x40, verify last_copied_data and dst (5 checks)
+- Test 3: length_words=4, copy 0x00-0x0C→0x80-0x8C, verify all 4 dst words (7 checks)
+- Test 4: invalid src mid-copy (src=0xFF4, len=4) — words 0-2 OK, word 3 OOB read aborts; copied_count=3, dst[3] unchanged (7 checks)
+- Test 5: invalid dst mid-copy (src=0x200, dst=0xFF4, len=4) — words 0-2 OK, word 3 OOB write aborts; copied_count=3, canary unchanged (8 checks)
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v

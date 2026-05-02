@@ -2,6 +2,6 @@
 2020.2
 Oct 14 2022
 05:07:14
-/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/rtl/simple_axi_master.v,1777749790,systemVerilog,,/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_axi_master_tb.sv,,simple_axi_master,,,,,,,,
-/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axi_mem_model.sv,1777741173,systemVerilog,,/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/rtl/simple_axi_master.v,,axi_mem_model,,,,,,,,
-/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_axi_master_tb.sv,1777749826,systemVerilog,,,,simple_axi_master_tb,,,,,,,,
+/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/rtl/simple_dma_copy_nword.v,1777756580,systemVerilog,,/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_copy_nword_tb.sv,,simple_dma_copy_nword,,,,,,,,
+/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axi_mem_model.sv,1777741173,systemVerilog,,/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/rtl/simple_dma_copy_nword.v,,axi_mem_model,,,,,,,,
+/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_copy_nword_tb.sv,1777756746,systemVerilog,,,,simple_dma_copy_nword_tb,,,,,,,,

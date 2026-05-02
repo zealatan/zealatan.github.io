@@ -1,1 +1,0 @@
-"simple_axi_master_tb" -debug "typical" -s "simple_axi_master_tb_sim" 

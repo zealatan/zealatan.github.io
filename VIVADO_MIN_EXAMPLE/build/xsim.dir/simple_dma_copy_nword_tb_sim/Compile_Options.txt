@@ -1,0 +1,1 @@
+"simple_dma_copy_nword_tb" -debug "typical" -s "simple_dma_copy_nword_tb_sim" 
