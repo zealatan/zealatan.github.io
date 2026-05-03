@@ -342,6 +342,34 @@ Invalid-address coverage: SLVERR returned under all three write orderings, under
 
 Cumulative check count across all verified layers: **1204/1204 PASS** (664 + 52 from P19 + 113 from P20 + 39 from P21 + 223 from P22 + 65 from P23 + 48 from P24).
 
+## Verification Phase v1 Closure (2026-05-03)
+
+**Status: CLOSED**
+
+All planned prompts (P01–P25) have been executed. All simulation scripts pass. CI grep gate clean on all runs. Verification matrix (67 entries), design contract, known limitations, closure criteria, and final summary are documented.
+
+No RTL, testbench, or simulation script files were modified in P25.
+
+### Closure Documents Created (P25)
+
+| File | Purpose |
+|------|---------|
+| `ai_context/known_limitations.md` | Deferred scope items (methodology, protocol, physical) |
+| `ai_context/design_contract.md` | Expected DUT behavior for all 19 design contract items |
+| `ai_context/verification_matrix.md` | 67-entry coverage matrix across all 8 layers |
+| `ai_context/verification_closure_criteria.md` | 10 closure criteria; all met |
+| `ai_context/final_verification_summary.md` | Complete campaign summary, hazards closed, next phase |
+
+### Recommended Next Phase: RTL Designer Protocol v1
+
+Templates to create:
+- `architecture_spec_template.md`
+- `interface_contract_template.md`
+- `microarchitecture_report_template.md`
+- `verification_handoff_template.md`
+
+These will enable the RTL Design Agent (Agent 3) to produce pre-contracted RTL and the RTL Verification Agent (Agent 4) to verify it automatically using the established prompt patterns.
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v
