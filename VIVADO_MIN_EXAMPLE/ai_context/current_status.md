@@ -268,6 +268,80 @@ Error-case observability note: RTL always latches rdata into input_lat in RD_DAT
 
 Restart-after-error coverage: FSM correctly resets to IDLE after DONE, accepts fresh start/src/dst/len/add inputs, and runs a clean transfer with no stale state from the prior failed transfer.
 
+## AXI-Lite Controlled DMA Add Accelerator
+
+Design:
+- RTL: rtl/simple_dma_add_ctrl.v (wraps rtl/simple_dma_add_nword.v)
+- Testbench: tb/simple_dma_add_ctrl_tb.sv (instantiates tb/axi_mem_model.sv as AXI4 slave)
+- Simulation script: scripts/run_simple_dma_add_ctrl_sim.sh
+
+### Register Map (AXI-lite slave, byte addresses)
+
+| Addr | Name             | Access | Description                                 |
+|------|------------------|--------|---------------------------------------------|
+| 0x00 | CONTROL          | W1S/R  | bit0=start; reads busy_r                    |
+| 0x04 | SRC_ADDR         | R/W    | Source byte address                         |
+| 0x08 | DST_ADDR         | R/W    | Destination byte address                    |
+| 0x0C | LENGTH_WORDS     | R/W    | Number of 32-bit words [15:0]               |
+| 0x10 | ADD_VALUE        | R/W    | 32-bit constant added to each word          |
+| 0x14 | STATUS           | RO     | bit0=done(sticky), bit1=error, bit2=busy    |
+| 0x18 | PROCESSED_COUNT  | RO     | Words successfully written [15:0]           |
+| 0x1C | LAST_INPUT_DATA  | RO     | Last latched input word                     |
+| 0x20 | LAST_OUTPUT_DATA | RO     | Last processed output word                  |
+
+Addresses outside 0x00–0x20 return SLVERR.
+
+### Implementation
+
+- AXI-lite write FSM: 4 states (W_IDLE, W_WAIT_W, W_WAIT_A, W_BRESP) — handles all three orderings
+- AXI-lite read FSM: 2 states (R_IDLE, R_RVALID)
+- busy_r set on CONTROL.start write if !busy_r; cleared on DMA done pulse
+- done_r, error_r, processed_count_r, last_input_r, last_output_r captured on done pulse
+- done_r cleared on next valid start
+- Instantiates simple_dma_add_nword; AXI4 master ports passed through directly
+
+### Verification Status (last run: 2026-05-03)
+
+691/691 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 16140 ns.
+
+Tests:
+- Test 1: register R/W sanity — SRC/DST/LEN/ADD write+readback; invalid addr 0x30 returns SLVERR (15 checks)
+- Test 2: 1-word add (0x10+0x05=0x15) — STATUS/COUNT/LAST_IN/LAST_OUT verified (15 checks)
+- Test 3: 4-word add (add=0x100) — all 4 dst words, LAST_IN/LAST_OUT for word 4 (18 checks)
+- Test 4: identity mode (add=0) — dst=src for 4 words, error=0, count=4 (14 checks)
+- Test 5: 32-bit overflow (0xFFFF_FFFF+1=0) — no error generated (9 checks)
+- Test 6: zero-length transfer — done=1, error=0, count=0, canary unchanged (11 checks)
+- Test 7: invalid src mid-transfer (src=0xFF8, len=3, word 2 OOB) — error=1, count=2, canary unchanged (13 checks)
+- Test 8: invalid dst mid-transfer (dst=0xFF8, len=3, word 2 OOB) — error=1, count=2, src unchanged (13 checks)
+- Test 9: busy-state + re-trigger guard — busy=1 read after start; second CONTROL.start no-op; 8 dst words verified (21 checks)
+- Test 10: restart-after-error — error transfer (count=1) followed by valid recovery (count=2, 2 dst words) (22 checks)
+- Test 11: mixed write ordering — invalid addr via AW-first and W-first both return SLVERR; SRC/LEN/CTRL via AW-first, DST/ADD via W-first; 3-word transfer verified with LAST_IN/LAST_OUT and 3 dst words (19 checks)
+- Test 12: B-channel backpressure — SRC/DST/LEN/ADD and invalid addr 0x44 each programmed with 3-cycle bready delay; bvalid held asserted at each delay cycle (4 checks per call × 5 calls = 20 bvalid checks); 5 response checks; CTRL via simultaneous; 2-word transfer verified (33 checks)
+- Test 13: R-channel backpressure — all 9 registers (SRC/DST/LEN/ADD/STATUS/COUNT/LAST_IN/LAST_OUT) and invalid addr 0x44 each read with 3-cycle rready delay; rvalid held, rdata stable, rresp stable verified per delay cycle (3×3=9 per call); final rvalid+rresp checks; data correctness verified; OKAY and SLVERR both exercised (113 checks)
+- Test 14a: reset during active transfer — 16-word add transfer started (src=0xB00, dst=0xA00, add=0x10); reset asserted 10 cycles after start while DMA in-flight; post-reset: all 9 AXI-lite registers verified at reset defaults (all 0); canary mem[639] (before dst) and mem[656] (after dst end) verified unchanged; partial writes to dst[0..15] before reset are expected and not checked (25 checks)
+- Test 14b: fresh transfer after reset — 4-word add (src=0xC00, dst=0xD00, add=3); STATUS.done=1, error=0, count=4, all 4 dst words correct (14 checks)
+- Test 15: repeated normal restart — 5 back-to-back transfers (len=1/2/3/2/4, add=0xAA/BB/CC/DD/EE); each run's STATUS/COUNT/LAST_IN/LAST_OUT/dst words verified independently; canary after last dst region unchanged; tests that fresh register programming takes effect on each restart (83 checks)
+- Test 16: lightweight random valid-transfer smoke — 10 deterministic iterations (len cycling 1..8 then 1,2; add=iter+1); fixed src/dst windows at 0xD80/0xDA0; src seeded per iteration as (iter+1)*0x1000+(j+1); all dst words verified as src+add; STATUS/COUNT verified per iteration; canary after dst window unchanged (140 checks)
+- Test 17: busy config write policy — start 16-word transfer (src=0xE10, dst=0xF00, add=0x1234, len=16); verify STATUS.busy=1 immediately after start; write new SRC/DST/LEN/ADD (0xE60/0xF50/5/0x5678) while DMA busy; poll done; verify orig transfer (16 dst words = 0xA0A0_1235..1244) unaffected by mid-flight writes; verify config registers hold new values; start second transfer via CTRL only; verify second transfer uses new parameters (5 dst words = 0xB0B0_5679..567D); canaries before/after both dst regions unchanged (65 checks)
+- Test 18: reset during transfer — start 8-word transfer (src=0xF68, dst=0xF8C, add=0x2468, len=8); verify STATUS.busy=1 (bit2) immediately after start; assert aresetn=0 after 10 cycles while DMA in-flight; hold reset 8 cycles; release and settle 4 cycles; verify all 9 AXI-lite registers (CONTROL/SRC/DST/LEN/ADD/STATUS/COUNT/LAST_IN/LAST_OUT) at reset defaults (all 0); verify canaries before/after orig dst region unchanged; orig dst may be partially written — not individually checked; recovery 3-word transfer (src=0xFB0, dst=0xFC0, add=0x100); STATUS/COUNT/LAST_IN/LAST_OUT verified; 3 new dst words and 2 new canaries verified (48 checks)
+
+Write-ordering coverage: W_IDLE (simultaneous AW+W), W_WAIT_W (AW-before-W), W_WAIT_A (W-before-AW) — all three paths exercised.
+B-channel backpressure coverage: W_BRESP held 3 cycles with bvalid=1 verified per cycle; both OKAY and SLVERR tested under backpressure.
+R-channel backpressure coverage: R_RVALID held 3 cycles with rvalid=1, rdata stable, rresp stable verified per cycle; all 9 readable register addresses and one invalid address tested; OKAY and SLVERR both exercised under backpressure.
+Reset-during-transfer coverage (T14a): async reset asserted mid-flight 16-word transfer; all DUT registers at reset defaults verified; canary words verified unchanged.
+Reset-during-transfer coverage (T18): busy=1 verified immediately before reset; reset asserted mid-flight 8-word transfer; all 9 AXI-lite registers at reset defaults (0) verified; canary integrity verified; STATUS.busy=0 after recovery transfer verified.
+Observed reset-default policy: all registers (CONTROL/SRC_ADDR/DST_ADDR/LENGTH_WORDS/ADD_VALUE/STATUS/PROCESSED_COUNT/LAST_INPUT_DATA/LAST_OUTPUT_DATA) reset to 0x00000000 on aresetn=0. CONTROL reads busy_r=0. STATUS encodes {busy=0,error=0,done=0}=0.
+Busy config write policy coverage: AXI-lite writes to SRC/DST/LEN/ADD accepted (OKAY) while DMA busy; RTL parameter latching verified — orig transfer uses latched values unchanged; post-transfer register readback confirms new values visible; second transfer uses new values correctly.
+Invalid-address coverage: SLVERR returned under all three write orderings, under B-channel backpressure, and under R-channel backpressure.
+
+## Documentation Status (last updated: 2026-05-03)
+
+- `docs/rtl_verification_agent_benchmark.md` — full benchmark doc: all 8 layers, verification patterns, agent capability description, coverage gaps
+- `docs/rtl_verification_workflow_summary.md` — compact workflow diagram and cumulative check table
+- `README.md` — updated with benchmark section (section 14), current status table, and links to docs/
+
+Cumulative check count across all verified layers: **1204/1204 PASS** (664 + 52 from P19 + 113 from P20 + 39 from P21 + 223 from P22 + 65 from P23 + 48 from P24).
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v

@@ -2,8 +2,8 @@
 # xsim v2022.2 (64-bit)
 # SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
 # IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Start of session at: Sun May  3 11:52:42 2026
-# Process ID: 247429
+# Start of session at: Sun May  3 11:42:13 2026
+# Process ID: 246587
 # Current directory: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build
 # Command line: xsim -mode tcl -source {xsim.dir/simple_dma_add_ctrl_tb_sim/xsim_script.tcl}
 # Log file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.log
@@ -631,117 +631,9 @@ run -all
 [PASS]                                     start: ADD write  resp=2'b00
 [PASS]                                    start: CTRL write  resp=2'b00
 [PASS]                           T17 STATUS read while busy  resp=2'b00
-[PASS]                                    T17 STATUS.busy=1  got=1'b1
-[PASS]                         T17 STATUS.done=0 while busy  got=1'b0
-[PASS]                               T17 busy write SRC=new  resp=2'b00
-[PASS]                               T17 busy write DST=new  resp=2'b00
-[PASS]                                 T17 busy write LEN=5  resp=2'b00
-[PASS]                               T17 busy write ADD=new  resp=2'b00
-[PASS]                                T17 STATUS after orig  resp=2'b00
-[PASS]                         T17 STATUS.done=1 after orig  got=1'b1
-[PASS]                        T17 STATUS.error=0 after orig  got=1'b0
-[PASS]                                 T17 COUNT after orig  resp=2'b00
-[PASS]                          T17 PROCESSED_COUNT=16 orig  got=0x00000010
-[PASS]                               T17 LAST_IN after orig  resp=2'b00
-[PASS]                             T17 LAST_INPUT_DATA orig  got=0xa0a00010
-[PASS]                              T17 LAST_OUT after orig  resp=2'b00
-[PASS]                            T17 LAST_OUTPUT_DATA orig  got=0xa0a01244
-[PASS]                                      T17 orig dst[0]  got=0xa0a01235
-[PASS]                                      T17 orig dst[1]  got=0xa0a01236
-[PASS]                                      T17 orig dst[2]  got=0xa0a01237
-[PASS]                                      T17 orig dst[3]  got=0xa0a01238
-[PASS]                                      T17 orig dst[4]  got=0xa0a01239
-[PASS]                                      T17 orig dst[5]  got=0xa0a0123a
-[PASS]                                      T17 orig dst[6]  got=0xa0a0123b
-[PASS]                                      T17 orig dst[7]  got=0xa0a0123c
-[PASS]                                      T17 orig dst[8]  got=0xa0a0123d
-[PASS]                                      T17 orig dst[9]  got=0xa0a0123e
-[PASS]                                     T17 orig dst[10]  got=0xa0a0123f
-[PASS]                                     T17 orig dst[11]  got=0xa0a01240
-[PASS]                                     T17 orig dst[12]  got=0xa0a01241
-[PASS]                                     T17 orig dst[13]  got=0xa0a01242
-[PASS]                                     T17 orig dst[14]  got=0xa0a01243
-[PASS]                                     T17 orig dst[15]  got=0xa0a01244
-[PASS]        T17 canary before orig dst mem[959] unchanged  got=0xb1b1b1b1
-[PASS]        T17 canary after  orig dst mem[976] unchanged  got=0xb2b2b2b2
-[PASS]                 T17 new dst mem[980] not yet written  got=0x00000000
-[PASS]                                     T17 SRC reg read  resp=2'b00
-[PASS]                                 T17 SRC readback=new  got=0x00000e60
-[PASS]                                     T17 DST reg read  resp=2'b00
-[PASS]                                 T17 DST readback=new  got=0x00000f50
-[PASS]                                     T17 LEN reg read  resp=2'b00
-[PASS]                                   T17 LEN readback=5  got=0x00000005
-[PASS]                                     T17 ADD reg read  resp=2'b00
-[PASS]                                 T17 ADD readback=new  got=0x00005678
-[PASS]                                T17 second CTRL.start  resp=2'b00
-[PASS]                            T17 STATUS after new xfer  resp=2'b00
-[PASS]                           T17 STATUS.done=1 new xfer  got=1'b1
-[PASS]                          T17 STATUS.error=0 new xfer  got=1'b0
-[PASS]                             T17 COUNT after new xfer  resp=2'b00
-[PASS]                       T17 PROCESSED_COUNT=5 new xfer  got=0x00000005
-[PASS]                           T17 LAST_IN after new xfer  resp=2'b00
-[PASS]                         T17 LAST_INPUT_DATA new xfer  got=0xb0b00005
-[PASS]                          T17 LAST_OUT after new xfer  resp=2'b00
-[PASS]                        T17 LAST_OUTPUT_DATA new xfer  got=0xb0b0567d
-[PASS]                                       T17 new dst[0]  got=0xb0b05679
-[PASS]                                       T17 new dst[1]  got=0xb0b0567a
-[PASS]                                       T17 new dst[2]  got=0xb0b0567b
-[PASS]                                       T17 new dst[3]  got=0xb0b0567c
-[PASS]                                       T17 new dst[4]  got=0xb0b0567d
-[PASS]         T17 canary before new dst mem[979] unchanged  got=0xb3b3b3b3
-[PASS]         T17 canary after  new dst mem[985] unchanged  got=0xb4b4b4b4
-[INFO] Test 18: reset during transfer
-[PASS]                                     start: SRC write  resp=2'b00
-[PASS]                                     start: DST write  resp=2'b00
-[PASS]                                     start: LEN write  resp=2'b00
-[PASS]                                     start: ADD write  resp=2'b00
-[PASS]                                    start: CTRL write  resp=2'b00
-[PASS]                           T18 STATUS read while busy  resp=2'b00
-[PASS]                                    T18 STATUS.busy=1  got=1'b1
-[PASS]                         T18 STATUS.done=0 while busy  got=1'b0
-[PASS]                                     T18 CONTROL read  resp=2'b00
-[PASS]                 T18 CONTROL=0 (busy_r=0 after reset)  got=0x00000000
-[PASS]                                    T18 SRC_ADDR read  resp=2'b00
-[PASS]                           T18 SRC_ADDR=0 after reset  got=0x00000000
-[PASS]                                    T18 DST_ADDR read  resp=2'b00
-[PASS]                           T18 DST_ADDR=0 after reset  got=0x00000000
-[PASS]                                         T18 LEN read  resp=2'b00
-[PASS]                       T18 LENGTH_WORDS=0 after reset  got=0x00000000
-[PASS]                                   T18 ADD_VALUE read  resp=2'b00
-[PASS]                          T18 ADD_VALUE=0 after reset  got=0x00000000
-[PASS]                                      T18 STATUS read  resp=2'b00
-[PASS]                 T18 STATUS=0 (done=0 error=0 busy=0)  got=0x00000000
-[PASS]                                       T18 COUNT read  resp=2'b00
-[PASS]                    T18 PROCESSED_COUNT=0 after reset  got=0x00000000
-[PASS]                                     T18 LAST_IN read  resp=2'b00
-[PASS]                    T18 LAST_INPUT_DATA=0 after reset  got=0x00000000
-[PASS]                                    T18 LAST_OUT read  resp=2'b00
-[PASS]                   T18 LAST_OUTPUT_DATA=0 after reset  got=0x00000000
-[PASS]  T18 canary before orig dst mem[994] 0xF88 unchanged  got=0xf8f8aabb
-[PASS] T18 canary after  orig dst mem[1003] 0xFAC unchanged  got=0xf8f8ccdd
-[INFO] Test 18: recovery transfer after reset
-[PASS]                                     start: SRC write  resp=2'b00
-[PASS]                                     start: DST write  resp=2'b00
-[PASS]                                     start: LEN write  resp=2'b00
-[PASS]                                     start: ADD write  resp=2'b00
-[PASS]                                    start: CTRL write  resp=2'b00
-[PASS]                            T18 STATUS after recovery  resp=2'b00
-[PASS]                           T18 STATUS.done=1 recovery  got=1'b1
-[PASS]                          T18 STATUS.error=0 recovery  got=1'b0
-[PASS]                           T18 STATUS.busy=0 recovery  got=1'b0
-[PASS]                             T18 COUNT after recovery  resp=2'b00
-[PASS]                       T18 PROCESSED_COUNT=3 recovery  got=0x00000003
-[PASS]                           T18 LAST_IN after recovery  resp=2'b00
-[PASS]                         T18 LAST_INPUT_DATA recovery  got=0xd9d90003
-[PASS]                          T18 LAST_OUT after recovery  resp=2'b00
-[PASS]                        T18 LAST_OUTPUT_DATA recovery  got=0xd9d90103
-[PASS]                       T18 new dst[0] mem[1008] 0xFC0  got=0xd9d90101
-[PASS]                       T18 new dst[1] mem[1009] 0xFC4  got=0xd9d90102
-[PASS]                       T18 new dst[2] mem[1010] 0xFC8  got=0xd9d90103
-[PASS]  T18 canary before new dst mem[1007] 0xFBC unchanged  got=0xf8f8eeff
-[PASS]  T18 canary after  new dst mem[1011] 0xFCC unchanged  got=0xf8f80011
-[PASS] simple_dma_add_ctrl_tb  691/691 checks passed
-[DONE] simulation complete at t=16140000
-$finish called at time : 16140 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_add_ctrl_tb.sv" Line 1199
+[FAIL]                                    T17 STATUS.busy=1  got=1'b0  exp=1'b1
+Fatal: [FATAL] check_bit failed: T17 STATUS.busy=1
+Time: 13740 ns  Iteration: 0  Process: /simple_dma_add_ctrl_tb/check_bit  Scope: simple_dma_add_ctrl_tb.check_bit  File: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_add_ctrl_tb.sv Line: 79
+$finish called at time : 13740 ns
 exit
-INFO: [Common 17-206] Exiting xsim at Sun May  3 11:52:49 2026...
+INFO: [Common 17-206] Exiting xsim at Sun May  3 11:42:20 2026...

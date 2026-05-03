@@ -300,4 +300,40 @@ First, repeat the workflow manually, observe patterns, and then turn those patte
 
 ## 13. One-Line Summary
 
-This experiment shows that a single Claude Code agent, guided by structured prompts and project policy files, can already participate in a meaningful RTL verification loop: generate RTL/TB/scripts, run Vivado xsim, detect failures, patch testbench/RTL issues, re-run simulations, and reach a clean 133/133 passing verification result.
+This experiment shows that a single Claude Code agent, guided by structured prompts and project policy files, can already participate in a meaningful RTL verification loop: generate RTL/TB/scripts, run Vivado xsim, detect failures, patch testbench/RTL issues, re-run simulations, and reach a clean passing verification result across an incrementally growing DUT stack.
+
+---
+
+## 14. AI-Assisted RTL Verification Benchmark
+
+This project has grown into a structured RTL Verification Agent benchmark covering eight DUT layers and **664 passing checks**.
+
+### Current Status
+
+| Layer | DUT | Checks |
+|-------|-----|--------|
+| 0 | AXI-lite register file | 133/133 |
+| 1 | AXI4 memory model | 30/30 |
+| 2 | Simple AXI4 master | 14/14 |
+| 3 | 1-word DMA copy engine | 16/16 |
+| 4 | N-word DMA copy engine | 31/31 |
+| 5 | AXI-lite DMA copy wrapper | 208/208 |
+| 6 | N-word DMA add/processing engine | 81/81 |
+| 7 | AXI-lite DMA add accelerator | 151/151 |
+| **Total** | | **664/664** |
+
+All checks pass. CI grep gate (`[FAIL]` / `FATAL`) is clean on all simulation scripts.
+
+### Documentation
+
+- [RTL Verification Agent Benchmark](docs/rtl_verification_agent_benchmark.md) — full layer-by-layer breakdown, verification patterns, agent capabilities, and coverage gaps
+- [RTL Verification Workflow Summary](docs/rtl_verification_workflow_summary.md) — compact workflow diagram, completed-layer table, and future orchestrator context
+
+### Context
+
+This benchmark is being built to validate **Agent 4 (RTL Verification Agent)** in a planned five-agent hardware development orchestrator:
+
+```
+Algorithm Agent → Python Modeling Agent → RTL Design Agent
+  → RTL Verification Agent (← here) → FPGA Test Agent
+```
