@@ -1,9 +1,15 @@
-
-****** xsim v2022.2 (64-bit)
-  **** SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
-  **** IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
-
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun May  3 09:49:38 2026
+# Process ID: 241455
+# Current directory: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build
+# Command line: xsim -mode tcl -source {xsim.dir/simple_dma_add_nword_tb_sim/xsim_script.tcl}
+# Log file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.log
+# Journal file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.jou
+# Running On: DESKTOP-FAIRVEG, OS: Linux, CPU Frequency: 2496.001 MHz, CPU Physical cores: 6, Host memory: 8134 MB
+#-----------------------------------------------------------
 source xsim.dir/simple_dma_add_nword_tb_sim/xsim_script.tcl
 # xsim {simple_dma_add_nword_tb_sim} -autoloadwcfg -runall
 Time resolution is 1 ps
@@ -72,47 +78,8 @@ run -all
 [PASS]                              T7 dst[1] mem[0x504>>2]  got=0x6666bbbb
 [PASS]                              T7 dst[2] mem[0x508>>2]  got=0x7777cccc
 [PASS]                              T7 dst[3] mem[0x50C>>2]  got=0x8888dddd
-[CHK] t=1005000  phase=test8a
-[INFO] Test 8a: read-error transfer (3 words, word 2 src OOB)
-[PASS]                                             T8a done  got=1'b1
-[PASS]                           T8a error (OOB src word 2)  got=1'b1
-[PASS]                                T8a processed_count=2  got=2
-[PASS]                             T8a dst[0] mem[0x600>>2]  got=0x2222bc2b
-[PASS]                             T8a dst[1] mem[0x604>>2]  got=0x3333cd3c
-[PASS]            T8a dst[2] canary mem[0x608>>2] unchanged  got=0xface5678
-[PASS]                T8a last_input_data = OOB rdata (0x0)  got=0x00000000
-[PASS]               T8a last_output_data = OOB rdata + add  got=0x00000050
-[CHK] t=1135000  phase=test8b
-[INFO] Test 8b: valid recovery after read error
-[PASS]                                             T8b done  got=1'b1
-[PASS]                                         T8b no error  got=1'b0
-[PASS]                                T8b processed_count=2  got=2
-[PASS]                  T8b last_input_data = last src word  got=0x87654321
-[PASS]                T8b last_output_data = last src + add  got=0x87654330
-[PASS]                             T8b dst[0] mem[0x700>>2]  got=0x12345687
-[PASS]                             T8b dst[1] mem[0x704>>2]  got=0x87654330
-[CHK] t=1245000  phase=test9a
-[INFO] Test 9a: write-error transfer (3 words, word 2 dst OOB)
-[PASS]                                             T9a done  got=1'b1
-[PASS]                           T9a error (OOB dst word 2)  got=1'b1
-[PASS]                                T9a processed_count=2  got=2
-[PASS]                             T9a dst[0] mem[0xFF8>>2]  got=0xabcdef04
-[PASS]                             T9a dst[1] mem[0xFFC>>2]  got=0xfedcba9b
-[PASS]                      T9a src mem[0x410>>2] unchanged  got=0xabcdef01
-[PASS]               T9a last_input_data = word 2 read data  got=0x13579bdf
-[PASS]              T9a last_output_data = word 2 processed  got=0x13579be2
-[CHK] t=1395000  phase=test9b
-[INFO] Test 9b: valid recovery after write error
-[PASS]                                             T9b done  got=1'b1
-[PASS]                                         T9b no error  got=1'b0
-[PASS]                                T9b processed_count=3  got=3
-[PASS]                  T9b last_input_data = last src word  got=0xa0b1c2d3
-[PASS]                T9b last_output_data = last src + add  got=0xa0b1c2d7
-[PASS]                             T9b dst[0] mem[0x780>>2]  got=0xdeadbef3
-[PASS]                             T9b dst[1] mem[0x784>>2]  got=0xcafef011
-[PASS]                             T9b dst[2] mem[0x788>>2]  got=0xa0b1c2d7
-[PASS] simple_dma_add_nword_tb  81/81 checks passed
-[DONE] simulation complete at t=1545000
-$finish called at time : 1545 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_add_nword_tb.sv" Line 400
+[PASS] simple_dma_add_nword_tb  50/50 checks passed
+[DONE] simulation complete at t=1005000
+$finish called at time : 1005 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_add_nword_tb.sv" Line 324
 exit
-INFO: [Common 17-206] Exiting xsim at Sun May  3 10:02:47 2026...
+INFO: [Common 17-206] Exiting xsim at Sun May  3 09:49:45 2026...

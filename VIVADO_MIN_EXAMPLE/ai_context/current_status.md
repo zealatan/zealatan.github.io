@@ -249,7 +249,7 @@ processed_count increments only on successful write (OKAY bresp).
 
 ### Verification Status (last run: 2026-05-03)
 
-50/50 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 1005 ns.
+81/81 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 1545 ns.
 
 Tests:
 - Test 1: length_words=0 — done immediately, processed_count=0, canary dst words unchanged (4 checks)
@@ -259,8 +259,14 @@ Tests:
 - Test 5: invalid src mid-processing (src=0xFF4, len=4) — 3 processed, error=1, dst[3] unchanged; last_input=OOB rdata (0x0), last_output=add_value (9 checks)
 - Test 6: invalid dst mid-processing (src=0x200, dst=0xFF4, len=4) — 3 processed, error=1, src unchanged; last_input=failed word's input, last_output=failed word's processed value (9 checks)
 - Test 7: identity mode (add_value=0, 4 words) — dst=src, last_input=last_output=last src word, no error (9 checks)
+- Test 8a: restart-after-read-error (error step) — src=0xFF8, dst=0x600, len=3, add=0x50; 2 words written, word 2 src OOB; error=1, count=2, dst[2] canary unchanged, last_input=0, last_output=0x50 (8 checks)
+- Test 8b: restart-after-read-error (recovery step) — src=0x3E8, dst=0x700, len=2, add=0x0F; both words correct; error=0, count=2, last_input/last_output correct (7 checks)
+- Test 9a: restart-after-write-error (error step) — src=0x410, dst=0xFF8, len=3, add=0x03; 2 words written, word 2 dst OOB; error=1, count=2, src unchanged, last_input=word2 read data, last_output=word2 processed (8 checks)
+- Test 9b: restart-after-write-error (recovery step) — src=0x420, dst=0x780, len=3, add=0x04; all 3 words correct; error=0, count=3, last_input/last_output correct (8 checks)
 
 Error-case observability note: RTL always latches rdata into input_lat in RD_DATA, even on SLVERR. After a read error, last_input_data = OOB rdata (0x0 from memory model) and last_output_data = 0 + add_value. After a write error, last_input_data = the read input of the failed write word, last_output_data = that word's processed value. This is the intended RTL design (no "preserve last successful" logic).
+
+Restart-after-error coverage: FSM correctly resets to IDLE after DONE, accepts fresh start/src/dst/len/add inputs, and runs a clean transfer with no stale state from the prior failed transfer.
 
 ## Legacy and2 Example
 
