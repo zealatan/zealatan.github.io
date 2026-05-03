@@ -48,6 +48,8 @@ run -all
 [PASS]                              T5 dst[1] mem[0x104>>2]  got=0xbbbb2232
 [PASS]                              T5 dst[2] mem[0x108>>2]  got=0xcccc3343
 [PASS]         T5 dst[3] mem[0x10C>>2] unchanged (no write)  got=0x00000000
+[PASS]                 T5 last_input_data = OOB rdata (0x0)  got=0x00000000
+[PASS]          T5 last_output_data = OOB rdata + add_value  got=0x00000010
 [CHK] t=625000  phase=test6
 [INFO] Test 6: invalid dst mid-processing src=0x200 dst=0xFF4 len=4
 [PASS]                                              T6 done  got=1'b1
@@ -57,8 +59,21 @@ run -all
 [PASS]                              T6 dst[1] mem[0xFF8>>2]  got=0x2222bbdb
 [PASS]                              T6 dst[2] mem[0xFFC>>2]  got=0x3333ccec
 [PASS]                       T6 src mem[0x200>>2] unchanged  got=0x1111aaaa
-[PASS] simple_dma_add_nword_tb  37/37 checks passed
-[DONE] simulation complete at t=815000
-$finish called at time : 815 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_add_nword_tb.sv" Line 290
+[PASS]         T6 last_input_data = failed-write input word  got=0x4444dddd
+[PASS]    T6 last_output_data = failed-write processed word  got=0x4444ddfd
+[CHK] t=815000  phase=test7
+[INFO] Test 7: identity mode (add_value=0), 4-word copy
+[PASS]                                              T7 done  got=1'b1
+[PASS]                                          T7 no error  got=1'b0
+[PASS]                                 T7 processed_count=4  got=4
+[PASS]                   T7 last_input_data = last src word  got=0x8888dddd
+[PASS]          T7 last_output_data = last src word (add=0)  got=0x8888dddd
+[PASS]                              T7 dst[0] mem[0x500>>2]  got=0x5555aaaa
+[PASS]                              T7 dst[1] mem[0x504>>2]  got=0x6666bbbb
+[PASS]                              T7 dst[2] mem[0x508>>2]  got=0x7777cccc
+[PASS]                              T7 dst[3] mem[0x50C>>2]  got=0x8888dddd
+[PASS] simple_dma_add_nword_tb  50/50 checks passed
+[DONE] simulation complete at t=1005000
+$finish called at time : 1005 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/simple_dma_add_nword_tb.sv" Line 324
 exit
-INFO: [Common 17-206] Exiting xsim at Sun May  3 09:41:17 2026...
+INFO: [Common 17-206] Exiting xsim at Sun May  3 09:49:45 2026...

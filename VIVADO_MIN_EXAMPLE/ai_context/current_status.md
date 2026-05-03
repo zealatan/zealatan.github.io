@@ -249,15 +249,18 @@ processed_count increments only on successful write (OKAY bresp).
 
 ### Verification Status (last run: 2026-05-03)
 
-37/37 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 815 ns.
+50/50 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 1005 ns.
 
 Tests:
 - Test 1: length_words=0 — done immediately, processed_count=0, canary dst words unchanged (4 checks)
 - Test 2: length_words=1, 0x10+0x5=0x15, verify last_input, last_output, dst (6 checks)
 - Test 3: length_words=4, add 0x100, verify all 4 dst words, last_input, last_output (9 checks)
 - Test 4: 32-bit overflow, 0xFFFF_FFFF+1=0x00000000, no error (4 checks)
-- Test 5: invalid src mid-processing (src=0xFF4, len=4) — 3 processed, error=1, dst[3] unchanged (7 checks)
-- Test 6: invalid dst mid-processing (src=0x200, dst=0xFF4, len=4) — 3 processed, error=1, src unchanged (7 checks)
+- Test 5: invalid src mid-processing (src=0xFF4, len=4) — 3 processed, error=1, dst[3] unchanged; last_input=OOB rdata (0x0), last_output=add_value (9 checks)
+- Test 6: invalid dst mid-processing (src=0x200, dst=0xFF4, len=4) — 3 processed, error=1, src unchanged; last_input=failed word's input, last_output=failed word's processed value (9 checks)
+- Test 7: identity mode (add_value=0, 4 words) — dst=src, last_input=last_output=last src word, no error (9 checks)
+
+Error-case observability note: RTL always latches rdata into input_lat in RD_DATA, even on SLVERR. After a read error, last_input_data = OOB rdata (0x0 from memory model) and last_output_data = 0 + add_value. After a write error, last_input_data = the read input of the failed write word, last_output_data = that word's processed value. This is the intended RTL design (no "preserve last successful" logic).
 
 ## Legacy and2 Example
 

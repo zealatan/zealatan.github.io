@@ -1,7 +1,7 @@
-Running: xsim.dir/simple_dma_add_nword_tb_sim/xsimk -runall -simmode gui -wdb simple_dma_add_nword_tb_sim.wdb -simrunnum 0 -socket 49653
+Running: xsim.dir/simple_dma_add_nword_tb_sim/xsimk -runall -simmode gui -wdb simple_dma_add_nword_tb_sim.wdb -simrunnum 0 -socket 53123
 Design successfully loaded
-Design Loading Memory Usage: 29188 KB (Peak: 29716 KB)
-Design Loading CPU Usage: 0 ms
+Design Loading Memory Usage: 29192 KB (Peak: 29720 KB)
+Design Loading CPU Usage: 10 ms
 Simulation completed
-Simulation Memory Usage: 119896 KB (Peak: 168456 KB)
-Simulation CPU Usage: 10 ms
+Simulation Memory Usage: 119900 KB (Peak: 168460 KB)
+Simulation CPU Usage: 20 ms
