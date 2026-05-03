@@ -166,6 +166,99 @@ Tests:
 - Test 4: invalid src mid-copy (src=0xFF4, len=4) — words 0-2 OK, word 3 OOB read aborts; copied_count=3, dst[3] unchanged (7 checks)
 - Test 5: invalid dst mid-copy (src=0x200, dst=0xFF4, len=4) — words 0-2 OK, word 3 OOB write aborts; copied_count=3, canary unchanged (8 checks)
 
+## AXI-Lite Controlled DMA Wrapper
+
+Design:
+- RTL: rtl/simple_dma_ctrl.v (wraps rtl/simple_dma_copy_nword.v)
+- Testbench: tb/simple_dma_ctrl_tb.sv (instantiates tb/axi_mem_model.sv as AXI4 slave)
+- Simulation script: scripts/run_simple_dma_ctrl_sim.sh
+
+### Register Map (AXI-lite slave, byte addresses)
+
+| Addr | Name         | Access | Description                              |
+|------|--------------|--------|------------------------------------------|
+| 0x00 | CONTROL      | W1S/R  | bit0=start (write-1-to-start); reads busy |
+| 0x04 | SRC_ADDR     | R/W    | Source byte address                      |
+| 0x08 | DST_ADDR     | R/W    | Destination byte address                 |
+| 0x0C | LENGTH_WORDS | R/W    | Number of 32-bit words [15:0]            |
+| 0x10 | STATUS       | RO     | bit0=done (sticky), bit1=error           |
+| 0x14 | COPIED_COUNT | RO     | Words successfully written [15:0]        |
+
+Addresses outside 0x00–0x14 return SLVERR.
+
+### Implementation
+
+- AXI-lite write FSM: 4 states (W_IDLE, W_WAIT_W, W_WAIT_A, W_BRESP) — handles AW-before-W and W-before-AW
+- AXI-lite read FSM: 2 states (R_IDLE, R_RVALID)
+- `busy_r` set on CONTROL.start write; cleared on DMA done pulse
+- `done_r`, `error_r`, `copied_count_r` captured from DMA core on done pulse; `done_r` cleared on next start
+- `dma_start_r`: one-cycle pulse generated when CONTROL.start=1 written and !busy_r
+- Instantiates simple_dma_copy_nword; AXI4 master ports passed through directly
+
+### Verification Status (last run: 2026-05-03)
+
+208/208 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 4330 ns.
+
+Tests:
+- Test 1: program 4 regs (simultaneous AW+W), run 4-word copy, verify STATUS/count/dst (11 checks)
+- Test 2: re-program and single-word copy (8 checks)
+- Test 3: invalid AXI-lite addr 0x20 — simultaneous write+read SLVERR (2 checks)
+- Test 4: OOB src mid-copy (src=0xFF4, len=4) — error=1, count=3, dst[3] unchanged (11 checks)
+- Test 5: OOB dst mid-copy (src=0x200, dst=0xFF4, len=4) — error=1, count=3, canary unchanged (11 checks)
+- Test 6: mixed write ordering — SRC/LENGTH via AW-first (W_WAIT_W), DST/CONTROL via W-first (W_WAIT_A); 3-word copy verified (10 checks)
+- Test 7: invalid addr 0x40 via AW-first, 0x50 via W-first — both return SLVERR (2 checks)
+- Test 8: B-channel backpressure — SRC/DST/LENGTH programmed with 3-cycle bready delay; bvalid held verified at each delay cycle; invalid addr with delay returns SLVERR; 2-word copy verified (22 checks)
+- Test 9: R-channel backpressure — all six register addresses read with 3-cycle rready delay; rvalid held, rdata stable, rresp stable verified at each delay cycle; invalid addr returns SLVERR with rdata=0 (66 checks)
+- Test 10: busy-state reads — CONTROL/STATUS/COPIED_COUNT read immediately after CONTROL.start; CONTROL busy=1, STATUS.done=0/error=0, COPIED_COUNT stale value ≤ LENGTH_WORDS verified; 8-word copy completed and all 8 dst words verified (22 checks)
+- Test 11: busy re-trigger guard — start 8-word copy; while busy, overwrite SRC/DST/LENGTH with corrupted values and write CONTROL.start again; verify second start returns OKAY but is ignored (DMA uses latched values); verify count=8, correct dst, canary_before and canary_after unchanged (23 checks)
+- Test 12a: zero-length DMA transfer — LENGTH_WORDS=0; DMA goes IDLE→DONE in ~3 cycles; STATUS.done=1, error=0, count=0; src and canary dst words unchanged (10 checks)
+- Test 12b: 3-word restart after zero-length — verifies busy_r is cleared after zero-length done and a fresh start is accepted; count=3, all 3 dst words correct (10 checks)
+
+Write-ordering coverage: W_IDLE (simultaneous), W_WAIT_W (AW-first), W_WAIT_A (W-first) — all three paths exercised.
+B-channel backpressure coverage: W_BRESP held 3 cycles with bvalid=1 verified; OKAY and SLVERR both tested under backpressure.
+R-channel backpressure coverage: R_RVALID held 3 cycles with rvalid=1, rdata stable, rresp stable verified; OKAY and SLVERR both tested under backpressure.
+Busy-state coverage: CONTROL/STATUS/COPIED_COUNT all read while DMA in-flight; busy=1, done=0, error=0 verified during active transfer.
+Re-trigger guard coverage: second CONTROL.start while busy_r=1 returns OKAY but does not restart DMA; mid-transfer register corruption ignored; canary words verify no spurious writes.
+Zero-length coverage: LENGTH_WORDS=0 completes immediately with done=1, error=0, count=0; restart after zero-length completes normally.
+
+## N-Word DMA Add Engine
+
+Design:
+- RTL: rtl/simple_dma_add_nword.v
+- Testbench: tb/simple_dma_add_nword_tb.sv (instantiates tb/axi_mem_model.sv as slave)
+- Simulation script: scripts/run_simple_dma_add_nword_sim.sh
+
+### Implementation — 6-state FSM (read-process-write, loops over length_words)
+
+Inputs: aclk, aresetn, start, src_addr[31:0], dst_addr[31:0], length_words[15:0], add_value[31:0]
+Outputs: done, error, processed_count[15:0], last_input_data[31:0], last_output_data[31:0]
+
+| State | Action |
+|-------|--------|
+| IDLE | Clear counters; latch src/dst/len/add; if len=0 → DONE; else → RD_ADDR |
+| RD_ADDR | Drive arvalid; wait for arready |
+| RD_DATA | Drive rready; wait for rvalid; latch input_lat; if rresp≠OKAY → DONE (abort before write) |
+| WR_ADDR | Drive awvalid+wvalid; wdata=processed_data (comb); wait for awready&&wready |
+| WR_RESP | Drive bready; wait for bvalid; if bresp≠OKAY → DONE; else processed_count++; last word → DONE; else word_idx++, RD_ADDR |
+| DONE | Assert done=1 and error=read_err\|write_err for one cycle |
+
+Processing datapath: `wire [31:0] processed_data = input_lat + add_lat` (purely combinatorial)
+last_input_data = input_lat; last_output_data = processed_data.
+Read error aborts before write; write error aborts after failed response.
+processed_count increments only on successful write (OKAY bresp).
+
+### Verification Status (last run: 2026-05-03)
+
+37/37 checks passed. 0 failures. CI gate exit code: 0. Simulation end: 815 ns.
+
+Tests:
+- Test 1: length_words=0 — done immediately, processed_count=0, canary dst words unchanged (4 checks)
+- Test 2: length_words=1, 0x10+0x5=0x15, verify last_input, last_output, dst (6 checks)
+- Test 3: length_words=4, add 0x100, verify all 4 dst words, last_input, last_output (9 checks)
+- Test 4: 32-bit overflow, 0xFFFF_FFFF+1=0x00000000, no error (4 checks)
+- Test 5: invalid src mid-processing (src=0xFF4, len=4) — 3 processed, error=1, dst[3] unchanged (7 checks)
+- Test 6: invalid dst mid-processing (src=0x200, dst=0xFF4, len=4) — 3 processed, error=1, src unchanged (7 checks)
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v
