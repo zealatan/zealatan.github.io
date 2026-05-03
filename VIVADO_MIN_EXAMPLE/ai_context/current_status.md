@@ -370,6 +370,21 @@ Templates to create:
 
 These will enable the RTL Design Agent (Agent 3) to produce pre-contracted RTL and the RTL Verification Agent (Agent 4) to verify it automatically using the established prompt patterns.
 
+## Verification Agent Protocol and DUT Profiles (P26, 2026-05-03)
+
+The following documents generalize Verification Phase v1 into reusable protocols and DUT-category profiles for the RTL Verification Agent (Agent 4). No RTL, testbench, or simulation scripts were modified.
+
+| File | Purpose |
+|------|---------|
+| `ai_context/verification_agent_core_protocol.md` | Core agent workflow, mandatory mechanics, failure classification, modification policy, report format |
+| `ai_context/dut_category_taxonomy.md` | 8 DUT categories with decision tree, interface descriptions, mandatory tests, common hazards, and deferred items |
+| `ai_context/dut_profile_axil_dma_accelerator.md` | CAT-3 profile: validated by Phase v1 benchmark; 21 mandatory tests; Phase v1 closure evidence |
+| `ai_context/dut_profile_axistream_block.md` | CAT-4 profile: AXI-Stream DUTs; scoreboard/golden model requirement; 10 mandatory tests |
+| `ai_context/dut_profile_dsp_pipeline.md` | CAT-5 profile: DSP/math pipelines; Python Modeling Agent handoff format; 10 mandatory tests |
+| `ai_context/dut_profile_cdc_fifo.md` | CAT-6 profile: async FIFO and CDC blocks; formal/SVA recommendation; 10 mandatory tests |
+
+These documents establish the reusable protocol foundation for Agent 4 verification campaigns beyond Phase v1. Any new DUT is identified by category, assigned a profile, and verified against the profile's mandatory test list and closure criteria.
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v
