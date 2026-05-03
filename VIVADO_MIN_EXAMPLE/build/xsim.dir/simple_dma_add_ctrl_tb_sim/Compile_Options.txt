@@ -1,1 +1,0 @@
-"simple_dma_add_ctrl_tb" -debug "typical" -s "simple_dma_add_ctrl_tb_sim" 

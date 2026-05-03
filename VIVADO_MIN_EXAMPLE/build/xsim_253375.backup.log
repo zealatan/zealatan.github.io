@@ -1,0 +1,57 @@
+#-----------------------------------------------------------
+# xsim v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Sun May  3 15:11:12 2026
+# Process ID: 253375
+# Current directory: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build
+# Command line: xsim -mode tcl -source {xsim.dir/axis_add_one_tb_sim/xsim_script.tcl}
+# Log file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.log
+# Journal file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.jou
+# Running On: DESKTOP-FAIRVEG, OS: Linux, CPU Frequency: 2496.001 MHz, CPU Physical cores: 6, Host memory: 8134 MB
+#-----------------------------------------------------------
+source xsim.dir/axis_add_one_tb_sim/xsim_script.tcl
+# xsim {axis_add_one_tb_sim} -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+[INFO] Test 1: reset defaults
+[PASS] id=0 after reset: 0
+[PASS] ta=0 after reset: 0x00000000
+[PASS] st=0 after reset: 0
+[INFO] Test 2: single-beat transfer
+[PASS] beat 0 tdata: 0xdeadbef0
+[PASS] beat 0 tlast: 1
+[INFO] Test 3: multi-beat packet (4 beats)
+[PASS] beat 0 tdata: 0xaaaa0001
+[PASS] beat 0 tlast: 0
+[PASS] beat 1 tdata: 0xaaaa0002
+[PASS] beat 1 tlast: 0
+[PASS] beat 2 tdata: 0xaaaa0003
+[PASS] beat 2 tlast: 0
+[PASS] beat 3 tdata: 0xaaaa0004
+[PASS] beat 3 tlast: 1
+[INFO] Test 4: back-to-back throughput (6 beats)
+[PASS]  during pipeline: 1
+[PASS]         T4 tdata: 0xcccc0001
+[PASS] ast=0 (not last): 0
+[PASS]  during pipeline: 1
+[PASS]         T4 tdata: 0xcccc0002
+[PASS] ast=0 (not last): 0
+[PASS]  during pipeline: 1
+[PASS]         T4 tdata: 0xcccc0003
+[PASS] ast=0 (not last): 0
+[PASS]  during pipeline: 1
+[PASS]         T4 tdata: 0xcccc0004
+[PASS] ast=0 (not last): 0
+[PASS]  during pipeline: 1
+[PASS]         T4 tdata: 0xcccc0005
+[PASS] ast=0 (not last): 0
+[PASS] tvalid last beat: 1
+[PASS]  tdata last beat: 0xcccc0006
+[PASS] last=1 last beat: 1
+[INFO] Test 5: output backpressure
+Fatal: [FATAL] send_beat tready timeout data=0xbbbb1234
+Time: 2255 ns  Iteration: 0  Process: /axis_add_one_tb/send_beat/sb_task  Scope: axis_add_one_tb.send_beat.sb_task  File: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axis_add_one_tb.sv Line: 166
+$finish called at time : 2255 ns
+exit
+INFO: [Common 17-206] Exiting xsim at Sun May  3 15:11:20 2026...

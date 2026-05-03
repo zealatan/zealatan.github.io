@@ -385,6 +385,89 @@ The following documents generalize Verification Phase v1 into reusable protocols
 
 These documents establish the reusable protocol foundation for Agent 4 verification campaigns beyond Phase v1. Any new DUT is identified by category, assigned a profile, and verified against the profile's mandatory test list and closure criteria.
 
+**AXI-Stream profile updated after axis_add_one handoff experiment (P29/P30, 2026-05-03):** axis_add_one achieved 146/146 PASS with no RTL bugs and no contract ambiguities. Profile `dut_profile_axistream_block.md` updated with: validated test list (10 tests), negedge-drive timing rules, interleave-vs-drain scoreboard guidance, common failure mode table, recommended TB architecture, and Rule 1–4 lessons from the experiment. Validation status changed from "not yet verified" to "validated." Core protocol `verification_agent_core_protocol.md` updated with §3.6a Interface-Specific TB Timing Rules.
+
+## RTL Designer Agent Protocol (P27, 2026-05-03)
+
+The following documents define Agent 3 (RTL Designer Agent) and the Agent 3 → Agent 4 handoff. No RTL, testbench, or simulation scripts were modified. Prompt backup stored in `md_files/rtl_designer/`.
+
+| File | Purpose |
+|------|---------|
+| `ai_context/rtl_designer_core_protocol.md` | Agent 3 purpose, 14-step workflow, 8 design quality rules, RTL modification policy, Agent 3↔4 interaction diagram, final report format |
+| `ai_context/architecture_spec_template.md` | 14-section reusable template: DUT name/purpose/category, block diagram, FSM overview, register map, error/reset policy, assumptions, verification profile |
+| `ai_context/interface_contract_template.md` | 12-section reusable template: clock/reset, port tables, AXI-lite/master/stream interfaces, valid/ready semantics, timing assumptions, reset values, unsupported behavior |
+| `ai_context/microarchitecture_report_template.md` | 12-section reusable template: FSM states with transitions, datapath registers, control registers, output behavior, error handling, latency table, deviations from spec |
+| `ai_context/verification_handoff_template.md` | 12-section reusable handoff document: required tests, expected normal/error/reset behavior, corner cases, scoreboard rule, evidence checklist, deferred items |
+
+These documents close the design-to-verification loop: Agent 3 produces RTL + four artifacts; Agent 4 consumes the verification_handoff.md and runs the verification campaign against the interface_contract.md.
+
+## AXI-Stream Add-One RTL Design (P28, 2026-05-03)
+
+Design artifacts created per RTL Designer Agent Protocol v1 for DUT `axis_add_one`. No testbench written (verification is Agent 4 scope). No simulation run.
+
+### Design Artifacts
+
+| File | Purpose |
+|------|---------|
+| `ai_context/architecture_spec_axis_add_one.md` | DUT purpose, high-level behavior, block diagram, FSM (implicit buffer state), datapath, reset policy, assumptions, known limitations |
+| `ai_context/interface_contract_axis_add_one.md` | Clock/reset, port table, AXI-Stream slave/master interfaces, backpressure rule (`s_tready = !m_tvalid \|\| m_tready`), functional contract, unsupported sidebands |
+| `rtl/axis_add_one.v` | 46-line Verilog-2001 RTL; one-entry output buffer pattern; `m_tdata = s_tdata + 1` (mod 2^32); `s_tready` combinatorial |
+| `ai_context/microarch_report_axis_add_one.md` | Implicit FSM state table, datapath registers (m_tvalid/m_tdata/m_tlast), combinatorial signals (s_tready), branch priority analysis, latency (1 cycle), resource estimate (~33 FFs, ~33 LUTs) |
+| `ai_context/verification_handoff_axis_add_one.md` | 12 required tests (T-SINGLE through T-VARY-BP), golden-path 3-word example, scoreboard rule, corner cases, deferred items |
+
+### RTL Summary
+
+```verilog
+assign s_axis_tready = !m_axis_tvalid || m_axis_tready;
+
+always @(posedge aclk or negedge aresetn) begin
+    if (!aresetn)                                  m_axis_tvalid <= 0; ...
+    else if (s_axis_tvalid && s_axis_tready) begin m_axis_tvalid <= 1; m_axis_tdata <= s_axis_tdata + 1; m_axis_tlast <= s_axis_tlast; end
+    else if (m_axis_tready)                        m_axis_tvalid <= 0;
+end
+```
+
+Category: CAT-4 AXI-Stream Processing Block. Profile: `dut_profile_axistream_block.md`. Verification campaign pending (Agent 4 scope).
+
+## AXI-Stream Add-One Verification (P29, 2026-05-03)
+
+Design:
+- RTL: rtl/axis_add_one.v (from P28)
+- Testbench: tb/axis_add_one_tb.sv
+- Simulation script: scripts/run_axis_add_one_sim.sh
+
+### Implementation (axis_add_one)
+
+One-entry registered output buffer. `m_tdata = s_tdata + 1` (mod 2^32). `s_tready = !m_tvalid || m_tready` (combinatorial). Async reset. 1-cycle latency, 1 word/cycle sustained throughput.
+
+### Verification Status (last run: 2026-05-03)
+
+146/146 checks passed. 0 failures. CI gate exit code: 0.
+
+Tests:
+- Test 1: reset defaults — m_tvalid=0, m_tdata=0, m_tlast=0 after reset (3 checks)
+- Test 2: single-beat transfer — tdata+1 and tlast=1 verified (2 checks)
+- Test 3: multi-beat packet (4 beats) — all tdata/tlast correct, interleaved (8 checks)
+- Test 4: back-to-back throughput (6 beats) — simultaneous consume+accept path exercised; pipeline no-bubble verified (18 checks)
+- Test 5: output backpressure — m_tvalid/tdata/tlast stable for 3 cycles; consumed on m_tready=1 (11 checks)
+- Test 6: input stall — 3 beats with idle gaps; order and data correct (6 checks)
+- Test 7: wraparound — 0xFFFFFFFF+1=0x00000000 (2 checks)
+- Test 8: tlast propagation — 3 packet types (1-beat, 3-beat, 2-beat); all tlast positions verified (12 checks)
+- Test 9: reset mid-packet — buffer cleared, s_tready=1 after reset, recovery transfer (6 checks)
+- Test 10: LFSR smoke — 10 packets, lengths 1–8, 39 beats, deterministic LFSR data (78 checks)
+
+### Agent 3 → Agent 4 Handoff Result: SUCCEEDED
+
+First AXI-Stream handoff experiment. All 12 handoff-required tests covered. No RTL bugs found. No contract ambiguities. Testbench bugs found and fixed (3 items; see final_verification_summary_axis_add_one.md).
+
+Key testbench protocol finding: all signal drives including m_tready must be at negedge to avoid race conditions with the DUT's posedge-triggered always block. Interleaved send+check required for 1-cycle-latency DUTs with m_tready=1.
+
+### Documentation
+
+- `ai_context/verification_matrix_axis_add_one.md` — 24-entry coverage matrix
+- `ai_context/final_verification_summary_axis_add_one.md` — full campaign summary; Agent 3→4 handoff assessment; protocol observations
+- `md_files/verification_agent/29_axis_add_one_verification_prompt.md` — prompt backup
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v

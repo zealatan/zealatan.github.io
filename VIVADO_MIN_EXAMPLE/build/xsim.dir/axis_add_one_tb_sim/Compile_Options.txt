@@ -1,0 +1,1 @@
+"axis_add_one_tb" -debug "typical" -s "axis_add_one_tb_sim" -timescale "1ns/1ps" 

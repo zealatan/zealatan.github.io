@@ -83,6 +83,18 @@ For AXI-based DUTs:
 - Sample DUT ready/valid signals on **posedge**
 - This prevents TB/DUT race conditions at clock edges
 
+### 3.6a Interface-Specific TB Timing Rules
+
+The negedge-drive / posedge-sample rule applies to **all** interface signals the testbench controls, not just tvalid/tdata. Validated lessons from the axis_add_one AXI-Stream experiment (P29):
+
+1. **All ready/valid signals must be driven at negedge.** Changing `m_axis_tready` (or any flow-control output) in the posedge active region races with the DUT's `always @(posedge aclk)` evaluation. Simulator event scheduling is nondeterministic between multiple active-region processes at the same simulation time. If the initial block executes before the DUT's always block at the same posedge, the DUT samples the new value and may produce incorrect behavior (e.g., branch 3 not firing, `m_tvalid` stuck at 1).
+
+   **Rule:** always advance to a negedge before changing any ready or valid signal.
+
+2. **Interleave send and expect for low-latency DUTs.** For single-cycle-latency streaming DUTs, each output beat is visible for exactly one posedge cycle when downstream is ready. Draining the scoreboard after all sends have completed will miss outputs that expired during the send phase. Interleave `send_beat` + `wait_output_beat` per beat, or use a concurrent monitor process.
+
+3. **Interface profiles may refine these rules.** `dut_profile_axistream_block.md` §9 documents the validated rules and failure modes for CAT-4 DUTs. `dut_profile_axil_dma_accelerator.md` covers CAT-3 AXI-lite register DUTs. When a profile exists, follow it.
+
 ### 3.7 Deterministic and Reproducible Tests
 All tests must produce the same result on every run. No `$random` without a fixed seed declared in the prompt. Deterministic smoke iterations are preferred over unbounded random.
 
