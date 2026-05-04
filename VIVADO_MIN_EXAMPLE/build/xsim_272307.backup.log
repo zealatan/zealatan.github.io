@@ -2,8 +2,8 @@
 # xsim v2022.2 (64-bit)
 # SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
 # IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Start of session at: Sun May  3 22:18:33 2026
-# Process ID: 277121
+# Start of session at: Sun May  3 20:54:42 2026
+# Process ID: 272307
 # Current directory: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build
 # Command line: xsim -mode tcl -source {xsim.dir/axis_complex_mult_snap/xsim_script.tcl}
 # Log file: /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/build/xsim.log
@@ -11,4 +11,16 @@
 # Running On: DESKTOP-FAIRVEG, OS: Linux, CPU Frequency: 2496.001 MHz, CPU Physical cores: 6, Host memory: 8134 MB
 #-----------------------------------------------------------
 source xsim.dir/axis_complex_mult_snap/xsim_script.tcl
+# xsim {axis_complex_mult_snap} -autoloadwcfg -runall
+Time resolution is 1 ps
 run -all
+[PASS] T1 reset: outputs clear during reset
+[PASS] T2 single pair  data=0x20000000 tlast=0
+[PASS] T3 vec[0]  data=0x20000000 tlast=0
+[PASS] T3 vec[1]  data=0x20002000 tlast=1
+[PASS] T3 vec[2]  data=0x2000c000 tlast=1
+--- 5 PASS  0 FAIL ---
+CI GATE: PASSED
+$finish called at time : 110 ns : File "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/axis_complex_mult_tb.sv" Line 151
+exit
+INFO: [Common 17-206] Exiting xsim at Sun May  3 20:54:53 2026...

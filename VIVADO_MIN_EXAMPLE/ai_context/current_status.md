@@ -468,6 +468,77 @@ Key testbench protocol finding: all signal drives including m_tready must be at 
 - `ai_context/final_verification_summary_axis_add_one.md` — full campaign summary; Agent 3→4 handoff assessment; protocol observations
 - `md_files/verification_agent/29_axis_add_one_verification_prompt.md` — prompt backup
 
+## AXI-Stream Complex Multiply RTL Design (P31, 2026-05-03)
+
+Design artifacts created per RTL Designer Agent Protocol v1 for DUT `axis_complex_mult`. No testbench written (verification is Agent 4 scope). No simulation run.
+
+### Design Artifacts
+
+| File | Purpose |
+|------|---------|
+| `ai_context/architecture_spec_axis_complex_mult.md` | DUT purpose, Q1.15 data encoding, block diagram, implicit FSM (one-entry buffer), 4-multiplier datapath, 33-bit accumulation, scaling, backpressure rule, TLAST policy, assumptions, known limitations |
+| `ai_context/interface_contract_axis_complex_mult.md` | Clock/reset, port table, atomic pair acceptance rule (`s_a_tready = s_b_tvalid && buf_ready`), functional math contract, Q1.15 scaling, TLAST OR policy, reset values, unsupported features |
+| `rtl/axis_complex_mult.v` | 50-line Verilog-2001 RTL; dual AXI-Stream slaves A+B; one-entry output buffer; 4 DSP-mapped multiplies; 33-bit accumulators; combinatorial tready signals |
+| `ai_context/microarchitecture_report_axis_complex_mult.md` | Implicit FSM (3 states), branch priority (reset > accept > drain), all combinatorial signals, no-loop proof, bit-width analysis, resource estimate (4 DSP48), RTL checklist |
+| `ai_context/verification_handoff_axis_complex_mult.md` | 12 required tests, scoreboard golden model (inline SV function), test vector examples, dual-input send_pair task pattern, timing rules, 8 deferred items |
+
+### RTL Summary
+
+```verilog
+assign s_axis_a_tready = s_axis_b_tvalid && buf_ready;  // atomic pair
+assign s_axis_b_tready = s_axis_a_tvalid && buf_ready;
+
+// 33-bit accumulation prevents carry loss
+wire signed [32:0] full_real = {prod_rr[31],prod_rr} - {prod_ii[31],prod_ii};
+wire signed [32:0] full_imag = {prod_ri[31],prod_ri} + {prod_ir[31],prod_ir};
+wire signed [15:0] out_real = full_real[30:15];  // Q1.15 scaling
+wire signed [15:0] out_imag = full_imag[30:15];
+
+always @(posedge aclk or negedge aresetn) begin
+    if (!aresetn)    m_axis_tvalid <= 0; ...
+    else if (accept) begin m_axis_tvalid <= 1; m_axis_tdata <= {out_real,out_imag}; m_axis_tlast <= a_tlast|b_tlast; end
+    else if (m_axis_tready) m_axis_tvalid <= 0;
+end
+```
+
+Category: CAT-4 AXI-Stream Processing Block / CAT-5 DSP Pipeline.
+
+## AXI-Stream Complex Multiply Verification Closure (P32–P35, 2026-05-03)
+
+**Status: CLOSED — 33/33 PASS, CI GATE: PASSED**
+
+Full verification campaign complete. 12 tests (T1–T12) covering reset, golden arithmetic, TLAST policy, negative/overflow arithmetic, backpressure, single-channel stall, back-to-back throughput, and 80-beat random smoke.
+
+### Verification Files
+
+| File | Purpose |
+|------|---------|
+| `tb/axis_complex_mult_tb.sv` | SystemVerilog TB: T1–T12, `golden_complex_mult`, `xorshift32`, negedge-drive/posedge-sample |
+| `scripts/run_axis_complex_mult_sim.sh` | xvlog → xelab (-timescale 1ns/1ps) → xsim; CI grep gate |
+| `ai_context/verification_matrix_axis_complex_mult.md` | 25-entry coverage matrix; AXI-Stream + DSP pipeline profile checks; deferred list |
+| `ai_context/final_verification_summary_axis_complex_mult.md` | Full campaign summary; Agent 3→4 handoff assessment; findings; limitations |
+
+### Verification Status (last run: 2026-05-03)
+
+| Test | Description | Checks | Result |
+|------|-------------|--------|--------|
+| T1 | Reset defaults | 1 | PASS |
+| T2 | Single A/B pair | 1 | PASS |
+| T3 | Three fixed golden vectors | 3 | PASS |
+| T4 | Real×real arithmetic (2 pairs) | 2 | PASS |
+| T5 | TLAST 4-combination matrix | 4 | PASS |
+| T6 | Negative arithmetic (2 pairs) | 2 | PASS |
+| T7 | Overflow/wrap/truncation (2 pairs) | 2 | PASS |
+| T8 | Output backpressure (3-cycle stall) | 4 | PASS |
+| T9 | A-valid-only stall → B arrives | 4 | PASS |
+| T10 | B-valid-only stall → A arrives | 4 | PASS |
+| T11 | Back-to-back throughput (5 pairs) | 5 | PASS |
+| T12 | 80-beat xorshift32 smoke + 20 bp stall cycles | 1 | PASS |
+
+**33/33 PASS — CI GATE: PASSED**
+
+Agent 3→4 handoff: SUCCEEDED. No RTL bugs, no contract ambiguities. 11/12 handoff-required tests covered (T-RST-MID deferred). Deferred: reset mid-stream, DATA_WIDTH sweep, formal proof, X-propagation, CDC/timing, FPGA board.
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v

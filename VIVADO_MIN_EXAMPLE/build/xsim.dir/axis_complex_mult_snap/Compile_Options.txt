@@ -1,0 +1,1 @@
+"axis_complex_mult_tb" -debug "typical" -timescale "1ns/1ps" -s "axis_complex_mult_snap" 

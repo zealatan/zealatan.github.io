@@ -1,0 +1,7 @@
+Running: xsim.dir/axis_complex_mult_snap/xsimk -runall -simmode gui -wdb axis_complex_mult_snap.wdb -simrunnum 0 -socket 36395
+Design successfully loaded
+Design Loading Memory Usage: 29184 KB (Peak: 29724 KB)
+Design Loading CPU Usage: 30 ms
+Simulation completed
+Simulation Memory Usage: 119892 KB (Peak: 168452 KB)
+Simulation CPU Usage: 30 ms
