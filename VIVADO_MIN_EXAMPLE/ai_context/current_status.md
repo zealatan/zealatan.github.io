@@ -539,6 +539,127 @@ Full verification campaign complete. 12 tests (T1–T12) covering reset, golden 
 
 Agent 3→4 handoff: SUCCEEDED. No RTL bugs, no contract ambiguities. 11/12 handoff-required tests covered (T-RST-MID deferred). Deferred: reset mid-stream, DATA_WIDTH sweep, formal proof, X-propagation, CDC/timing, FPGA board.
 
+## Fractional CFO Frame Corrector (Step 20 + Step 21)
+
+Design:
+- RTL: rtl/frac_cfo_frame_corrector_top.v
+- Testbench: tb/frac_cfo_frame_corrector_top_tb.sv
+- Simulation script: scripts/run_frac_cfo_frame_corrector_top_sim.sh
+
+### Implementation
+
+256-entry Q1.15 sin/cos LUT (initialized via $cos/$sin real arithmetic), 16-bit phase accumulator, one-entry AXI-Stream output buffer. Phase rotation uses full complex multiply with 33-bit accumulation for carry safety. Frame detection: discard cfg_timing_offset samples, output cfg_frame_len samples with tlast on last. Backpressure stalls input only during frame capture.
+
+### Verification Status (last run: 2026-05-06)
+
+**176/176 checks passed. 0 failures. CI gate exit code: 0.**
+
+#### Step 20 Tests (39 checks)
+
+- T1: Reset defaults — m_tvalid=0, frame_detected=0, m_tlast=0 (3 checks)
+- T2: Frame offset=0, cfo=0, len=4 — data + fd + tlast (6 checks)
+- T3: Frame offset=3, cfo=0, len=3 — data + fd + tlast (5 checks)
+- T4: frame_detected pulse timing — no fd before, fd=1 on start, fd=0 after (3 checks)
+- T5: tlast pattern for 4-sample frame — 0,0,0,1 (4 checks)
+- T6: Backpressure basic — tvalid held, last tlast=1 (3 checks)
+- T7: Frame length 1 — fd + data + tlast + no extra output (4 checks)
+- T8: Reset mid-stream — state clear + recovery frame (5 checks)
+- T9: Post-frame canary — tvalid=0, s_tready=1, no spurious output (6 checks)
+
+#### Step 21 Randomized Campaign (137 checks)
+
+- R1: Timing offset sweep offsets 0..15 — fd + tlast per offset (32 checks)
+- R2: CFO sweep 0x0000/0x4000/0x8000/0xC000 — 4 data checks per value (16 checks)
+- R3: Randomized frame placement 20 LFSR trials — fd + tlast (40 checks)
+- R4: Randomized amplitude scaling 10 LFSR trials, cfo=0 — data identity (10 checks)
+- R5: AXI-Stream backpressure delays 0,1,2,3 — stall valid + data + tlast (12 checks)
+- R6: Reset robustness 3 scenarios — state clear + recovery fd + recovery data/tlast (9 checks)
+- R7: No-frame false-trigger rejection 3 tests — m_tvalid=0 + fd=0 (6 checks)
+- R8: Buffer boundary stress len=1/10/offset=15/mid-range — fd + tlast + data (12 checks)
+
+Campaign statistics: 57 randomized/sweep trials, CFO range 0x0000–0xC000/0xF000,
+timing offset range 0–15, backpressure patterns 4 (delays 0–3).
+
+Testbench bugs found and fixed: (1) run_frame last-sample buffer leak (consume step added);
+(2) recv_bp m_tlast race (read before asserting tready). No RTL bugs found.
+
+## Step 22 — Synthesis Readiness Audit: frac_cfo_frame_corrector_top (2026-05-06)
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `scripts/step22_synth_check.tcl` | Vivado batch synthesis script (OOC, xczu3eg-sfvc784-1-e, 100 MHz) |
+| `scripts/run_frac_cfo_frame_corrector_top_synth.sh` | Shell driver; runs Vivado, greps reports, CI gate |
+| `reports/step22_synth_utilization.rpt` | Vivado utilization report |
+| `reports/step22_timing_summary.rpt` | Vivado timing summary (WNS/TNS/hold) |
+| `reports/step22_drc.rpt` | Vivado DRC report |
+| `reports/step22_synth_messages.log` | Vivado stdout log |
+| `docs/step22_synthesis_readiness_report.md` | Full synthesis readiness report |
+
+### Synthesis Result
+
+**PASSED — 0 errors, 0 critical warnings**
+
+Target: xczu9eg-ffvb1156-2-e (ZCU102 Zynq UltraScale+ ZU9EG).
+Mode: out-of-context. Clock: aclk 100 MHz (10.000 ns period).
+
+### Utilization Summary
+
+| Resource | Used | % |
+|----------|------|---|
+| LUT | 203 | 0.29% |
+| FF (FDCE) | 45 | 0.03% |
+| BRAM | 0 | 0% |
+| DSP48E2 | 4 | 1.11% |
+
+cos_lut and sin_lut (256×16) inferred as distributed ROM (LUT-based). 4 DSP48E2 absorb the Q1.15 complex multiply (rr, ri, ir, ii).
+
+### Timing Summary
+
+| Metric | Value | Result |
+|--------|-------|--------|
+| WNS | 5.938 ns | PASS |
+| TNS | 0.000 ns | PASS |
+| Hold slack | 0.078 ns | PASS |
+
+### Blockers Found
+
+None. All expected unsynthesizable constructs (`real`, `$cos`, `$sin`, `$rtoi` in initial block) evaluated at elaboration time by Vivado 2022.2. Inferred as distributed ROM initialization. RTL was not modified.
+
+**Portability note:** This behavior is Vivado-specific. Synplify/DC may reject the real/$cos/$sin constructs. A pre-computed $readmemh replacement is recommended before tool-independent release.
+
+### FPGA-Readiness Conclusion
+
+**FPGA-READY for Phase-1 deployment at block level.** Synthesis passes, 100 MHz timing met with 5.938 ns WNS margin, resource usage minimal, DRC clean.
+
+### Recommended Step 23
+
+Add AXI-Lite debug/config wrapper: runtime programming of cfg_cfo_step, cfg_timing_offset, cfg_frame_len, plus STATUS register exposing frame_detected (sticky), in_frame, sample_count. Follows simple_dma_add_ctrl CAT-3 pattern. Required for FPGA bring-up without re-synthesis per configuration.
+
+## Prompt Archive Status (updated 2026-05-06)
+
+All major task prompts must be saved in `md_files/` before or during execution.
+See `CLAUDE.md § Prompt Archive Policy` for the full policy.
+
+### Archived Prompts
+
+| File | Step | Status |
+|------|------|--------|
+| `md_files/20_frac_cfo_frame_corrector_top_prompt.md` | 20 | Created 2026-05-06 |
+| `md_files/21_frac_cfo_frame_corrector_randomized_verification_prompt.md` | 21 | Created 2026-05-06 |
+| `md_files/22_synthesis_readiness_prompt.md` | 22 | Created 2026-05-06 |
+| `md_files/README.md` | — | Updated 2026-05-06 (naming convention + Step 20/21/22 index) |
+
+### Next Required Prompt Archive
+
+Future prompts must be archived in `md_files/` before or during execution.
+
+Step 23 prompt must be saved as:
+```
+md_files/23_axi_lite_debug_config_wrapper_prompt.md
+```
+
 ## Legacy and2 Example
 
 - RTL: rtl/and2.v

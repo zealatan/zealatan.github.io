@@ -1,0 +1,52 @@
+=== Step 22 Synthesis Check ===
+Project dir : /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE
+RTL source  : /home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/rtl/frac_cfo_frame_corrector_top.v
+Target part : xczu9eg-ffvb1156-2-e  (ZCU102 Zynq UltraScale+ ZU9EG)
+Target clock: aclk 100 MHz (10.000 ns)
+
+--- Running synth_design ---
+SYNTHESIS FAILED
+First error captured: ERROR: [Common 17-345] A valid license was not found for feature 'Synthesis' and/or device 'xczu9eg'. Please run the Vivado License Manager for assistance in determining
+which features and devices are licensed for your system.
+Resolution: Check the status of your licenses in the Vivado License Manager. For debug help search Xilinx Support for "Licensing FAQ". If you are using a license server, verify that the license server is up and running a version of the xilinx daemon that is compatible with the version of Xilinx software that you are using. Note: Vivado 2021.1 and later versions require upgrading your license server tools to the Flex 11.17.2.0 versions. Please confirm with your license admin that the correct version of the license server tools are installed.
+
+
+Target part : xczu9eg-ffvb1156-2-e  (ZCU102 Zynq UltraScale+ ZU9EG)
+# tee "Target clock: aclk 100 MHz (10.000 ns)"
+Target clock: aclk 100 MHz (10.000 ns)
+# tee ""
+
+# create_project -in_memory
+create_project: Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1253.664 ; gain = 0.023 ; free physical = 3458 ; free virtual = 7892
+# set_part xczu9eg-ffvb1156-2-e
+INFO: [Coretcl 2-1500] The part has been set to 'xczu9eg-ffvb1156-2-e' for the current project only. Run set_part -help for more details. To evaluate different speed grades in the current design, use the set_speed_grade command, or use the open_checkpoint -part command to change the part used by an existing checkpoint design.
+# read_verilog [file join $rtl_dir frac_cfo_frame_corrector_top.v]
+# tee "--- Running synth_design ---"
+--- Running synth_design ---
+# set synth_ok 0
+# if {[catch {
+#     synth_design \
+#         -top frac_cfo_frame_corrector_top \
+#         -part xczu9eg-ffvb1156-2-e \
+#         -mode out_of_context \
+#         -flatten_hierarchy rebuilt
+#     set synth_ok 1
+# } synth_err]} {
+#     tee "SYNTHESIS FAILED"
+#     tee "First error captured: $synth_err"
+#     close $log_fh
+#     exit 1
+# }
+Command: synth_design -top frac_cfo_frame_corrector_top -part xczu9eg-ffvb1156-2-e -mode out_of_context -flatten_hierarchy rebuilt
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xczu9eg'
+WARNING: [Common 17-348] Failed to get the license for feature 'Synthesis' and/or device 'xczu9eg'. Explanation: The license feature Synthesis could not be found.
+Resolution: Check the status of your licenses in the Vivado License Manager. For debug help search Xilinx Support for "Licensing FAQ". 
+0 Infos, 1 Warnings, 0 Critical Warnings and 1 Errors encountered.
+synth_design failed
+SYNTHESIS FAILED
+First error captured: ERROR: [Common 17-345] A valid license was not found for feature 'Synthesis' and/or device 'xczu9eg'. Please run the Vivado License Manager for assistance in determining
+which features and devices are licensed for your system.
+Resolution: Check the status of your licenses in the Vivado License Manager. For debug help search Xilinx Support for "Licensing FAQ". If you are using a license server, verify that the license server is up and running a version of the xilinx daemon that is compatible with the version of Xilinx software that you are using. Note: Vivado 2021.1 and later versions require upgrading your license server tools to the Flex 11.17.2.0 versions. Please confirm with your license admin that the correct version of the license server tools are installed.
+
+INFO: [Common 17-206] Exiting Vivado at Wed May  6 16:11:24 2026...
