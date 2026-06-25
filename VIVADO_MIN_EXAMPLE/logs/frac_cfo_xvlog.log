@@ -1,4 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/rtl/frac_cfo_frame_corrector_top.v" into library work
-INFO: [VRFC 10-311] analyzing module frac_cfo_frame_corrector_top
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/home/zealatan/AI_ORC/messi/VIVADO_MIN_EXAMPLE/tb/frac_cfo_frame_corrector_top_tb.sv" into library work
-INFO: [VRFC 10-311] analyzing module frac_cfo_frame_corrector_top_tb
