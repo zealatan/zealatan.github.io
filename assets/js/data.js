@@ -113,6 +113,15 @@ export const demos = [
       { label: "Related Paper →", href: "https://ieeexplore.ieee.org/document/10978370" },
     ],
   },
+  {
+    title: "AI-Native Synchronizer on X410",
+    video: "assets/ai_sync.mp4",
+    poster: "assets/ai_sync-poster.jpg",
+    description:
+      "AI-native synchronizer on USRP X410, with online training for filter calibration and synchronization.",
+    tags: ["X410", "AI-native Sync", "Online Training", "Filter Calibration"],
+    links: [],
+  },
 ];
 
 export const footerText = "© 2026 Bumhee Lee. All rights reserved.";
