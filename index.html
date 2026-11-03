@@ -6,10 +6,18 @@
 
   <title>Bumhee Lee | Research Portfolio</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
+  <div id="nav"></div>
+
   <main class="container">
 
     <!-- Hero / Profile Header -->
@@ -21,7 +29,7 @@
       </p>
 
       <p class="tagline">
-         Modem Systems | FPGA Validation | AI-assisted Hardware Design
+        Modem Systems | FPGA Validation | AI-assisted Hardware Design
       </p>
 
       <div class="links">
@@ -48,211 +56,18 @@
       </a>
     </section>
 
+    <section id="projects"></section>
 
- <!-- Featured Projects -->
-    <section>
-      <h2 class="section-title">🚀 Featured Projects</h2>
+    <section id="experience"></section>
 
-      <div class="project-grid">
+    <section id="skills"></section>
 
-        <article class="project-card purple">
-          <span class="project-badge">Wireless AI</span>
-
-          <h3>
-
-              Hardware-aware ML for PHY Systems
-   
-          </h3>
-
-
-
-          <div class="project-tags">
-            <span>ML</span>
-            <span>PHY</span>
-            <span>Synchronization</span>
-          </div>
-
-          <a class="project-link"
-             href="https://github.com/zealatan/PY_OFDM"
-             target="_blank"
-             rel="noopener noreferrer">
-            View GitHub →
-          </a>
-        </article>
-
-        <article class="project-card green">
-          <span class="project-badge">Real-time PHY</span>
-
-          <h3>
-              Real-time OFDM PHY Architecture
-          </h3>
-
-
-          <div class="project-tags">
-            <span>Multi-sample/clk</span>
-            <span>Fixed-point</span>
-          </div>
-
-          <a class="project-link"
-             href="https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband"
-             target="_blank"
-             rel="noopener noreferrer">
-            View GitHub →
-          </a>
-        </article>
-
-      </div>
-    </section>
-
-
-    <!-- Professional Experience -->
-    <section>
-      <h2 class="section-title">💼 Professional Experience</h2>
-
-      <div class="experience-list">
-
-        <!-- RWTH -->
-        <div class="experience-item blue">
-          <div class="experience-header">
-            <div>
-              <h3>RWTH Aachen University</h3>
-              <p class="experience-meta">
-                Aachen, Germany | Research Assistant, Chair for Distributed Signal Processing
-              </p>
-            </div>
-
-            <span class="experience-date">Aug 2023 – Aug 2026</span>
-          </div>
-
-             <p class="experience-meta">
-              Validated real-time PHY systems through simulation, RFSoC prototyping, lab/OTA experiments,
-	     </p>
-        </div>
-
-        <!-- Samsung -->
-        <div class="experience-item green">
-          <div class="experience-header">
-            <div>
-              <h3>Samsung Electronics</h3>
-              <p class="experience-meta">
-                Hwaseong, South Korea | System LSI Division — SoC FPGA Validation and LTE/EVDO Modem Protocols
-              </p>
-            </div>
-
-          </div>
-
-          <div class="compact-role-list">
-
-            <div class="compact-role">
-              <div class="compact-role-header">
-                <strong>Cellular Modem Protocol Engineer</strong>
-                <span>Sep 2015 – May 2018</span>
-              </div>
-
-              <p>
-                Developed and debugged Layer-1 modem protocol features, and validated software changes
-                on FPGA-based modem test platforms.
-              </p>
-            </div>
-
-            <div class="compact-role">
-              <div class="compact-role-header">
-                <strong>FPGA Validation Engineer</strong>
-                <span>Mar 2013 – Aug 2015</span>
-              </div>
-
-              <p>
-                Performed FPGA-based validation of high-throughput video codec IPs, contributing to test automation and reduced test time.
-              </p>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-   
-
-    <!-- Technical Skills -->
-    <section>
-      <h2 class="section-title">🛠️ Technical Skills</h2>
-
-      <div class="skill-grid">
-        <span>Wideband OFDM</span>
-        <span>MIMO / Beamforming / RIS</span>
-        <span>LTE / NR PHY</span>
-
-        <span>USRP X410 / RFSoC</span>
-        <span>AXI4 / DMA</span>
-        <span>Streaming Pipelines</span>
-
-        <span>Verilog / SystemVerilog</span>
-        <span>C / C++ / Python</span>
-        <span>LLM Agents</span>
-      </div>
-    </section>
-    
-
-    
-
-    <!-- Education & Publications -->
-    <section>
-      <h2 class="section-title">📚 Education & Publications</h2>
-
-      <div class="education-publication-grid">
-
-        <div>
-          <h3 class="subsection-title">🎓 Education</h3>
-
-          <p>
-            <strong>M.Sc. in Communication and Multimedia Engineering</strong><br />
-            Friedrich-Alexander-Universität Erlangen-Nürnberg, Germany<br />
-            <span class="small-text">Oct 2019 – Dec 2022</span>
-          </p>
-
-          <p>
-            <strong>B.Sc. in Electronics and Computer Engineering</strong><br />
-            Hanyang University, Seoul, South Korea<br />
-            <span class="small-text">Mar 2006 – Feb 2013</span>
-          </p>
-
-          <p>
-            Completed mandatory military service from 2008 to 2010.
-          </p>
-        </div>
-
-        <div>
-          <h3 class="subsection-title">📖 Publications</h3>
-
-          <p>
-            <strong>Programmable 28 GHz mmWave MU-MIMO Testbed</strong><br />
-            First Author, Proc. IEEE WCNC 2025, Milan, Italy
-          </p>
-
-<p class="publication-links">
-  <a href="https://ieeexplore.ieee.org/document/10978370"
-     target="_blank"
-     rel="noopener noreferrer">
-    Paper →
-  </a>
-
-  <a href="demos.html">
-    Demo Video →
-  </a>
-</p>
-        </div>
-
-      </div>
-    </section>
-
-  
-
-    <!-- Footer -->
-    <footer>
-      <p>© 2026 Bumhee Lee. All rights reserved.</p>
-    </footer>
+    <section id="education"></section>
 
   </main>
+
+  <div id="footer"></div>
+
+  <script type="module" src="assets/js/page-index.js"></script>
 </body>
 </html>
