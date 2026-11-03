@@ -94,6 +94,27 @@ p {
   margin-bottom: 36px;
 }
 
+.hero-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
+}
+
+.hero-text {
+  flex: 1 1 400px;
+  min-width: 0;
+}
+
+.hero-photo {
+  flex: 0 0 240px;
+  width: 240px;
+  max-height: 420px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: var(--radius);
+  border: 1px solid var(--rule);
+}
+
 .hero h1 {
   font-family: var(--font-serif);
   font-size: 44px;
@@ -491,6 +512,15 @@ footer {
    ========================= */
 
 @media (max-width: 760px) {
+  .hero-main {
+    flex-direction: column-reverse;
+  }
+
+  .hero-photo {
+    width: 100%;
+    max-height: 280px;
+  }
+
   .project-grid {
     grid-template-columns: 1fr;
   }
