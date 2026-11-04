@@ -118,8 +118,8 @@ export const demos = [
     video: "assets/ai_sync.mp4",
     poster: "assets/ai_sync-poster.jpg",
     description:
-      "AI-native synchronizer on USRP X410, with online training for filter calibration and synchronization.",
-    tags: ["X410", "AI-native Sync", "Online Training", "Filter Calibration"],
+      "A two-stage CNN-based synchronizer deployed on USRP X410, combining offline-trained filters with online training for calibration and synchronization under harsh channel conditions.",
+    tags: ["X410", "2-Stage CNN", "Offline + Online Training", "Harsh Channel Conditions"],
     links: [],
   },
 ];

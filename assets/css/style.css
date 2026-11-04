@@ -110,7 +110,7 @@ p {
   width: 320px;
   max-height: 420px;
   object-fit: cover;
-  object-position: top;
+  object-position: center;
   border-radius: var(--radius);
   border: 1px solid var(--rule);
 }
