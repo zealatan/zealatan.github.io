@@ -20,6 +20,7 @@ export const projects = [
     title: "Hardware-aware ML for PHY Systems",
     tags: ["ML", "PHY", "Synchronization"],
     link: "https://github.com/zealatan/PY_OFDM",
+    image: "assets/project-ber.jpg",
   },
   {
     badge: "Real-time PHY",

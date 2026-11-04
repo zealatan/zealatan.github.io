@@ -24,13 +24,15 @@ export function renderProjects(container, projects) {
     .map(
       (project) => `
       <article class="card project-card">
-        ${project.image ? `<img class="project-card-image" src="${project.image}" alt="${project.title}" />` : ""}
-        <span class="badge">${project.badge}</span>
-        <h3>${project.title}</h3>
-        <div class="tag-list">
-          ${project.tags.map((tag) => `<span>${tag}</span>`).join("\n")}
+        <div class="project-card-body">
+          <span class="badge">${project.badge}</span>
+          <h3>${project.title}</h3>
+          <div class="tag-list">
+            ${project.tags.map((tag) => `<span>${tag}</span>`).join("\n")}
+          </div>
+          <a class="card-link" href="${project.link}"${externalAttrs(project.link)}>View GitHub →</a>
         </div>
-        <a class="card-link" href="${project.link}"${externalAttrs(project.link)}>View GitHub →</a>
+        ${project.image ? `<img class="project-card-image" src="${project.image}" alt="${project.title}" />` : ""}
       </article>
     `
     )
