@@ -24,6 +24,7 @@ export function renderProjects(container, projects) {
     .map(
       (project) => `
       <article class="card project-card">
+        ${project.image ? `<img class="project-card-image" src="${project.image}" alt="${project.title}" />` : ""}
         <span class="badge">${project.badge}</span>
         <h3>${project.title}</h3>
         <div class="tag-list">

@@ -26,6 +26,7 @@ export const projects = [
     title: "Real-time OFDM PHY Architecture",
     tags: ["Multi-sample/clk", "Fixed-point"],
     link: "https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband",
+    image: "assets/project-fpga.jpg",
   },
 ];
 
