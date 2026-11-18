@@ -18,19 +18,6 @@ export const nav = [
 
 export const projects = [
   {
-    badge: "ISAC Digital Twin",
-    title: "ISAC-OFDM Digital-Twin Simulator",
-    summary:
-      "Interactive in-browser simulator of a full OFDM transceiver + sensing (ISAC) loop — synchronized RX with CFO recovery, bit-faithful golden demod chain, and an OFDM radar range-Doppler map. Tier 1 of a three-tier FPGA digital-twin pipeline; runs entirely client-side (Pyodide).",
-    tags: ["ISAC", "OFDM", "Digital Twin", "Range-Doppler", "In-Browser Python"],
-    image: null,
-    detailUrl: null,
-    links: [
-      { label: "Live Simulator →", href: "isac-sim.html" },
-      { label: "WebGL Intro: OFDM Visualized →", href: "ofdm-webgl/index.html" },
-    ],
-  },
-  {
     badge: "Real-Time PHY",
     title: "Real-Time FPGA OFDM PHY",
     summary:
