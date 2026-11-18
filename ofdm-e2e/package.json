@@ -1,0 +1,7 @@
+{
+  "name": "ofdm-e2e",
+  "private": true,
+  "type": "module",
+  "description": "Sample-level end-to-end OFDM transceiver simulator (floating-point digital-twin reference)",
+  "scripts": { "test": "node tests/test_phy.mjs" }
+}

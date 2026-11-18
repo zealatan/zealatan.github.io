@@ -18,6 +18,19 @@ export const nav = [
 
 export const projects = [
   {
+    badge: "E2E PHY Reference",
+    title: "OFDM E2E Live Simulator — Sample-Level Transceiver",
+    summary:
+      "True end-to-end OFDM chain on complex IQ samples, entirely in the browser: Gray-QAM → pilot grid → unitary IFFT → CP → FIR multipath/CFO/SFO/phase-noise/PA/IQ channel → Schmidl-Cox + known-preamble sync → LS channel estimation → ZF/MMSE → recovered bits. 32-check numerical test suite (BER matches Q(√(2Eb/N0)) and per-bin fading theory), Monte-Carlo BER/EVM in a worker, real image transmission, and versioned IQ test-vector export for RTL/hardware digital-twin comparison.",
+    tags: ["OFDM", "Sample-Level IQ", "Schmidl-Cox", "Monte-Carlo BER", "Digital Twin"],
+    image: null,
+    detailUrl: null,
+    links: [
+      { label: "Open E2E Simulator →", href: "ofdm-e2e/index.html" },
+      { label: "Math Reference →", href: "ofdm-e2e/theory.html" },
+    ],
+  },
+  {
     badge: "Live Simulator",
     title: "OFDM Live Dashboard — In-Browser PHY Simulator",
     summary:

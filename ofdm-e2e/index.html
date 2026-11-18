@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OFDM E2E Live Simulator — sample-level transceiver</title>
+<meta name="description" content="Sample-level end-to-end OFDM transceiver in the browser: real complex IQ chain (QAM→IFFT→CP→channel→sync→FFT→CE→EQ→bits) with Monte-Carlo BER/EVM and exportable test vectors.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+  <h1>OFDM E2E Live Simulator</h1>
+  <span class="sub">sample-level IQ chain · every panel shows signals from the SAME end-to-end run ·
+    <a href="theory.html">📐 math</a> · <a href="../ofdm-sim/index.html">legacy live sim</a> ·
+    <a href="../index.html">portfolio</a></span>
+  <div class="right btns">
+    <button id="btnLive" class="on">▶ live</button>
+    <button id="btnExport">⇩ Export signals (JSON)</button>
+  </div>
+</header>
+
+<div class="dash">
+  <!-- Row 1: three plot cells with per-cell view tabs -->
+  <div class="pcell">
+    <div class="ptabs btns" id="tabsConst">
+      <button data-v="tx" class="active">TX constellation</button>
+      <button data-v="pre">RX pre-EQ</button>
+      <button data-v="post">RX post-EQ</button>
+    </div>
+    <canvas id="cvConst"></canvas>
+  </div>
+  <div class="pcell">
+    <div class="ptabs btns" id="tabsTime">
+      <button data-v="tx" class="active">TX IQ</button>
+      <button data-v="rx">RX IQ</button>
+      <button data-v="spec">RX spectrum</button>
+      <button data-v="sync">Sync metric</button>
+    </div>
+    <canvas id="cvTime"></canvas>
+  </div>
+  <div class="pcell">
+    <div class="ptabs btns" id="tabsChan">
+      <button data-v="H" class="active">|H| true vs est</button>
+      <button data-v="cir">Channel impulse response</button>
+      <button data-v="ber">BER / EVM vs SNR</button>
+    </div>
+    <canvas id="cvChan"></canvas>
+  </div>
+
+  <!-- Row 2 cell A: waveform + channel controls -->
+  <div class="ctl">
+    <div class="srow"><label>mod</label><div class="btns" id="mods"></div></div>
+    <div class="srow"><label>channel</label><div class="btns" id="chans"></div></div>
+    <div class="srow"><label>SNR</label>
+      <input id="snr" type="range" min="-5" max="40" step="0.5" value="25">
+      <span class="val" id="snrv">25.0 dB</span>
+      <select id="snrMode">
+        <option value="esn0">Es/N0</option>
+        <option value="ebn0">Eb/N0</option>
+        <option value="sample">sample SNR</option>
+      </select></div>
+    <div class="srow"><label>delay</label>
+      <input id="delay" type="range" min="0" max="400" step="1" value="60">
+      <span class="val" id="delayv">60 smp</span></div>
+    <div class="srow"><label>CFO</label>
+      <input id="cfo" type="range" min="-3" max="3" step="0.01" value="0.8">
+      <span class="val" id="cfov">+0.80 sc</span></div>
+    <div class="srow"><label>SFO</label>
+      <input id="sfo" type="range" min="0" max="100" step="1" value="0">
+      <span class="val" id="sfov">0 ppm</span></div>
+    <div class="srow"><label>PN</label>
+      <input id="pn" type="range" min="0" max="2000" step="10" value="0">
+      <span class="val" id="pnv">0 Hz</span></div>
+    <div class="srow"><label>RF</label><div class="btns">
+      <button id="tIQ">IQ imb</button><button id="tPA">PA</button><button id="tDC">DC</button></div>
+      <label style="min-width:30px">seed</label><input id="seed" type="number" value="1" min="0" step="1"></div>
+    <div class="statline" style="margin-top:auto" id="gridInfo"></div>
+  </div>
+
+  <!-- Row 2 cell B: receiver controls + metrics -->
+  <div class="ctl">
+    <div class="srow"><label>sync</label><div class="btns">
+      <button id="syncPractical" class="active">practical (S&amp;C + xcorr)</button>
+      <button id="syncOracle">oracle</button></div>
+      <span class="oracle-tag" id="oracleTag" hidden>ORACLE: true timing/CFO used</span></div>
+    <div class="srow"><label>chan est</label><div class="btns" id="ces"></div></div>
+    <div class="srow"><label>equalizer</label><div class="btns">
+      <button id="eqZf" class="active">ZF</button><button id="eqMmse">MMSE</button></div></div>
+    <div class="sep"></div>
+    <div class="statline">BER <b id="mBer">–</b> <span class="mini" id="mBits"></span></div>
+    <div class="statline">EVM <b id="mEvm">–</b> · MSE(Ĥ) <b id="mMse">–</b></div>
+    <div class="statline">sync err <b id="mSync">–</b> · CFO err <b id="mCfo">–</b></div>
+    <div class="mini" id="mNote"></div>
+    <div class="sep"></div>
+    <div class="imgrow" style="margin-top:auto">
+      <div class="imgcol"><canvas id="txImg" width="48" height="48"></canvas><div class="lab">TX image</div></div>
+      <div class="arrow">real PHY<br>─────►<br><b id="imgBer">–</b></div>
+      <div class="imgcol"><canvas id="rxImg" width="48" height="48"></canvas><div class="lab">RX image</div></div>
+      <div class="btns" style="flex-direction:column">
+        <button id="btnImg">Transmit image</button>
+        <label class="tb" for="upload" style="text-align:center">📷 upload</label>
+        <input id="upload" type="file" accept="image/*" hidden>
+        <span class="mini" id="imgStat"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2 cell C: Monte-Carlo sweep controls -->
+  <div class="ctl">
+    <div class="statline"><b>BER / EVM vs SNR — Monte-Carlo over independent frames</b></div>
+    <div class="mini">Real end-to-end runs in a Web Worker (UI stays responsive). Each point
+      accumulates frames until the error target or the bit cap. The dashed reference is the
+      ANALYTIC AWGN curve for the selected modulation (theory, not simulation).</div>
+    <div class="srow"><label>SNR range</label>
+      <input id="swLo" type="number" value="0" style="width:64px"> –
+      <input id="swHi" type="number" value="24" style="width:64px"> dB, step
+      <input id="swStep" type="number" value="2" style="width:56px"></div>
+    <div class="srow"><label>stop at</label>
+      <input id="swErr" type="number" value="200" style="width:76px"> errors or
+      <input id="swBits" type="number" value="400000" style="width:96px"> bits/point</div>
+    <div class="srow btns">
+      <button id="btnSweep" class="warn">Run sweep</button>
+      <button id="btnStopSweep" disabled>Stop</button>
+      <span class="mini" id="swStat"></span></div>
+    <div class="mini" id="swDetail"></div>
+    <div class="sep"></div>
+    <div class="mini">
+      Pipeline per frame: bits → Gray-QAM → grid (pilots+data, DC null, guard) →
+      unitary IFFT → CP → [P1 S&amp;C | P2 known] preamble → <b>channel on IQ samples</b>
+      (PA → FIR multipath → CFO → phase noise → SFO resample → AWGN → IQ → DC) →
+      S&amp;C sync → CP drop → FFT → pilot LS CE → EQ → demap → BER/EVM.
+      Charts always show THIS run's arrays — nothing is synthesized.</div>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
