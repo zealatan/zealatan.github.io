@@ -21,8 +21,8 @@ export const projects = [
     badge: "Live Simulator",
     title: "OFDM Live Dashboard — In-Browser PHY Simulator",
     summary:
-      "Real-time OFDM link simulator running entirely in the browser: synchronizer (timing/CFO, NTN LEO/GEO Doppler tracking) and channel estimator (LS/LMMSE with Linear/FFT/2D/CNN interpolation, BER-vs-SNR across AWGN/EPA/EVA/ETU/Rician, FEC) — plus live image transmission through the link.",
-    tags: ["OFDM", "CNN Channel Est.", "NTN Doppler", "BER / EVM", "Vanilla JS"],
+      "Real-time OFDM link simulator running entirely in the browser: synchronizer (preamble timing, coarse/fine CFO, CPE/SFO tracking) and channel estimator (LS/LMMSE with Linear/FFT/2D/CNN interpolation, BER-vs-SNR across AWGN/EPA/EVA/ETU/Rician, FEC) — plus live image transmission through the link.",
+    tags: ["OFDM", "CNN Channel Est.", "Synchronization", "BER / EVM", "Vanilla JS"],
     image: null,
     detailUrl: null,
     links: [
