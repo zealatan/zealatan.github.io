@@ -130,7 +130,7 @@ export const education = [
     degree: "M.Sc. in Communication and Multimedia Engineering",
     school: "Friedrich-Alexander-Universität Erlangen-Nürnberg, Germany",
     detail:
-      "Master thesis at the Institute for Digital Communications (IDC) — Supervisor: Prof. Laura Cottatellucci; Examiner: Prof. Robert Schober",
+      "Institute for Digital Communications (IDC) — Supervisor: Prof. Laura Cottatellucci; Examiner: Prof. Robert Schober",
     dateRange: "Oct 2019 – Dec 2022",
     note: "Master's thesis: power-efficient reconfigurable intelligent surface (RIS)-assisted wireless power transfer algorithms, achieving ~11% transmission power reduction in simulation.",
   },
