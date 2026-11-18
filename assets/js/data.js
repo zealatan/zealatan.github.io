@@ -18,6 +18,16 @@ export const nav = [
 
 export const projects = [
   {
+    badge: "Live Simulator",
+    title: "OFDM Live Dashboard — In-Browser PHY Simulator",
+    summary:
+      "Real-time OFDM link simulator running entirely in the browser: synchronizer (timing/CFO, NTN LEO/GEO Doppler tracking) and channel estimator (LS/LMMSE with Linear/FFT/2D/CNN interpolation, BER-vs-SNR across AWGN/EPA/EVA/ETU/Rician, FEC) — plus live image transmission through the link.",
+    tags: ["OFDM", "CNN Channel Est.", "NTN Doppler", "BER / EVM", "Vanilla JS"],
+    image: null,
+    detailUrl: null,
+    links: [{ label: "Open Live Simulator →", href: "ofdm-sim/index.html" }],
+  },
+  {
     badge: "Real-Time PHY",
     title: "Real-Time FPGA OFDM PHY",
     summary:
