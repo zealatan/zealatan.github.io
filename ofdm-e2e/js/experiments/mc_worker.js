@@ -6,26 +6,31 @@ import { makeGrid, transmit, MODS } from "../phy/engine.js";
 import { applyChannel } from "../channel/channel.js";
 import { receive } from "../receiver/receiver.js";
 
+/* Accounting: a frame whose receiver throws (frame not located / truncated)
+ * yields no recovered bits. Its payload bits are counted as ERRORS (no
+ * assumed 50% random-guess rate), and the sync-loss count is reported
+ * separately so BER and frame-loss are never conflated. */
 function runFrames(cfg, snrDb, minErrors, maxBits, seed0) {
   const grid = makeGrid(cfg.gridCfg ?? {});
-  let errs = 0, bits = 0, evmAcc = 0, frames = 0, syncFail = 0;
+  let errs = 0, bits = 0, evmAcc = 0, evmCnt = 0, frames = 0, syncFail = 0;
   while (errs < minErrors && bits < maxBits) {
     const seed = seed0 + frames;
     const tx = transmit({ grid, mod: cfg.mod, seed });
     const ch = applyChannel(tx, { ...cfg.chan, seed,
       noise: { mode: cfg.snrMode, valueDb: snrDb } });
+    frames++;
     let r;
     try {
       r = receive(ch.rxIQ, tx, ch, cfg.rx);
-    } catch (e) {               // sync completely lost the frame
-      syncFail++; frames++;
-      errs += tx.txBits.length / 2;  // count as half-errored (random guess)
+    } catch (e) {
+      syncFail++;
+      errs += tx.txBits.length;
       bits += tx.txBits.length;
       continue;
     }
-    errs += r.bitErrors; bits += r.bitTotal; evmAcc += r.evm; frames++;
+    errs += r.bitErrors; bits += r.bitTotal; evmAcc += r.evm; evmCnt++;
   }
-  return { errs, bits, evm: frames ? evmAcc / frames : null, frames, syncFail };
+  return { errs, bits, evm: evmCnt ? evmAcc / evmCnt : null, frames, syncFail };
 }
 
 self.onmessage = (ev) => {

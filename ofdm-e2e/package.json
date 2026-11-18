@@ -3,5 +3,10 @@
   "private": true,
   "type": "module",
   "description": "Sample-level end-to-end OFDM transceiver simulator (floating-point digital-twin reference)",
-  "scripts": { "test": "node tests/test_phy.mjs" }
+  "scripts": {
+    "test": "node tests/test_phy.mjs && node tests/test_verify.mjs",
+    "test:phy": "node tests/test_phy.mjs",
+    "test:verify": "node tests/test_verify.mjs",
+    "regen": "node tests/regenerate_export.mjs"
+  }
 }

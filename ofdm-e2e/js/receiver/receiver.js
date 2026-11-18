@@ -189,7 +189,17 @@ export function demodulate(rx, tx, start, eps, ceMethod, eqMethod, chanMeta, opt
     });
     let H;
     if (ceMethod === "perfect" && Htrue) {
-      H = Htrue;
+      // Oracle CSI for the receiver as it actually runs: the residual CFO
+      // (true - estimated) rotates the window by 2*pi*res*n/N; its effect on a
+      // data symbol is taken at the window centre as one common phase.
+      const res = (chanMeta.trueCfoEps ?? 0) - eps;
+      const phi = 2 * Math.PI * res * (off + (N - 1) / 2) / N;
+      const c = Math.cos(phi), sn = Math.sin(phi);
+      H = czeros(N);
+      for (let k = 0; k < N; k++) {
+        H.re[k] = Htrue.re[k] * c - Htrue.im[k] * sn;
+        H.im[k] = Htrue.re[k] * sn + Htrue.im[k] * c;
+      }
     } else if (ceMethod === "ls-dft" || ceMethod === "lmmse") {
       H = dftInterp(Hp, grid, ceMethod === "lmmse" ? sigma2 : null);
     } else {                                   // 'ls-linear' (default)

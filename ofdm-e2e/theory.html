@@ -59,7 +59,7 @@
 Unlike an educational visualization, the <a href="index.html" style="color:var(--acc)">E2E
 simulator</a> runs a complete complex-IQ sample chain for every frame you see. This page
 documents exactly those computations. Numerical verification lives in
-<code>tests/test_phy.mjs</code> (run with <code>node tests/test_phy.mjs</code>; 32 checks).
+<code>tests/test_phy.mjs</code> (32 checks) and <code>tests/test_verify.mjs</code> (126 checks; run both with <code>npm test</code>). Results and open failures: <code>docs/VERIFICATION_REPORT.md</code>.
 </p>
 
 <nav class="toc">
@@ -110,7 +110,7 @@ signal <b>qamSymbols</b> · view <span class="ui">TX constellation</span></div>
 <h2 id="grid">3. Resource grid <small>N=128, CP=16 default (configurable)</small></h2>
 <section class="block">
 <h3>Active / pilot / data partition</h3>
-<p>Active bins = all \(k\in[1,N)\) outside the Nyquist guard (22 bins) — DC is nulled.
+<p>Active bins = all \(k\in[1,N)\) except the guard band \(k\in[53,75]\) — the Nyquist bin \(k=64\) plus 11 bins on each side, 23 bins in total (the configuration value <code>guard=22</code> sets the 11+11 side bins). DC (\(k=0\)) is nulled.
 Pilots take every 8th active bin plus the forced upper edge (14 pilots); the remaining
 90 bins carry data. Pilot values are BPSK from an m-sequence LFSR
 (\(x_i=x_{i-3}\oplus x_{i-7}\)), independent of the data RNG and known to the receiver.
@@ -194,10 +194,17 @@ views <span class="ui">Channel impulse response, |H| true vs est</span></div>
 w_n\sim\mathcal N(0,\,2\pi\beta/F_s) \qquad
 \text{PA: } G(|x|)=\big(1+(|x|/A)^{2p}\big)^{-1/(2p)} $$</div>
 <div class="eq">$$ \text{SFO: } y[k]=x\big(k(1+\delta)\big)\ \text{via linear interpolation}
-\qquad \text{IQ: } Q'=g(\sin\varphi\, I+\cos\varphi\, Q) \qquad I'=I+dc $$</div>
+\qquad \text{IQ: } Q'=g(\sin\varphi\, I+\cos\varphi\, Q),\ I'=I \qquad
+\text{DC: } y\leftarrow y+dc $$</div>
+<div class="eq">$$ \text{PA (output back-off } B \text{ relative to the measured mean power } P_{avg}\text{ of the frame):}\quad
+A=\sqrt{P_{avg}}\,10^{B/20} $$</div>
 <p class="note">SFO is an actual resampling of the sample stream (linear interpolation —
 limitation: first-order kernel), not a constellation rotation. PA acts at the TX; AWGN,
-IQ imbalance and DC are receiver-side.</p>
+IQ imbalance and DC are receiver-side. A constant DC offset lands only on FFT bin 0, which is
+a null, so it does not change data-bin EVM (Test F). The <code>AWGN</code> preset is
+\(h=[1]\) (no fading and no phase); the fading presets are Rayleigh/Rician realizations.
+Every impairment is validated against its own signal-domain property in Test F and in
+<code>tests/test_verify.mjs</code>, section F.</p>
 <div class="map"><code>js/channel/channel.js</code> — <code>applyCfo() applyPhaseNoise()
 applySfo() applyPa() applyIqImbalance() applyDcOffset() addAwgn()</code> ·
 <span class="ui">CFO/SFO/PN sliders, IQ/PA/DC toggles</span> · Test F: 0.3-subcarrier CFO
@@ -241,13 +248,16 @@ the pilots are derotated, the slowly-varying residual is linearly interpolated, 
 ramp is re-applied. This is what lets the deliberate sync backoff cost nothing
 (Test C: EVM 10⁻¹³ with a −2-sample offset).</p>
 <h3>Alternatives</h3>
-<p><b>perfect</b> — oracle: \(H[k]=\sum_\ell h[\ell]e^{-j2\pi k\ell/N}\cdot
-e^{j2\pi k\tau/N}\) with the receiver's actual window offset \(\tau\) (static-FIR
-response only; residual-CFO common phase is NOT tracked — labeled baseline).
+<p><b>perfect</b> — oracle: \(H_s[k]=\sum_\ell h[\ell]e^{-j2\pi k\ell/N}\cdot
+e^{j2\pi k\tau/N}\cdot e^{j2\pi(\epsilon_{true}-\hat\epsilon)(n_s+\tfrac{N-1}{2})/N}\), with the
+receiver's actual window offset \(\tau\), the residual CFO \(\epsilon_{true}-\hat\epsilon\)
+taken at the window centre of symbol \(s\) (\(n_s\) = window start). This makes the oracle
+valid when practical sync is used (Test G4: 0 errors, same as oracle sync).
 <b>ls-dft</b> — pilot-axis IDFT, keep the CP-supported taps, DFT back (band-limited
 smoothing; the pilot axis spans only the active band, noted limitation).
 <b>lmmse</b> — ls-dft with per-tap Wiener weights \(p_\ell/(p_\ell+\sigma^2/P)\),
-exponential-PDP prior, genie \(\sigma^2\) (labeled).</p>
+prior \(p_\ell\propto e^{-0.5\ell}\) (normalized; this is an assumed PDP, not the channel's own
+profile), genie \(\sigma^2\) (labeled).</p>
 <div class="map"><code>linInterp() dftInterp() demodulate()</code> · signal
 <b>channelEstimates[sym]</b> · view <span class="ui">|H| true vs est</span> (orange dots =
 received pilot LS values) · metric <span class="ui">MSE(Ĥ)</span></div>
@@ -260,9 +270,9 @@ received pilot LS values) · metric <span class="ui">MSE(Ĥ)</span></div>
 <div class="eq">$$ \hat X_{ZF}=\frac{Y\,\hat H^*}{\max(|\hat H|^2,10^{-12})},\qquad
 \hat X_{MMSE}=\frac{Y\,\hat H^*}{|\hat H|^2+\sigma^2} $$</div>
 <p>On frequency-selective realizations, ZF noise enhancement on deep-faded bins is real
-physics: Test E verifies the measured BER matches the semi-analytic prediction from this
-realization's per-bin post-ZF SNRs
-\(\gamma_k=|H_k|^2/\sigma^2\) (empirical 6.28×10⁻⁴ vs 6.90×10⁻⁴ on EVA at 35 dB).</p>
+physics. Test E checks the measured BER against the per-bin Rayleigh theory with oracle CSI
+(3/8·erfc√(γ_k/10), \(\gamma_k=|H_k|^2/\sigma^2\)) within 3 SE; the ZF noise-enhancement law
+\(\mathrm{EVM}^2=\mathrm{mean}_k\,\sigma^2/|H_k|^2\) is checked at 60 dB in Test H2 (measured/predicted = 1.003).</p>
 <div class="map"><code>demodulate()</code> equalization loop · signal
 <b>equalizedSymbols</b> · view <span class="ui">RX post-EQ</span></div>
 </section>
@@ -286,13 +296,13 @@ chain, frame by frame, and reconstructs from the recovered bits.</p>
 <!-- 13 -->
 <h2 id="ver">13. Verification &amp; export <small>tests/test_phy.mjs · export.js</small></h2>
 <section class="block">
-<h3>Test suite (32 checks, all passing)</h3>
+<h3>Test suites (see docs/VERIFICATION_REPORT.md for the full list and open failures)</h3>
 <table>
 <tr><th>Test</th><th>What it proves</th><th>Key number</th></tr>
 <tr><td>A FFT/IFFT</td><td>identity + Parseval, N=64/128/256</td><td>err ≤ 1.5×10⁻¹⁴</td></tr>
 <tr><td>B QAM</td><td>map→demap = identity, 4 modulations</td><td>0 bit errors</td></tr>
 <tr><td>C perfect channel</td><td>practical sync, BER=0, EVM≈0, boundary in CP</td><td>EVM ≈ 10⁻¹³</td></tr>
-<tr><td>D AWGN theory</td><td>QPSK vs \(Q(\sqrt{2E_b/N_0})\), 3σ+10% tolerance</td><td>1.915e-4 vs 1.909e-4</td></tr>
+<tr><td>D AWGN theory</td><td>QPSK vs \(Q(\sqrt{2E_b/N_0})\), 3σ binomial band (no extra tolerance)</td><td>1.917e-4 vs 1.909e-4</td></tr>
 <tr><td>E multipath</td><td>within-CP matches per-bin fading theory; beyond-CP degrades ≫</td><td>6.3e-4 / 9.1e-2</td></tr>
 <tr><td>F CFO</td><td>ICI degrades; S&amp;C+xcorr recovers (ε̂ err &lt; 0.02 sc)</td><td>EVM 107% → 4%</td></tr>
 <tr><td>G determinism</td><td>same seed ⇒ identical outputs</td><td>exact match</td></tr>

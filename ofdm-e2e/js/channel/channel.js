@@ -17,7 +17,7 @@ import { czeros, cpower, makeRng } from "../phy/engine.js";
  * Loosely patterned on 3GPP EPA/EVA/ETU shapes at ~20 Msps, expressed in
  * integer sample delays. Rician = EPA-like PDP + K-factor LOS on tap 0.   */
 export const CHANNEL_PRESETS = {
-  AWGN:   { taps: [{ d: 0, pDb: 0 }], ricianK: null },
+  AWGN:   { taps: [{ d: 0, pDb: 0 }], ricianK: null, fixed: true },   // h = [1]: no fading, no phase
   EPA:    { taps: [{ d: 0, pDb: 0 }, { d: 1, pDb: -3 }, { d: 2, pDb: -9 }], ricianK: null },
   EVA:    { taps: [{ d: 0, pDb: 0 }, { d: 1, pDb: -1.5 }, { d: 3, pDb: -1.4 },
                    { d: 6, pDb: -3.6 }, { d: 9, pDb: -9 }, { d: 14, pDb: -12 }], ricianK: null },
@@ -30,6 +30,9 @@ export const CHANNEL_PRESETS = {
 /* draw a complex FIR h[l] from a tap profile (Rayleigh per tap, optional
  * Rician LOS on the first tap), normalized to unit total power.           */
 export function drawChannel(profile, rng) {
+  if (profile.fixed) {
+    const h = czeros(1); h.re[0] = 1; return h;
+  }
   const maxD = profile.taps.reduce((m, t) => Math.max(m, t.d), 0);
   const h = czeros(maxD + 1);
   for (const t of profile.taps) {
@@ -115,9 +118,9 @@ export function addAwgn(x, sigma2, rng) {
   }
 }
 
-/* RX IQ imbalance: y = cos(φ/2)·x + j g sin(... ) — implemented in the
- * common gain/phase mismatch baseband form:
- *   I' = I ;  Q' = g (sin φ · I + cos φ · Q)                              */
+/* RX IQ imbalance (gain g, phase φ) in widely-linear form:
+ *   I' = I ;  Q' = g (sin φ · I + cos φ · Q)
+ * equivalent to y' = α y + β y*, with image coefficient β (see test F4).   */
 export function applyIqImbalance(x, gainDb, phaseDeg) {
   const g = Math.pow(10, gainDb / 20), p = phaseDeg * Math.PI / 180;
   const sp = Math.sin(p), cp = Math.cos(p);
@@ -125,9 +128,11 @@ export function applyIqImbalance(x, gainDb, phaseDeg) {
     x.im[n] = g * (sp * x.re[n] + cp * x.im[n]);
 }
 
-/* Rapp PA model (p=2): g(|x|) = (1+(|x|/A)^{2p})^{-1/(2p)}                */
+/* Rapp PA model (p=2): g(|x|) = (1+(|x|/A)^{2p})^{-1/(2p)}
+ * Saturation level A is set by the OUTPUT back-off relative to the measured
+ * mean power of the input: OBO = 10 log10(A^2 / P_avg)  =>  A = sqrt(P_avg) 10^{OBO/20}. */
 export function applyPa(x, backoffDb, p = 2) {
-  const A = Math.pow(10, backoffDb / 20);
+  const A = Math.sqrt(cpower(x)) * Math.pow(10, backoffDb / 20);
   for (let n = 0; n < x.re.length; n++) {
     const m = Math.hypot(x.re[n], x.im[n]);
     const g = Math.pow(1 + Math.pow(m / A, 2 * p), -1 / (2 * p));

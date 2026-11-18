@@ -52,8 +52,24 @@ function runOnce() {
 }
 
 /* ---------------- rendering ---------------- */
+/* Everything that defines a Monte-Carlo sweep's meaning. The live-run seed is
+ * deliberately excluded: it changes every 600 ms and does not change the
+ * experiment definition. */
+function configKey() {
+  return JSON.stringify([S.mod, S.preset, S.snrMode, S.syncMode, S.ceMethod, S.eqMethod,
+    S.delay, S.cfoEps, S.sfoPpm, S.pnHz, S.iq, S.pa, S.dc]);
+}
+function sweepIsStale() {
+  return !!sweep.key && sweep.key !== configKey();
+}
+
 function render() {
   if (!last) return;
+  if (sweep.running && sweepIsStale()) stopSweep("settings changed");
+  if (sweep.key && sweepIsStale()) {
+    $("swStat").textContent = "stale: settings changed since this sweep";
+    $("swDetail").textContent = "press “Run sweep” to re-measure with the current settings";
+  }
   const { tx, ch, rx, grid } = last;
 
   // --- constellation cell ---
@@ -139,7 +155,11 @@ function render() {
 let worker = null;
 function theoreticalBer(mod, snrDb) {
   // analytic Gray-QAM over AWGN (per-bit approx) — REFERENCE curve, labeled
-  const bps = MODS[mod], esn0 = S.snrMode === "ebn0" ? snrDb + 10 * Math.log10(bps) : snrDb;
+  const bps = MODS[mod];
+  const nAct = makeGrid({}).activeBins.length, N = makeGrid({}).N;
+  const esn0 = S.snrMode === "ebn0" ? snrDb + 10 * Math.log10(bps)
+             : S.snrMode === "sample" ? snrDb - 10 * Math.log10(nAct / N)
+             : snrDb;
   const g = Math.pow(10, esn0 / 10), L = Math.sqrt(1 << bps);
   const erfc = (x) => { // Abramowitz-Stegun
     const z = Math.abs(x), t = 1 / (1 + z / 2);
@@ -152,6 +172,19 @@ function theoreticalBer(mod, snrDb) {
   return a * 0.5 * erfc(Math.sqrt(3 * g / (2 * (L * L - 1))) / Math.SQRT2 * Math.SQRT2);
 }
 function drawSweep() {
+  if (sweep.key && sweepIsStale()) {
+    const x = P.clear($("cvChan"));
+    x.fillStyle = "#f0883e"; x.font = "12px sans-serif"; x.textAlign = "center";
+    x.fillText("settings changed since this sweep — stale data hidden", $("cvChan").width / 2, 56);
+    x.fillText("press “Run sweep” to re-measure", $("cvChan").width / 2, 76);
+    return;
+  }
+  if (!sweep.key) {
+    const x = P.clear($("cvChan"));
+    x.fillStyle = "#8b949e"; x.font = "12px sans-serif"; x.textAlign = "center";
+    x.fillText("no Monte-Carlo sweep run yet — press “Run sweep”", $("cvChan").width / 2, 60);
+    return;
+  }
   const xs = sweep.xs.length ? sweep.xs : [0, 24];
   const theo = xs.map((s) => theoreticalBer(S.mod, s));
   P.lineChart($("cvChan"), xs, [
@@ -163,16 +196,19 @@ function drawSweep() {
        xLabel: `${S.snrMode === "ebn0" ? "Eb/N0" : S.snrMode === "esn0" ? "Es/N0" : "SNR"} (dB)` });
 }
 function startSweep() {
-  if (sweep.running) return;
+  if (sweep.running) stopSweep("restarted");
   const lo = +$("swLo").value, hi = +$("swHi").value, st = Math.max(0.5, +$("swStep").value);
   const xs = [];
   for (let s = lo; s <= hi + 1e-9; s += st) xs.push(+s.toFixed(2));
-  sweep = { xs, ber: xs.map(() => null), evm: xs.map(() => null), running: true, detail: "" };
+  const key = configKey();
+  sweep = { xs, ber: xs.map(() => null), evm: xs.map(() => null), running: true, detail: "",
+            key, seed: S.seed };
   S.viewChan = "ber"; setTabs("tabsChan", "ber");
   worker?.terminate();
   worker = new Worker(new URL("./experiments/mc_worker.js", import.meta.url), { type: "module" });
   worker.onmessage = (ev) => {
     const m = ev.data;
+    if (sweep.key !== key) return;                  // stale worker output: ignore
     if (m.type === "point") {
       sweep.ber[m.i] = m.ber > 0 ? m.ber : null;
       sweep.evm[m.i] = m.evm;
@@ -191,13 +227,13 @@ function startSweep() {
   $("swStat").textContent = "starting…";
   worker.postMessage({ type: "sweep", snrList: xs,
     minErrors: Math.max(10, +$("swErr").value), maxBits: Math.max(10000, +$("swBits").value),
-    seed0: S.seed * 7919 + 1,
+    seed0: sweep.seed * 7919 + 1,
     cfg: { mod: S.mod, snrMode: S.snrMode, chan: { ...chanCfg(0), noise: undefined }, rx: rxCfg() } });
 }
-function stopSweep() {
+function stopSweep(why = "stopped") {
   worker?.terminate(); worker = null;
   sweep.running = false;
-  $("swStat").textContent = "stopped";
+  $("swStat").textContent = why;
   $("btnSweep").disabled = false; $("btnStopSweep").disabled = true;
 }
 
@@ -335,7 +371,7 @@ $("eqZf").onclick = () => { S.eqMethod = "zf";
 $("eqMmse").onclick = () => { S.eqMethod = "mmse";
   $("eqMmse").classList.add("active"); $("eqZf").classList.remove("active"); runOnce(); };
 $("btnSweep").onclick = startSweep;
-$("btnStopSweep").onclick = stopSweep;
+$("btnStopSweep").onclick = () => stopSweep();
 $("btnExport").onclick = doExport;
 $("btnImg").onclick = transmitImage;
 $("btnLive").onclick = () => {
@@ -364,5 +400,6 @@ setInterval(() => {
 }, 600);
 
 window.addEventListener("resize", render);
+window.__e2e = { get last() { return last; }, get S() { return S; }, get sweep() { return sweep; } };
 defaultImage();
 runOnce();

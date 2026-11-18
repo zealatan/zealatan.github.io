@@ -82,9 +82,9 @@ console.log("Test D — QPSK over AWGN vs Pb = Q(sqrt(2 Eb/N0)), oracle sync+CSI
     }
     const emp = errs / total;
     const theo = qfunc(Math.sqrt(2 * Math.pow(10, ebn0 / 10)));
-    // binomial 3-sigma band + 10% model tolerance
+    // 3-sigma binomial band, no extra model tolerance (QPSK-AWGN theory is exact)
     const sd = Math.sqrt(theo * (1 - theo) / total);
-    const tol = 3 * sd + 0.10 * theo;
+    const tol = 3 * sd;
     check(`Eb/N0=${ebn0} dB`, Math.abs(emp - theo) <= tol,
           `emp=${emp.toExponential(3)} theo=${theo.toExponential(3)} n=${total}`);
   }
@@ -115,9 +115,10 @@ console.log("Test E — static multipath, CP-sufficient vs beyond-CP");
     }
   }
   const berIn = errsIn / totIn, berTheo = theoAcc / theoCnt;
-  check("EVA (delay<=CP): BER matches per-bin fading theory",
-        berIn < 2.5 * berTheo + 1e-5 && berIn > 0.3 * berTheo - 1e-5,
-        `emp=${berIn.toExponential(2)} theo=${berTheo.toExponential(2)}`);
+  const sdE = Math.sqrt(berTheo * (1 - berTheo) / totIn);
+  check("EVA (delay<=CP): BER matches per-bin fading theory (|diff| <= 3 SE)",
+        Math.abs(berIn - berTheo) <= 3 * sdE,
+        `emp=${berIn.toExponential(2)} theo=${berTheo.toExponential(2)} z=${((berIn - berTheo) / sdE).toFixed(2)}`);
 
   // practical pilot-based CE on a mild channel (EPA, max delay 2)
   let bersP = [];
