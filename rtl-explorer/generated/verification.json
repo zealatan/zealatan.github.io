@@ -1,0 +1,524 @@
+{
+ "tiers": {
+  "tier1": {
+   "name": "Algorithm Simulator",
+   "detail": "Floating-point OFDM golden reference (algorithm_sim/ofdm), selftests PASS 2026-11-18."
+  },
+  "tier2": {
+   "name": "RTL Simulator",
+   "detail": "cocotb 2.1.0 + Verilator 5.044 on the unmodified RTL; 6/6 loopback/RX scenarios PASS, BER=0 (reports/TIER2_OFDM_REPORT.md)."
+  },
+  "tier3": {
+   "name": "Real Hardware",
+   "detail": "ZedBoard: NOT executed - no JTAG/Vivado on this machine (orchestrator/real_hw_adapter.py is a disclosed stub). The parent project reports silicon validation on ZCU216/ZU9EG (parent-repo claim, not reproduced here)."
+  }
+ },
+ "scenarios": [
+  {
+   "scenario": "qam16_tier1",
+   "mod_sel": 1,
+   "bit_errors": 0,
+   "total_bits": 10608,
+   "eq_evm_rms_pct": 0.03364062181616102,
+   "tx_data_max_abs_iq_err_lsb": 1.0,
+   "latency_from_start_cycles": {
+    "tx_first_from_start": 4,
+    "tx_last_from_start": 4046,
+    "sync_first_from_start": 8986,
+    "fx_first_from_start": 10112,
+    "bits_first_from_start": 10649,
+    "bits_last_from_start": 14070
+   },
+   "latency_bits_last_us_at_250mhz": 56.28,
+   "source_report": "reports/tier2_ofdm_qam16_tier1.json"
+  },
+  {
+   "scenario": "qpsk_tier1",
+   "mod_sel": 0,
+   "bit_errors": 0,
+   "total_bits": 5304,
+   "eq_evm_rms_pct": 0.033197970792745106,
+   "tx_data_max_abs_iq_err_lsb": 2.0,
+   "latency_from_start_cycles": {
+    "tx_first_from_start": 4,
+    "tx_last_from_start": 4046,
+    "sync_first_from_start": 8986,
+    "fx_first_from_start": 10112,
+    "bits_first_from_start": 10649,
+    "bits_last_from_start": 14070
+   },
+   "latency_bits_last_us_at_250mhz": 56.28,
+   "source_report": "reports/tier2_ofdm_qpsk_tier1.json"
+  }
+ ],
+ "modules": {
+  "complex_mult": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "complex_mult_32": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "complex_mult_iq": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "complex_rotator": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_complex_rotator_unit_tb.sv"
+    ]
+   }
+  },
+  "complex_to_mag": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "cordic_atan2": {
+   "status": "Unit Tested",
+   "detail": "Dedicated tier-2 cocotb+Verilator gate: RTL output equals the bit-exact Python model on 400/400 vectors (0 LSB); deviation vs the float golden is the algorithm-intrinsic 4 LSB (<=5 LSB over a 20k sweep).",
+   "gates": [
+    {
+     "scenario": "isac_chirp",
+     "n": 200,
+     "latency": 15,
+     "max_abs_err_vs_bitexact_lsb": 0,
+     "bitexact_tolerance_lsb": 0,
+     "max_abs_err_vs_float_lsb": 4,
+     "intrinsic_float_bound_lsb": 5,
+     "promoted_to_real_hardware": true
+    },
+    {
+     "scenario": "random",
+     "n": 200,
+     "latency": 15,
+     "max_abs_err_vs_bitexact_lsb": 0,
+     "bitexact_tolerance_lsb": 0,
+     "max_abs_err_vs_float_lsb": 4,
+     "intrinsic_float_bound_lsb": 5,
+     "promoted_to_real_hardware": true
+    }
+   ],
+   "investigation": {
+    "random": {
+     "max_rtl_vs_bitexact": 0,
+     "max_rtl_vs_float": 4
+    },
+    "isac_chirp": {
+     "max_rtl_vs_bitexact": 0,
+     "max_rtl_vs_float": 4
+    }
+   },
+   "source_report": "reports/cordic_investigation.json"
+  },
+  "delayT": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "delay_sample": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "frac_cfo_corrector_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "frac_cfo_estimator": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_frac_cfo_estimator_unit_tb.sv"
+    ]
+   }
+  },
+  "frac_cfo_frame_corrector_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "frac_continuous_tb.sv"
+    ]
+   }
+  },
+  "frame_detect_fsm": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "frame_detector": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_frame_detector_unit_tb.sv"
+    ]
+   }
+  },
+  "frame_frac_cfo_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "iq_capture_pingpong": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "iq_capture_pingpong_unit_tb.sv"
+    ]
+   }
+  },
+  "iq_frame_buffer": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "meyr_FFT_ak_dut": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "meyr_Rm_dut": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "meyr_ak_buf": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "meyr_cfo_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_d_meyr_cfo_top_unit_tb.sv"
+    ]
+   }
+  },
+  "meyr_feeder": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "meyr_ifft_peak_dut": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "meyr_slot_frontend": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_d_meyr_slot_frontend_tb.sv"
+    ]
+   }
+  },
+  "meyr_sync_capture": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_d_meyr_sync_capture_tb.sv"
+    ]
+   }
+  },
+  "meyr_zeropad": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "moving_avg_optimized": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "nco_phase_gen": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_nco_phase_gen_unit_tb.sv"
+    ]
+   }
+  },
+  "ofdm_transceiver_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "ofdm_transceiver_top_tb.sv"
+    ]
+   }
+  },
+  "peak_detector": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "phase3_axi_lite_regs": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "phase3_sync_axis_dma_wrapper": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p3_14b_dma_replay_tb.sv",
+     "p3_24a_cp_autocorr_restore_tb.sv",
+     "p5_03_continuous_nightly_tb.sv",
+     "p5_03_continuous_robust_tb.sv",
+     "p5_03_continuous_smoke_tb.sv",
+     "p5_axi_lite_cov_tb.sv",
+     "p5_d_continuous_wrapper_tb.sv",
+     "phase3_axi_dma_wrapper_smoke_tb.sv",
+     "session_C2_p3_14d_replay_hardening_tb.sv",
+     "session_C3_p3_20a_axi_stress_tb.sv",
+     "session_C4_p3_20b_axi_soak_tb.sv",
+     "session_C_p3_14c_dma_replay_golden_tb.sv",
+     "session_D3_p3_15c_equiv_tb.sv",
+     "session_D_p3_15a_phase3_observable_dump_tb.sv",
+     "session_E_p3_16a_full_end_to_end_phase3_tb.sv",
+     "session_I_p3_20a_axi_backpressure_stress_tb.sv",
+     "session_J_p3_21a_j2j3_wrapper_tb.sv",
+     "session_K_p3_22a_channel_robustness_tb.sv",
+     "session_L_p3_23a_stress_tb.sv"
+    ]
+   }
+  },
+  "phase3_sync_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p3_04_phase3_sync_top_compile_tb.sv",
+     "p3_12b_frame_detector_golden_regression_tb.sv",
+     "phase3_sync_reference_compare_tb.sv",
+     "session_A_p3_12c_full_phase3_regression_tb.sv"
+    ]
+   }
+  },
+  "ram_2port": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "rx_ber_checker": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_ber_checker_tb.sv"
+    ]
+   }
+  },
+  "rx_ch_est": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_ch_est_robust_tb.sv",
+     "rx_ch_est_tb.sv"
+    ]
+   }
+  },
+  "rx_demod_qam": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "rx_downstream_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_downstream_top_tb.sv",
+     "tx_rx_impair_tb.sv",
+     "tx_rx_loop_tb.sv"
+    ]
+   }
+  },
+  "rx_eq_complex_div": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_eq_complex_div_tb.sv",
+     "rx_eq_div_stress_tb.sv"
+    ]
+   }
+  },
+  "rx_equalizer": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_equalizer_tb.sv"
+    ]
+   }
+  },
+  "rx_fft_frontend": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_fft_frontend_rand_tb.sv",
+     "rx_fft_frontend_tb.sv"
+    ]
+   }
+  },
+  "rx_full_chain_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_cfo_allmods_tb.sv",
+     "rx_full_chain_multiframe_tb.sv",
+     "rx_full_chain_tb.sv",
+     "tx_rx_full_loopback_tb.sv"
+    ]
+   }
+  },
+  "sample_power_sq": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "sliding_window_sum": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "slot_start_controller": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "streaming_cp_autocorr": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "p5_cp_autocorr_unit_tb.sv"
+    ]
+   }
+  },
+  "timing_sync_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "tx_ifft_frontend": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "tx_ifft_frontend_tb.sv"
+    ]
+   }
+  },
+  "tx_ofdm_top": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "rx_cfo_allmods_tb.sv",
+     "tx_ofdm_top_tb.sv",
+     "tx_rx_full_loopback_tb.sv",
+     "tx_rx_impair_tb.sv",
+     "tx_rx_loop_tb.sv"
+    ]
+   }
+  },
+  "tx_subcarrier_map": {
+   "status": "Integration Tested",
+   "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md",
+   "parent_testbenches": {
+    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
+    "files": [
+     "tx_subcarrier_map_tb.sv"
+    ]
+   }
+  },
+  "xfft_2N": {
+   "status": "Simulated with Stub",
+   "detail": "Xilinx xfft 9.1 vendor IP (.xci). Tier-2 replaces it with a behavioral FWD/INV BFP model (hw_sim/ofdm/xfft_sim.v), itself unit-tested 0 LSB vs numpy (run_xfft_unit.py). The REAL IP is not simulated here; the real-IP xsim flow remains the acceptance gate per the parent project's rules.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "xfft_IFFT": {
+   "status": "Simulated with Stub",
+   "detail": "Xilinx xfft 9.1 vendor IP (.xci). Tier-2 replaces it with a behavioral FWD/INV BFP model (hw_sim/ofdm/xfft_sim.v), itself unit-tested 0 LSB vs numpy (run_xfft_unit.py). The REAL IP is not simulated here; the real-IP xsim flow remains the acceptance gate per the parent project's rules.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  },
+  "xfft_N": {
+   "status": "Simulated with Stub",
+   "detail": "Xilinx xfft 9.1 vendor IP (.xci). Tier-2 replaces it with a behavioral FWD/INV BFP model (hw_sim/ofdm/xfft_sim.v), itself unit-tested 0 LSB vs numpy (run_xfft_unit.py). The REAL IP is not simulated here; the real-IP xsim flow remains the acceptance gate per the parent project's rules.",
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
+  }
+ },
+ "notes": [
+  "Statuses come only from reports under ~/zedboard-digital-twin/reports/.",
+  "'Integration Tested' does NOT imply independent module-level verification.",
+  "No module is marked 'Hardware Validated' by this environment."
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "generated_by": "scripts/extract_rtl_hierarchy.py",
+ "verilator": "Verilator 5.044 2026-01-01 rev conda-forge build 0",
+ "top": "ofdm_transceiver_top",
+ "rtl_dir": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl",
+ "source_revision": {
+  "repo": "/home/messi/realtime-Gbps-OFDM-for-Wideband",
+  "revision": "ea7ee9700c5b7ff8464dd691e548695aa3b49c7b",
+  "dirty_files": 26
+ },
+ "rtl_files_discovered": 59,
+ "extra_sources": [
+  "/home/messi/zedboard-digital-twin/hw_sim/ofdm/xfft_sim.v"
+ ],
+ "unique_modules": 52,
+ "module_variants": 55,
+ "total_instances": 64,
+ "max_hierarchy_depth": 9,
+ "total_ports": 824,
+ "total_connection_edges": 934,
+ "vendor_ip": [
+  "xfft_2N",
+  "xfft_IFFT",
+  "xfft_N"
+ ],
+ "unresolved": [],
+ "verilator_warnings_lines": 124
+}

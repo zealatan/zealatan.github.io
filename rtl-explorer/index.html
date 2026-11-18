@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OFDM RTL Architecture Explorer</title>
+<link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+<header id="topbar">
+  <div class="brand">OFDM RTL Architecture Explorer
+    <span class="muted small">ofdm_transceiver_top · source-accurate (Verilator elaboration)</span>
+  </div>
+  <div class="searchbox">
+    <input id="search" type="search" placeholder="Search modules, instances, ports, nets…" autocomplete="off">
+    <div id="search-results"></div>
+  </div>
+  <div id="stats" class="muted small"></div>
+</header>
+
+<main id="layout">
+  <aside id="left-pane">
+    <h3 class="pane-title">Hierarchy</h3>
+    <div id="tree"></div>
+  </aside>
+
+  <section id="diagram-pane">
+    <svg id="diagram" preserveAspectRatio="xMidYMid meet"></svg>
+    <svg id="minimap"></svg>
+    <div id="legend">
+      <span><i class="sw cls-data"></i>data</span>
+      <span><i class="sw cls-axis"></i>AXI-Stream handshake</span>
+      <span><i class="sw cls-axil"></i>AXI4-Lite</span>
+      <span><i class="sw cls-control"></i>control</span>
+      <span><i class="sw cls-clock"></i>clock/reset</span>
+      <span><i class="sw sw-ip"></i>vendor IP</span>
+      <span class="muted">ƒ = internal logic · K = constant · ? = unresolved</span>
+    </div>
+    <div id="timing"></div>
+  </section>
+
+  <aside id="right-pane">
+    <div id="details"></div>
+  </aside>
+</main>
+
+<footer id="toolbar">
+  <nav id="crumbs"></nav>
+  <div class="tools">
+    <button class="btn" id="btn-back" title="Back">←</button>
+    <button class="btn" id="btn-fwd" title="Forward">→</button>
+    <span class="sep"></span>
+    <button class="btn" id="btn-zin" title="Zoom in">+</button>
+    <button class="btn" id="btn-zout" title="Zoom out">−</button>
+    <button class="btn" id="btn-fit" title="Fit to screen">Fit</button>
+    <button class="btn" id="btn-full" title="Fullscreen">⛶</button>
+    <span class="sep"></span>
+    <label class="small"><input type="checkbox" id="chk-clocks"> clk/rst nets</label>
+    <span class="sep"></span>
+    <button class="btn" id="btn-svg">SVG</button>
+    <button class="btn" id="btn-png">PNG</button>
+    <button class="btn" id="btn-timing">Timing</button>
+    <button class="btn" id="btn-source">Source</button>
+    <button class="btn" id="btn-theme" title="Toggle theme">◐</button>
+  </div>
+</footer>
+
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
