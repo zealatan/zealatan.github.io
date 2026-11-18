@@ -19,23 +19,52 @@ export function renderFooter(container, text) {
   container.innerHTML = `<footer><p>${text}</p></footer>`;
 }
 
+export function renderHero(container, profile) {
+  container.innerHTML = `
+    <h1>${profile.name}</h1>
+    <p class="subtitle">${profile.subtitle}</p>
+    <p class="tagline">${profile.tagline}</p>
+    <p class="intro">${profile.intro}</p>
+    <div class="links">
+      <a href="#projects">↓ View Projects</a>
+      <a href="mailto:${profile.email}">✉ ${profile.email}</a>
+      <a href="${profile.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="${profile.github}" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <a class="resume-button" href="${profile.resumeUrl}" target="_blank" rel="noopener noreferrer">
+      ↓ Download Resume PDF
+    </a>
+  `;
+}
+
 export function renderProjects(container, projects) {
   const cards = projects
-    .map(
-      (project) => `
+    .map((project) => {
+      const detailLink = project.detailUrl
+        ? `<a class="card-link" href="${project.detailUrl}">View Details →</a>`
+        : "";
+      const otherLinks = (project.links || [])
+        .map((link) => `<a class="card-link" href="${link.href}"${externalAttrs(link.href)}>${link.label}</a>`)
+        .join("\n");
+
+      return `
       <article class="card project-card">
         <div class="project-card-body">
           <span class="badge">${project.badge}</span>
           <h3>${project.title}</h3>
+          <p class="project-card-summary">${project.summary}</p>
           <div class="tag-list">
             ${project.tags.map((tag) => `<span>${tag}</span>`).join("\n")}
           </div>
-          <a class="card-link" href="${project.link}"${externalAttrs(project.link)}>View GitHub →</a>
+          <div class="card-link-row">
+            ${detailLink}
+            ${otherLinks}
+          </div>
         </div>
         ${project.image ? `<img class="project-card-image" src="${project.image}" alt="${project.title}" />` : ""}
       </article>
-    `
-    )
+    `;
+    })
     .join("\n");
 
   container.innerHTML = `
@@ -59,6 +88,9 @@ function renderRole(role) {
 function renderExperienceItem(item) {
   const dateHtml = item.dateRange ? `<span class="experience-date">${item.dateRange}</span>` : "";
   const descriptionHtml = item.description ? `<p class="experience-meta">${item.description}</p>` : "";
+  const highlightsHtml = item.highlights
+    ? `<ul class="experience-highlights">${item.highlights.map((h) => `<li>${h}</li>`).join("\n")}</ul>`
+    : "";
   const rolesHtml = item.roles
     ? `<div class="compact-role-list">${item.roles.map(renderRole).join("\n")}</div>`
     : "";
@@ -73,6 +105,7 @@ function renderExperienceItem(item) {
         ${dateHtml}
       </div>
       ${descriptionHtml}
+      ${highlightsHtml}
       ${rolesHtml}
     </div>
   `;
@@ -95,12 +128,14 @@ export function renderSkillGrid(container, skills) {
 }
 
 function renderEducationItem(item) {
+  const noteHtml = item.note ? `<p class="education-note">${item.note}</p>` : "";
   return `
     <p>
       <strong>${item.degree}</strong><br />
       ${item.school}<br />
       <span class="small-text">${item.dateRange}</span>
     </p>
+    ${noteHtml}
   `;
 }
 

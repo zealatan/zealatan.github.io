@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>28 GHz mmWave MU-MIMO Testbed | Bumhee Lee</title>
+  <meta name="description" content="Programmable 28 GHz mmWave MU-MIMO testbed with real-time beam tracking, demonstrated OTA and published at IEEE WCNC 2025." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <div id="nav"></div>
+
+  <main class="container">
+    <a class="detail-back" href="index.html#projects">← Back to Projects</a>
+
+    <section class="hero detail-hero">
+      <span class="badge">mmWave MIMO</span>
+      <h1>28 GHz mmWave MU-MIMO Testbed</h1>
+      <p class="tagline">
+        A programmable multi-user MIMO prototype operated over the air at 28 GHz, with real-time beam
+        tracking — built and demonstrated at RWTH Aachen's Chair for Distributed Signal Processing, and
+        published as a first-author paper at IEEE WCNC 2025.
+      </p>
+      <div class="detail-links">
+        <a href="https://ieeexplore.ieee.org/document/10978370" target="_blank" rel="noopener noreferrer">IEEE Paper →</a>
+        <a href="demos.html">Demo Video →</a>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">1</span>Engineering Challenge</h2>
+      <p>
+        Multi-user MIMO and beam tracking at mmWave frequencies are usually studied in simulation because
+        building a real over-the-air (OTA) testbed is hard: synchronization, beam management, and multi-user
+        separation all have to work against real propagation, real hardware impairments, and real timing —
+        not an idealized channel model. The goal of this project was to build a <em>programmable</em> 28 GHz
+        testbed that could actually demonstrate multi-user operation live, not just predict it.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">2</span>System Overview &amp; Hardware Platform</h2>
+      <p>
+        The testbed is an SDR-based mmWave platform assembled at the RWTH Aachen Chair for Distributed Signal
+        Processing. It pairs baseband/SDR processing units with RF up/down-conversion stages and phased-array
+        front-ends, and was demonstrated live in a two-user MIMO scenario with independent per-user signal
+        chains and real-time beam control.
+      </p>
+      <div class="diagram-card">
+        <svg viewBox="0 0 900 220" role="img" aria-labelledby="mimo-diagram-title mimo-diagram-desc">
+          <title id="mimo-diagram-title">High-level MU-MIMO testbed system overview</title>
+          <desc id="mimo-diagram-desc">Baseband/SDR unit feeding RF front-end and phased array, transmitting over the air to two user terminals, with a beam-tracking control path.</desc>
+          <defs>
+            <marker id="arrow3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#1c2b4a" />
+            </marker>
+          </defs>
+          <g font-family="IBM Plex Sans, sans-serif">
+            <rect x="15" y="60" width="160" height="70" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="95" y="88" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Baseband / SDR</text>
+            <text x="95" y="104" text-anchor="middle" font-size="10" fill="#5b6472">signal generation</text>
+            <text x="95" y="118" text-anchor="middle" font-size="10" fill="#5b6472">+ beam control</text>
+
+            <rect x="225" y="60" width="150" height="70" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="300" y="88" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">RF Front-End</text>
+            <text x="300" y="104" text-anchor="middle" font-size="10" fill="#5b6472">28 GHz up/down-</text>
+            <text x="300" y="118" text-anchor="middle" font-size="10" fill="#5b6472">conversion</text>
+
+            <rect x="425" y="60" width="150" height="70" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="500" y="88" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Phased Array</text>
+            <text x="500" y="104" text-anchor="middle" font-size="10" fill="#5b6472">beamforming /</text>
+            <text x="500" y="118" text-anchor="middle" font-size="10" fill="#5b6472">beam tracking</text>
+
+            <rect x="660" y="20" width="155" height="55" rx="6" fill="#ffffff" stroke="#2c3e63" stroke-width="1.2" stroke-dasharray="4 3" />
+            <text x="737" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#2c3e63">User 1</text>
+            <text x="737" y="60" text-anchor="middle" font-size="10" fill="#5b6472">OTA receiver</text>
+
+            <rect x="660" y="120" width="155" height="55" rx="6" fill="#ffffff" stroke="#2c3e63" stroke-width="1.2" stroke-dasharray="4 3" />
+            <text x="737" y="144" text-anchor="middle" font-size="11.5" font-weight="600" fill="#2c3e63">User 2</text>
+            <text x="737" y="160" text-anchor="middle" font-size="10" fill="#5b6472">OTA receiver</text>
+
+            <line x1="175" y1="95" x2="223" y2="95" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow3)" />
+            <line x1="375" y1="95" x2="423" y2="95" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow3)" />
+            <line x1="575" y1="85" x2="658" y2="50" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow3)" />
+            <line x1="575" y1="105" x2="658" y2="147" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow3)" />
+          </g>
+          <text x="15" y="200" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#5b6472">
+            High-level system overview — over-the-air links to independent user terminals, with real-time beam tracking feedback into the array.
+          </text>
+        </svg>
+      </div>
+      <p class="diagram-caption">
+        This is a high-level conceptual overview, not an internal RF/IF block diagram — detailed RF chain
+        specifics are not yet documented for this page (see Content TODO).
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">3</span>My Contribution</h2>
+      <p>
+        I am the first author of the associated publication and personally built the testbed — from
+        architecture and hardware integration through to the live OTA demonstration — as part of my research
+        assistant work at the RWTH Aachen Chair for Distributed Signal Processing.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">4</span>Experimental Setup &amp; Validation</h2>
+      <p>
+        The testbed was validated with a live two-user MIMO scenario, operated over the air rather than
+        purely in simulation. The system and demonstration were presented at IEEE WCNC 2025 in Milan, Italy,
+        alongside the first-author paper describing the design.
+      </p>
+      <div class="evidence-figure">
+        <video class="detail-video" controls preload="metadata" poster="assets/testbed-poster.jpg">
+          <source src="assets/28GHz-mmWave-MU-MIMO-Testbed-demo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <figcaption>Live two-user MIMO demonstration recorded on the testbed.</figcaption>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">5</span>Publications &amp; Demonstrations</h2>
+      <p><strong>Programmable 28 GHz mmWave MU-MIMO Testbed</strong> — First Author, Proc. IEEE WCNC 2025, Milan, Italy.</p>
+      <div class="detail-links">
+        <a href="https://ieeexplore.ieee.org/document/10978370" target="_blank" rel="noopener noreferrer">IEEE Paper →</a>
+        <a href="demos.html">Demo Video Page →</a>
+        <a href="index.html#projects">Back to Projects →</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script type="module">
+    import { profile, nav, footerText } from "./assets/js/data.js";
+    import { renderNav, renderFooter } from "./assets/js/render.js";
+    renderNav(document.getElementById("nav"), { siteTitle: profile.name, items: nav });
+    renderFooter(document.getElementById("footer"), footerText);
+  </script>
+</body>
+</html>

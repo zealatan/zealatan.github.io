@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Hardware-Aware ML for PHY Synchronization | Bumhee Lee</title>
+  <meta name="description" content="Two-stage CNN-based synchronizer with offline-trained filters and online calibration, demonstrated on a USRP X410 SDR." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <div id="nav"></div>
+
+  <main class="container">
+    <a class="detail-back" href="index.html#projects">← Back to Projects</a>
+
+    <section class="hero detail-hero">
+      <span class="badge">Hardware-Aware AI</span>
+      <h1>Hardware-Aware ML for PHY Synchronization</h1>
+      <p class="tagline">
+        A two-stage CNN-based synchronizer combining offline-trained filters with online calibration,
+        demonstrated on a USRP X410 software-defined radio under harsh channel conditions.
+      </p>
+      <div class="detail-links">
+        <a href="demos.html">Demo Video →</a>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">1</span>Traditional Synchronization Challenges</h2>
+      <p>
+        Classical PHY synchronization (correlation-based frame detection, Meyr-style integer/fractional CFO
+        estimation — the same approach used in the
+        <a href="project-ofdm-phy.html">Real-Time FPGA OFDM PHY</a> project) is well understood and
+        efficient, but its performance assumptions can degrade under non-ideal, time-varying, or otherwise
+        harsh channel conditions. This project explores whether a learned synchronizer can stay robust in
+        exactly those conditions, and whether it can be deployed in a way that is realistic for an SDR
+        platform rather than purely offline.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">2</span>ML-Based Approach</h2>
+      <p>
+        The synchronizer is a <strong>two-stage CNN</strong>: an offline-trained stage provides a general
+        synchronization filter, and a second, online-training stage calibrates against the live channel
+        conditions seen on the radio. This offline + online split is intended to combine the sample-efficiency
+        of pretraining with the adaptability needed when channel conditions drift.
+      </p>
+      <div class="diagram-card">
+        <svg viewBox="0 0 900 160" role="img" aria-labelledby="ai-sync-diagram-title ai-sync-diagram-desc">
+          <title id="ai-sync-diagram-title">Two-stage CNN synchronizer pipeline</title>
+          <desc id="ai-sync-diagram-desc">Received signal through an offline-trained CNN filter stage and an online-training calibration stage, producing a synchronized output.</desc>
+          <defs>
+            <marker id="arrow4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#1c2b4a" />
+            </marker>
+          </defs>
+          <g font-family="IBM Plex Sans, sans-serif">
+            <rect x="15" y="45" width="150" height="70" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="90" y="75" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Received IQ</text>
+            <text x="90" y="92" text-anchor="middle" font-size="10" fill="#5b6472">(USRP X410)</text>
+
+            <rect x="210" y="45" width="190" height="70" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="305" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Stage 1 — CNN Filter</text>
+            <text x="305" y="88" text-anchor="middle" font-size="10" fill="#5b6472">offline-trained</text>
+            <text x="305" y="102" text-anchor="middle" font-size="10" fill="#5b6472">general synchronization</text>
+
+            <rect x="445" y="45" width="210" height="70" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="550" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Stage 2 — Calibration</text>
+            <text x="550" y="88" text-anchor="middle" font-size="10" fill="#5b6472">online training</text>
+            <text x="550" y="102" text-anchor="middle" font-size="10" fill="#5b6472">live channel adaptation</text>
+
+            <rect x="700" y="45" width="185" height="70" rx="6" fill="#ffffff" stroke="#2c3e63" stroke-width="1.2" stroke-dasharray="4 3" />
+            <text x="792" y="75" text-anchor="middle" font-size="12" font-weight="600" fill="#2c3e63">Synchronized</text>
+            <text x="792" y="92" text-anchor="middle" font-size="10" fill="#5b6472">output → PHY RX</text>
+
+            <line x1="165" y1="80" x2="208" y2="80" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow4)" />
+            <line x1="400" y1="80" x2="443" y2="80" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow4)" />
+            <line x1="655" y1="80" x2="698" y2="80" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow4)" />
+          </g>
+        </svg>
+      </div>
+      <p class="diagram-caption">
+        Pipeline reconstructed from the project's demo description. Internal layer architecture and parameter
+        counts are not yet documented for this page (see Content TODO).
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">3</span>Hardware Implementation Considerations</h2>
+      <p>
+        The synchronizer was demonstrated on a <strong>USRP X410</strong> SDR platform, running as a real-time
+        processing chain alongside live training-loss logging during calibration. The USRP X410 carries an
+        onboard RFSoC, but the available project material documents a host-side, GNU&nbsp;Radio-style
+        processing chain for this demo rather than a synthesized RTL/FPGA-fabric deployment of the network
+        itself — so this page does <em>not</em> claim FPGA deployment of the inference path. Confirming
+        whether (and how much of) the pipeline runs on the X410's FPGA fabric versus the host is tracked in
+        the Content TODO.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">4</span>Experimental Comparison</h2>
+      <p>
+        The chart below is a real measured BER-vs-SNR result from this project's test logs, showing a
+        synchronization performance comparison across the tested SNR range.
+      </p>
+      <div class="evidence-figure" style="max-width:420px;">
+        <img src="assets/project-ber.jpg" alt="Measured bit-error-rate versus SNR chart comparing synchronization configurations" />
+        <figcaption>
+          Measured BER vs. SNR. The exact curve legend (which trace corresponds to which synchronizer
+          configuration) is not yet labeled on the source chart — see Content TODO before quoting this
+          result to a specific audience.
+        </figcaption>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">5</span>Available Demonstrations</h2>
+      <p>
+        A recorded demonstration of the AI-native synchronizer running on the X410, including live training
+        logs, is available on the demos page.
+      </p>
+      <div class="detail-links">
+        <a href="demos.html">Demo Video Page →</a>
+        <a href="index.html#projects">Back to Projects →</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script type="module">
+    import { profile, nav, footerText } from "./assets/js/data.js";
+    import { renderNav, renderFooter } from "./assets/js/render.js";
+    renderNav(document.getElementById("nav"), { siteTitle: profile.name, items: nav });
+    renderFooter(document.getElementById("footer"), footerText);
+  </script>
+</body>
+</html>
