@@ -99,6 +99,7 @@ function renderEducationItem(item) {
     <p>
       <strong>${item.degree}</strong><br />
       ${item.school}<br />
+      ${item.detail ? `${item.detail}<br />` : ""}
       <span class="small-text">${item.dateRange}</span>
     </p>
   `;
