@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Real-Time FPGA OFDM PHY | Bumhee Lee</title>
+  <meta name="description" content="Mode-selectable OFDM transceiver in Verilog, verified bit-exact and proven on ZCU216 RFSoC silicon." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <div id="nav"></div>
+
+  <main class="container">
+    <a class="detail-back" href="index.html#projects">← Back to Projects</a>
+
+    <section class="hero detail-hero">
+      <span class="badge">Real-Time PHY</span>
+      <h1>Real-Time FPGA OFDM PHY</h1>
+      <p class="tagline">
+        A mode-selectable OFDM transceiver written in synthesizable Verilog for the AMD ZCU216 RFSoC —
+        verified bit-exact against a C/NumPy reference model and proven on real silicon.
+      </p>
+      <div class="detail-links">
+        <a href="https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband" target="_blank" rel="noopener noreferrer">GitHub Repository →</a>
+      </div>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">1</span>Engineering Challenge</h2>
+      <p>
+        A wideband OFDM PHY — the same family of waveform used by Wi-Fi, LTE, and 5G — has to run frame
+        synchronization, carrier-offset correction, FFT-based demodulation, channel estimation, and
+        equalization at full radio sample rate, with essentially zero error tolerance. Proving that a design
+        works is not enough in simulation only: the real test is whether the same RTL, synthesized and routed
+        for a specific part, produces bit-exact results when it is actually clocked on silicon. This project's
+        goal was to build and close that full loop — from a clean mathematical reference down to a working
+        transceiver on an RFSoC board.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">2</span>System Architecture</h2>
+      <p>
+        <code>ofdm_transceiver_top</code> is a single Verilog design that is runtime mode-selectable:
+        transmitter, receiver, or digital loopback (TX feeding RX internally), with a second select line
+        choosing the modulation order. Both chains share a 256-point FFT engine, the QAM constellation logic,
+        and the framing structure. Control and status (mode, modulation, start, on-chip BER readback) are
+        exposed over AXI-Lite/GPIO; the IQ datapath is carried over AXI-Stream.
+      </p>
+      <div class="diagram-card">
+        <svg viewBox="0 0 920 430" role="img" aria-labelledby="ofdm-diagram-title ofdm-diagram-desc">
+          <title id="ofdm-diagram-title">OFDM transceiver block diagram</title>
+          <desc id="ofdm-diagram-desc">TX chain feeding a channel/loopback block feeding an RX chain, with mode and modulation mux control.</desc>
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#1c2b4a" />
+            </marker>
+          </defs>
+
+          <!-- TX chain label -->
+          <text x="20" y="22" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="#5b6472" letter-spacing="0.04em">TX CHAIN</text>
+
+          <!-- TX boxes -->
+          <g font-family="IBM Plex Sans, sans-serif">
+            <rect x="20" y="32" width="160" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="100" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">tx_subcarrier_map</text>
+            <text x="100" y="74" text-anchor="middle" font-size="10.5" fill="#5b6472">QAM map + pilots</text>
+            <text x="100" y="88" text-anchor="middle" font-size="10.5" fill="#5b6472">+ fftshift</text>
+
+            <rect x="210" y="32" width="160" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="290" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">tx_ifft_frontend</text>
+            <text x="290" y="74" text-anchor="middle" font-size="10.5" fill="#5b6472">256-pt IDFT (xfft)</text>
+            <text x="290" y="88" text-anchor="middle" font-size="10.5" fill="#5b6472">+ cyclic prefix (32)</text>
+
+            <rect x="400" y="32" width="160" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="480" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">tx_ofdm_top</text>
+            <text x="480" y="74" text-anchor="middle" font-size="10.5" fill="#5b6472">PSS/SSS + 12 data</text>
+            <text x="480" y="88" text-anchor="middle" font-size="10.5" fill="#5b6472">symbols → 4032 slot</text>
+
+            <line x1="180" y1="65" x2="208" y2="65" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+            <line x1="370" y1="65" x2="398" y2="65" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+          </g>
+
+          <!-- down to channel -->
+          <line x1="480" y1="98" x2="480" y2="150" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+
+          <!-- channel box -->
+          <rect x="330" y="150" width="300" height="56" rx="6" fill="#ffffff" stroke="#2c3e63" stroke-width="1.2" stroke-dasharray="4 3" />
+          <text x="480" y="173" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="#2c3e63">Channel / Loopback /</text>
+          <text x="480" y="190" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="#2c3e63">RF DAC ↔ ADC</text>
+
+          <!-- down to RX -->
+          <line x1="480" y1="206" x2="480" y2="256" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+
+          <!-- RX chain label -->
+          <text x="20" y="246" font-family="IBM Plex Sans, sans-serif" font-size="12" font-weight="600" fill="#5b6472" letter-spacing="0.04em">RX CHAIN</text>
+
+          <g font-family="IBM Plex Sans, sans-serif">
+            <rect x="20" y="256" width="150" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="95" y="282" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">synchronizer</text>
+            <text x="95" y="298" text-anchor="middle" font-size="10" fill="#5b6472">frame/timing +</text>
+            <text x="95" y="311" text-anchor="middle" font-size="10" fill="#5b6472">int/frac CFO (Meyr)</text>
+
+            <rect x="195" y="256" width="150" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="270" y="282" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">rx_fft_frontend</text>
+            <text x="270" y="298" text-anchor="middle" font-size="10" fill="#5b6472">256-pt FFT</text>
+
+            <rect x="370" y="256" width="150" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="445" y="282" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">rx_ch_est</text>
+            <text x="445" y="298" text-anchor="middle" font-size="10" fill="#5b6472">pilot-based</text>
+            <text x="445" y="311" text-anchor="middle" font-size="10" fill="#5b6472">LS channel estimate</text>
+
+            <rect x="545" y="256" width="150" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="620" y="282" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">rx_equalizer</text>
+            <text x="620" y="298" text-anchor="middle" font-size="10" fill="#5b6472">zero-forcing EQ</text>
+
+            <rect x="720" y="256" width="170" height="66" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="805" y="278" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">rx_demod_qam +</text>
+            <text x="805" y="293" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">rx_ber_checker</text>
+            <text x="805" y="309" text-anchor="middle" font-size="10" fill="#5b6472">slicer + on-chip BER</text>
+
+            <line x1="170" y1="289" x2="193" y2="289" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+            <line x1="345" y1="289" x2="368" y2="289" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+            <line x1="520" y1="289" x2="543" y2="289" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+            <line x1="695" y1="289" x2="718" y2="289" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow)" />
+          </g>
+
+          <text x="20" y="360" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#5b6472">
+            ofdm_transceiver_top — mode[1:0]: TX / RX / LOOPBACK &#8226; mod_sel[1:0]: QPSK / 16-QAM / 64-QAM / 256-QAM
+          </text>
+          <text x="20" y="380" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#5b6472">
+            Interfaces — AXI-Stream (32-bit IQ datapath) &#8226; AXI-Lite / GPIO (mode, mod_sel, start, BER readback)
+          </text>
+        </svg>
+      </div>
+      <p class="diagram-caption">
+        Block diagram reconstructed from the project's own architecture documentation (README and block-design
+        docs in the repository).
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">3</span>My Contribution</h2>
+      <p>
+        This is an individually built research/portfolio project (solo repository, not a team deliverable):
+        the RTL for both TX and RX chains, the C and NumPy golden-reference models used to validate it, the
+        simulation and regression infrastructure, the Vivado block design (RFDC + DMA integration), the Vitis
+        firmware used for board bring-up, and the silicon debugging were all carried out directly by me.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">4</span>Implementation</h2>
+      <ul>
+        <li>RTL: synthesizable Verilog, 256-point FFT/IFFT via the Xilinx xfft 9.1 IP, fixed-point QAM mapping/slicing (QPSK, 16/64/256-QAM).</li>
+        <li>Synchronization: frame/timing detection plus integer and fractional carrier-frequency offset (CFO) correction using a Meyr-style estimator.</li>
+        <li>Channel estimation / equalization: pilot-based least-squares channel estimation feeding a zero-forcing equalizer.</li>
+        <li>Platform: AMD ZCU216 RFSoC evaluation board, locked target part <code>xczu9eg-ffvb1156-2-e</code>; Vivado 2021.1 for synthesis/simulation, Vitis 2022.2 for firmware.</li>
+        <li>Integration: AXI-Stream IQ datapath, AXI-Lite/GPIO control plane, RFDC + DMA in the Vivado block design.</li>
+      </ul>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">5</span>Verification</h2>
+      <p>
+        Every block is proven against a reference before it is trusted on hardware. The chain of evidence runs
+        from a C reference model, to a bit-exact NumPy golden model, to RTL simulation against the
+        <strong>real</strong> Xilinx FFT IP on the locked target part, and only then to silicon:
+      </p>
+      <div class="diagram-card">
+        <svg viewBox="0 0 900 140" role="img" aria-labelledby="verify-diagram-title">
+          <title id="verify-diagram-title">Verification methodology flow</title>
+          <defs>
+            <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#1c2b4a" />
+            </marker>
+          </defs>
+          <g font-family="IBM Plex Sans, sans-serif">
+            <rect x="10" y="35" width="150" height="60" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="85" y="60" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">C reference</text>
+            <text x="85" y="76" text-anchor="middle" font-size="10" fill="#5b6472">receiver.c / transmitter.c</text>
+
+            <rect x="195" y="35" width="170" height="60" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="280" y="60" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">NumPy golden model</text>
+            <text x="280" y="76" text-anchor="middle" font-size="10" fill="#5b6472">bit-exact vectors</text>
+
+            <rect x="400" y="35" width="210" height="60" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="505" y="56" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">RTL — xsim</text>
+            <text x="505" y="72" text-anchor="middle" font-size="10" fill="#5b6472">real Xilinx xfft 9.1 IP</text>
+            <text x="505" y="86" text-anchor="middle" font-size="10" fill="#5b6472">locked part xczu9eg-ffvb1156-2-e</text>
+
+            <rect x="645" y="35" width="245" height="60" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+            <text x="767" y="60" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1c2b4a">ZCU216 silicon</text>
+            <text x="767" y="76" text-anchor="middle" font-size="10" fill="#5b6472">on-chip BER readback</text>
+
+            <line x1="160" y1="65" x2="193" y2="65" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow2)" />
+            <line x1="365" y1="65" x2="398" y2="65" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow2)" />
+            <line x1="610" y1="65" x2="643" y2="65" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#arrow2)" />
+          </g>
+        </svg>
+      </div>
+      <p>
+        On top of this chain, a required-gate regression suite (<code>run_rtl_regression.py</code>) tracks a
+        registry of simulation gates — 12 of 12 passing at the time this page was written — covering the
+        3-mode transceiver, 4-modulation clean loopback, and multi-frame streaming scenarios.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">6</span>Measured Results</h2>
+      <p>All figures below are taken directly from the project's own simulation logs, timing/utilization reports, and silicon test results.</p>
+      <div class="results-grid">
+        <div class="result-stat">
+          <span class="value">187.5 MHz</span>
+          <span class="label">Sample clock (pl_clk0) run on ZCU216 silicon</span>
+        </div>
+        <div class="result-stat">
+          <span class="value">232 MHz</span>
+          <span class="label">Post-route Fmax (WNS +0.656 ns at a 200 MHz closure target)</span>
+        </div>
+        <div class="result-stat">
+          <span class="value">BER = 0</span>
+          <span class="label">Full RX chain (sync→FFT→channel-est→EQ→16-QAM demod) on ZCU216 silicon, full rate <span class="status-pill done">silicon</span></span>
+        </div>
+        <div class="result-stat">
+          <span class="value">3 / 3 modes</span>
+          <span class="label">TX / RX / LOOPBACK mode-selectable transceiver, BER = 0 on silicon <span class="status-pill done">silicon</span></span>
+        </div>
+        <div class="result-stat">
+          <span class="value">4 / 4 modulations</span>
+          <span class="label">QPSK / 16 / 64 / 256-QAM clean-loopback, BER = 0 in simulation <span class="status-pill progress">sim</span></span>
+        </div>
+        <div class="result-stat">
+          <span class="value">5 / 5 + 8 / 8</span>
+          <span class="label">Multi-frame continuous streaming, BER = 0 (silicon frames / sim frames)</span>
+        </div>
+        <div class="result-stat">
+          <span class="value">LUT 7.5% · Reg 8.3%</span>
+          <span class="label">Post-route resource utilization (full design incl. AXI DMA + PS block design)</span>
+        </div>
+        <div class="result-stat">
+          <span class="value">DSP 7.8% · BRAM 2.5%</span>
+          <span class="label">Post-route resource utilization (same build)</span>
+        </div>
+        <div class="result-stat">
+          <span class="value">1.27 W</span>
+          <span class="label">Post-route on-chip power estimate</span>
+        </div>
+      </div>
+      <p class="result-note">
+        <strong>Honest status, not overstated:</strong> silicon-validated BER = 0 currently covers the 16-QAM
+        full-chain RX and the 3-mode transceiver. The 4-modulation result (QPSK/16/64/256-QAM) is verified
+        clean-loopback in simulation; silicon validation across all four modulations and a diverse
+        channel/CFO BER-vs-SNR sweep are in progress. Sustained wideband throughput against the project's
+        200 Msps target is also still in progress and is not yet a closed result — it is tracked separately
+        from the BER and timing-closure figures above.
+      </p>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">7</span>Engineering Challenges</h2>
+      <ul>
+        <li><strong>Full-rate timing closure.</strong> The channel-estimation complex-divide was reworked into a precomputed-constant multiply to close timing at the full 187.5 MHz sample rate.</li>
+        <li><strong>RF loopback debug.</strong> An RF DAC→ADC analog loopback test uncovered a DAC C2R (complex-to-real) mixer bug; it was root-caused and fixed on silicon. The remaining residual error was isolated to a degraded SMA test cable through physical substitution testing — a design-external cause, not a logic bug.</li>
+        <li><strong>Keeping simulation honest.</strong> A "real-IP rule" was enforced throughout: a simulation gate only counts as PASS when it runs against the actual Xilinx xfft 9.1 IP on the locked target part — stub/behavioral runs are treated as sanity checks only, not evidence.</li>
+      </ul>
+    </section>
+
+    <section class="detail-section">
+      <h2><span class="step-num">8</span>Repository &amp; Evidence</h2>
+      <div class="evidence-figure" style="margin-bottom:20px;">
+        <img src="assets/project-fpga.jpg" alt="ZCU216 RFSoC board and companion RF front-end on the lab bench during bring-up" />
+        <p class="diagram-caption" style="margin:8px 0 0;">Hardware bring-up: ZCU216 RFSoC evaluation board with RF front-end module.</p>
+      </div>
+      <div class="detail-links">
+        <a href="https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband" target="_blank" rel="noopener noreferrer">GitHub Repository →</a>
+        <a href="index.html#projects">Back to Projects →</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+  <script type="module">
+    import { profile, nav, footerText } from "./assets/js/data.js";
+    import { renderNav, renderFooter } from "./assets/js/render.js";
+    renderNav(document.getElementById("nav"), { siteTitle: profile.name, items: nav });
+    renderFooter(document.getElementById("footer"), footerText);
+  </script>
+</body>
+</html>

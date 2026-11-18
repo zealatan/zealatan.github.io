@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OFDM Live Dashboard — Math Reference</title>
+<meta name="description" content="Every scenario and transceiver algorithm in the OFDM Live Dashboard, mapped 1:1 to its equations and implementation.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+  :root { --bg:#0e1117; --panel:#161b22; --fg:#e6edf3; --mut:#8b949e;
+          --acc:#2f81f7; --grid:#30363d; --ok:#3fb950; --warn:#f0883e; --err:#f85149; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+         line-height:1.6; }
+  header { position:sticky; top:0; z-index:5; background:rgba(14,17,23,0.95);
+           backdrop-filter:blur(4px); border-bottom:1px solid var(--grid);
+           padding:10px 18px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+  header h1 { font-size:17px; margin:0; }
+  header .sub { font-size:12px; color:var(--mut); }
+  header a.btn { margin-left:auto; background:var(--acc); color:#fff; text-decoration:none;
+                 border-radius:7px; padding:5px 12px; font-size:13px; }
+  main { max-width:980px; margin:0 auto; padding:22px 18px 80px; }
+  nav.toc { background:var(--panel); border:1px solid var(--grid); border-radius:10px;
+            padding:14px 18px; font-size:13.5px; columns:2; column-gap:28px; }
+  nav.toc a { color:var(--acc); text-decoration:none; display:block; padding:1.5px 0; }
+  @media (max-width:700px){ nav.toc{columns:1} }
+  h2 { font-size:19px; border-bottom:1px solid var(--grid); padding-bottom:6px;
+       margin:46px 0 10px; }
+  h2 small { font-size:12px; color:var(--mut); font-weight:400; margin-left:8px; }
+  section.block { background:var(--panel); border:1px solid var(--grid); border-radius:10px;
+                  padding:14px 18px; margin:14px 0; }
+  section.block h3 { font-size:15px; margin:0 0 6px; }
+  .eq { overflow-x:auto; padding:4px 0; }
+  .map { font-size:12.5px; color:var(--mut); border-top:1px dashed var(--grid);
+         margin-top:10px; padding-top:8px; }
+  .map b { color:var(--fg); }
+  .map .ui { color:var(--warn); }
+  .map code { background:#0b0f14; border:1px solid var(--grid); border-radius:5px;
+              padding:1px 6px; font-size:11.5px; color:#79c0ff; }
+  p { font-size:14px; }
+  table { border-collapse:collapse; font-size:13px; margin:8px 0; width:100%; }
+  th,td { border:1px solid var(--grid); padding:5px 10px; text-align:center; }
+  th { background:#0b0f14; color:var(--mut); font-weight:600; }
+  td:first-child { text-align:left; }
+  .note { font-size:12.5px; color:var(--mut); }
+  .tag { display:inline-block; font-size:10.5px; letter-spacing:.04em; border-radius:5px;
+         padding:1px 7px; margin-right:6px; vertical-align:2px; }
+  .tag.t2 { background:#13233a; color:#58a6ff; border:1px solid #1f4064; }
+  .tag.t1 { background:#15271a; color:#3fb950; border:1px solid #1f5230; }
+  .tag.cm { background:#2a2113; color:#d29922; border:1px solid #574a1e; }
+</style>
+</head>
+<body>
+<header>
+  <h1>OFDM Live Dashboard — Math Reference</h1>
+  <span class="sub">every scenario &amp; transceiver algorithm ↔ its equations, 1:1</span>
+  <a class="btn" href="index.html">▶ Open the simulator</a>
+</header>
+<main>
+
+<p>
+This document states exactly what the <a href="index.html" style="color:var(--acc)">OFDM Live
+Dashboard</a> computes in your browser — equation by equation, as implemented. Under each
+block, the <span class="ui" style="color:var(--warn)">orange text</span> names the simulator
+control it maps to and <code>code</code> names the function in the (single-file) source.
+<span class="tag cm">common</span><span class="tag t2">② Channel Estimator tab</span><span class="tag t1">① Synchronizer tab</span>
+</p>
+
+<nav class="toc">
+  <a href="#sig">1. Common signal model (QAM · AWGN · detection · metrics)</a>
+  <a href="#imp">2. RF / sync impairment equations</a>
+  <a href="#chan">3. Channel scenarios (AWGN · EPA · EVA · ETU · Rician)</a>
+  <a href="#ce">4. Channel estimation — LS · LMMSE · Linear/FFT/2D/CNN</a>
+  <a href="#eq">5. Equalization — ZF vs MMSE</a>
+  <a href="#ber">6. BER curve model and error floors</a>
+  <a href="#fec">7. FEC — Hamming(7,4)</a>
+  <a href="#img">8. Image transmission (BER → pixel bit flips)</a>
+  <a href="#pre">9. Preambles — m-sequence / Gold</a>
+  <a href="#tim">10. Timing sync — cross-correlation &amp; first-path ambiguity</a>
+  <a href="#cfo">11. CFO estimation — phase-slope LS fit</a>
+  <a href="#res">12. Sync residual model and the LOCK rule</a>
+  <a href="#trk">13. Phase tracking — CPE · SFO ramp</a>
+</nav>
+
+<!-- ============ 1. Signal model ============ -->
+<h2 id="sig">1. Common signal model <small>QAM mapping · noise · detection · metrics</small></h2>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>Normalized square QAM with Gray mapping</h3>
+<p>Modulation order \(M\in\{4,16,64,256\}\), \(L=\sqrt{M}\) levels per axis. Per-axis levels and Gray code:</p>
+<div class="eq">$$ v_i = 2i-(L-1),\quad i=0,\dots,L-1, \qquad g(i)= i \oplus (i\!\gg\!1) $$</div>
+<p>A normalization constant forces unit average symbol energy \(E_s=1\):</p>
+<div class="eq">$$ c=\frac{1}{\sqrt{2\cdot\frac{1}{L}\sum_{i=0}^{L-1}v_i^2}},\qquad s = c\,(v_I + j\,v_Q) $$</div>
+<div class="map"><span class="ui">QPSK/16QAM/64QAM/256QAM buttons</span> · <code>buildAxis()</code> <code>normFactor()</code> <code>grayEncode()</code></div>
+</section>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>AWGN — Box-Muller Gaussian</h3>
+<div class="eq">$$ u,v\sim\mathcal U(0,1),\qquad z=\sqrt{-2\ln u}\,\cos(2\pi v)\ \sim\ \mathcal N(0,1) $$</div>
+<p>SNR is converted to linear scale and the complex noise variance split equally between I and Q:</p>
+<div class="eq">$$ \gamma=10^{\mathrm{SNR_{dB}}/10},\qquad n = \sigma\,(z_1+j z_2),\quad \sigma=\sqrt{\tfrac{\sigma_n^2}{2}} $$</div>
+<div class="map"><span class="ui">SNR slider</span> · <code>randn()</code> (the sine component is recycled via a spare variable)</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Assembling the received noise variance — the simulator's central equation</h3>
+<p>The total noise variance visible on the equalized constellation is the sum of four terms:</p>
+<div class="eq">$$ \sigma_n^2 \;=\; \underbrace{\ell_{est}\cdot\frac{P_t}{\gamma}}_{\text{AWGN}\times\text{est.\ loss}}
+\;+\; \underbrace{F_{sel}}_{\text{selectivity floor}}
+\;+\; \underbrace{\frac{\pi^2}{3}\Big(\frac{\Delta f_{res}}{\Delta f_{sc}}\Big)^{2}}_{\text{CFO ICI}}
+\;+\; \underbrace{(3.6\times10^{-4}\,\delta_{sfo})^2}_{\text{SFO residual}} $$</div>
+<p>with pilot-overhead power \(P_t=0.97\), subcarrier spacing
+\(\Delta f_{sc}=20\,\mathrm{MHz}/256=78.125\,\mathrm{kHz}\), and channel-estimation loss</p>
+<div class="eq">$$ \ell_{est}=1+(\,\ell_P-1\,)\cdot\mu_{noise},\qquad \ell_P=1.6\ \text{(PILOT\_LOSS)} $$</div>
+<p>\(\mu_{noise}\) and \(F_{sel}\) are functions of the estimation options, defined in §6.
+With Perfect Sync ON, the CFO/SFO/PN residual terms are zero.</p>
+<div class="map"><span class="ui">Perfect Sync toggle, PN/CFO/SFO sliders</span> · the <code>nVar</code> assembly in <code>simulate()</code></div>
+</section>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>Hard decision · BER · EVM · blind SNR</h3>
+<div class="eq">$$ \hat i=\mathrm{clip}\Big(\mathrm{round}\big(\tfrac{y/c+(L-1)}{2}\big),\,0,\,L-1\Big),
+\qquad \mathrm{BER}=\frac{\#\{\text{Gray-bit mismatches}\}}{2\log_2\!L\cdot N} $$</div>
+<div class="eq">$$ \mathrm{EVM}=\sqrt{\frac{\sum_k |y_k-s_k|^2}{\sum_k |s_k|^2}},\qquad
+\widehat{\mathrm{SNR}}_{blind}=10\log_{10}\frac{1}{\mathrm{EVM}^2} $$</div>
+<div class="map">bottom status line <span class="ui">BER · EVM · blind</span> · <code>sliceIdx()</code>, tallies in <code>simulate()</code></div>
+</section>
+
+<!-- ============ 2. Impairments ============ -->
+<h2 id="imp">2. RF / sync impairment equations <small>toggles shared by both tabs</small></h2>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>CFO → ICI (inter-carrier interference)</h3>
+<p>A frequency offset \(\Delta f\) breaks subcarrier orthogonality; the equivalent noise (small-offset approximation):</p>
+<div class="eq">$$ \sigma^2_{ICI}\;\approx\;\frac{\pi^2}{3}\Big(\frac{\Delta f}{\Delta f_{sc}}\Big)^{2} $$</div>
+<div class="map"><span class="ui">CFO slider</span> · <code>cfoICI</code> (②), and in <code>syncConst()</code> (①)</div>
+</section>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>Phase noise (PN) — random walk + CPE</h3>
+<p>Phase noise of linewidth \(\beta\) [Hz] accumulates as a per-symbol random walk:</p>
+<div class="eq">$$ \phi_{t+1}=\phi_t+w_t,\quad w_t\sim\mathcal N\!\big(0,\ (0.18)^2\,\tfrac{2\pi\beta}{\Delta f_{sc}}\big) $$</div>
+<p>With common-phase (CPE) tracking ON the common component of \(\phi\) is removed (§13);
+OFF, the whole constellation rotates by \(\phi_t\).</p>
+<div class="map"><span class="ui">PN slider + CPE toggle</span> · <code>pnSigma</code>, <code>phiRes</code></div>
+</section>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>IQ imbalance</h3>
+<p>Gain mismatch \(g=10^{1/20}\) (1 dB), phase mismatch \(\varphi=5^\circ\):</p>
+<div class="eq">$$ y' \;=\; g\,(\sin\varphi\; x+\cos\varphi\; y) $$</div>
+<div class="map"><span class="ui">IQ toggle</span> · <code>iqG, iqP</code> — classified as an impairment the synchronizer does <b>not</b> correct</div>
+</section>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>PA nonlinearity — Rapp model (p = 2)</h3>
+<p>Saturation level \(A_{sat}=10^{3/20}\) (3 dB backoff):</p>
+<div class="eq">$$ G(|x|)=\Big(1+\big(\tfrac{|x|}{A_{sat}}\big)^{2p}\Big)^{-\frac{1}{2p}},\quad p=2
+\qquad x'\!=G(|x|)\,x $$</div>
+<div class="map"><span class="ui">PA toggle</span> · <code>Asat</code> — envelope compression also squashes the timing-correlation peak (§10)</div>
+</section>
+
+<section class="block"><span class="tag cm">common</span>
+<h3>DC offset · SFO</h3>
+<div class="eq">$$ x' = x + 0.02 \qquad\quad \sigma^2_{SFO}=(3.6\times10^{-4}\cdot \delta_{ppm})^2 $$</div>
+<p>DC mostly hits the DC subcarrier (small effect on data); SFO appears as a phase ramp
+proportional to symbol index (§13), and its residual enters as a variance term.</p>
+<div class="map"><span class="ui">DC toggle · SFO slider</span> · <code>dc</code>, <code>sfoRes</code>/<code>sfoVar</code></div>
+</section>
+
+<!-- ============ 3. Channels ============ -->
+<h2 id="chan">3. Channel scenarios <small>AWGN · 3GPP fading · Rician</small></h2>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Scenario parameter table</h3>
+<table>
+<tr><th>Scenario</th><th>Taps \(L_{cir}\)</th><th>Selectivity res</th><th>Doppler [Hz]</th><th>Notes</th></tr>
+<tr><td>AWGN</td><td>1</td><td>0</td><td>0</td><td>flat, no floor</td></tr>
+<tr><td>EPA</td><td>3</td><td>0.05</td><td>5</td><td>pedestrian (3GPP EPA5)</td></tr>
+<tr><td>EVA</td><td>8</td><td>0.22</td><td>70</td><td>vehicular (EVA70)</td></tr>
+<tr><td>ETU</td><td>16</td><td>0.45</td><td>300</td><td>urban high-speed (ETU300)</td></tr>
+<tr><td>Rician</td><td>3</td><td>0.035</td><td>5</td><td>LOS-dominated → less selective than EPA</td></tr>
+</table>
+<p class="note">Overriding \(L_{cir}\) with the taps slider recomputes selectivity as
+\( \mathrm{res}=\min(0.6,\,0.03(L_{cir}-1)) \).</p>
+<div class="map"><span class="ui">AWGN/EPA/EVA/ETU/Rician buttons + taps slider</span> · <code>SCN</code>, <code>CIR_LEN</code>, <code>selFromTaps()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Physical channel synthesis — exponential-PDP Rayleigh/Rician</h3>
+<p>Tap gains are Rayleigh complex gains on an exponential power-delay profile; Rician adds a
+LOS component to the first tap, then the CIR is normalized to unit power:</p>
+<div class="eq">$$ g_n = e^{-0.35 n}\,e^{j\theta_n},\ \theta_n\sim\mathcal U(0,2\pi)
+\qquad g_0 \mathrel{+}= 1.6\ \text{(Rician)} \qquad \sum_n |g_n|^2 = 1 $$</div>
+<p>The frequency response is the DFT over \(N=128\) subcarriers, with Doppler slowly modulating the tap phases:</p>
+<div class="eq">$$ H[k]=\sum_{n=0}^{L_{cir}-1} g_n\,e^{j\,0.6\sin(t f_d/700+1.3n)}\;e^{-j2\pi kn/N} $$</div>
+<div class="map">the <b>true|H|</b> curve in the |H| panel · <code>genBaseTaps()</code> <code>trueH()</code></div>
+</section>
+
+<section class="block"><span class="tag t1">①</span>
+<h3>Multipath for the synchronizer + Rician K</h3>
+<p>The CIR the preamble passes through (tap spacing 3 samples) uses the same exponential PDP,
+with a LOS of K-factor \(K_{dB}\) added to the first tap:</p>
+<div class="eq">$$ g_0 \mathrel{+}= \sqrt{10^{K_{dB}/10}},\qquad r[m]=\sum_t g_t\,p[m-3t]\,e^{j2\pi \Delta f m/F_s}+n[m] $$</div>
+<div class="map"><span class="ui">taps slider + Rician K slider</span> · <code>syncTiming()</code> — the cause of the first-path ambiguity in §10</div>
+</section>
+
+<!-- ============ 4. Channel estimation ============ -->
+<h2 id="ce">4. Channel estimation <small>LS · LMMSE · Linear/FFT/2D/CNN interpolation</small></h2>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>LS pilot estimates</h3>
+<p>\(P\in\{8,16,32,64\}\) pilots are placed with spacing \(D=N/P\). On pilot subcarriers:</p>
+<div class="eq">$$ \hat H_p[i] \;=\; \frac{Y[iD]}{X_p[iD]} \;=\; H[iD]+\frac{n_i}{X_p},\qquad
+\operatorname{Var}=\sigma_n^2 $$</div>
+<div class="map"><span class="ui">pilots 8/16/32/64 · est LS</span> · <code>Hpr/Hpi</code> in <code>estimateChannel()</code> (orange dots)</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Linear interpolation</h3>
+<div class="eq">$$ \hat H[k]=\hat H_p[i]+\frac{k-k_i}{k_{i+1}-k_i}\big(\hat H_p[i\!+\!1]-\hat H_p[i]\big) $$</div>
+<p>On a selective channel it cannot follow the curvature between pilots — an
+<b>interpolation bias</b> that does not vanish with SNR and becomes a BER floor (§6).</p>
+<div class="map"><span class="ui">interp Linear</span> · <code>lerp()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>FFT (DFT) interpolation — CIR recovery</h3>
+<p>Take the pilot response to the time domain with a \(P\)-point IDFT, keep only the CP span (16 taps),
+and go back with an \(N\)-point DFT:</p>
+<div class="eq">$$ c[n]=\frac{1}{P}\sum_{m=0}^{P-1}\hat H_p[m]e^{j2\pi mn/P}
+\;\xrightarrow{\;n&lt;\min(P,16)\;}\;
+\hat H[k]=\sum_{n} c[n]\,e^{-j2\pi kn/N} $$</div>
+<p>If the channel length fits inside the CP, the bias disappears and noise shrinks by \(\tfrac{L_{cir}}{P}\).</p>
+<div class="map"><span class="ui">interp FFT</span> · <code>idftP()</code> <code>dftToN()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>LMMSE — per-tap Wiener weighting</h3>
+<p>Same path as FFT interpolation, multiplied by a per-tap Wiener filter with an exponential-PDP prior:</p>
+<div class="eq">$$ w_n=\frac{p_n}{p_n+\sigma_n^2/P},\qquad p_n=\frac{e^{-0.35n}}{\sum_m e^{-0.35m}}
+\qquad c[n]\leftarrow w_n\,c[n] $$</div>
+<p>Suppressing the noise-dominated weak taps cuts estimation noise by a further ~28%.</p>
+<div class="map"><span class="ui">est LMMSE</span> · the LMMSE branch of <code>estimateChannel()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>2D interpolation — time-axis averaging</h3>
+<div class="eq">$$ \bar H_p[i]=\frac{1}{T}\sum_{t=1}^{T}\hat H_p^{(t)}[i],\quad T\le 5
+\;\;\to\;\; \text{linear interpolation} $$</div>
+<p>Only valid at low Doppler (long coherence time) — on fast channels like EVA/ETU the
+time average itself becomes a bias.</p>
+<div class="map"><span class="ui">interp 2D</span> · 5-frame moving average over <code>chHist</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>CNN interpolation — learned residual refinement (AI CE)</h3>
+<p>The linear-interpolated estimate is RMS-normalized into a 3-channel input
+\([\mathrm{Re}/\rho,\ \mathrm{Im}/\rho,\ \sigma_n]\); a circular-padded 1-D convolutional
+residual network outputs a correction:</p>
+<div class="eq">$$ h=\mathrm{ReLU}(W_{head}*x),\quad
+h\leftarrow h+\mathrm{ReLU}(W_{b}*h)\ (\times2),\quad
+\hat H = \big(x_{1,2}+W_{tail}*h\big)\cdot\rho $$</div>
+<p class="note">12 channels, kernel 7, two residual blocks. Weights were trained per pilot count in
+py_ofdm_sim's <code>cnn_export.py</code> and exported to JSON — the forward pass genuinely runs
+in the page.</p>
+<div class="map"><span class="ui">interp CNN</span> · <code>cnnInterp()</code> <code>cnnConv()</code>, weights <code>CNN_W</code> (inlined in the HTML)</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Estimate quality + CFO correction (before/after)</h3>
+<div class="eq">$$ \mathrm{MSE}=\frac{1}{N}\sum_{k}\big|\hat H[k]-H[k]\big|^2 $$</div>
+<p>CFO correction ON: the common phase is tracked from the inter-frame pilot inner product and de-rotated:</p>
+<div class="eq">$$ \theta \mathrel{+}= \arg\!\Big(\sum_i \hat H_p^{(t)}[i]\,\overline{\hat H_p^{(t-1)}[i]}\Big),
+\qquad \hat H \leftarrow \hat H\,e^{-j\theta} $$</div>
+<p class="note">The CFO rotation is removed, but the SFO ramp and phase-noise jitter remain —
+the same limitation as real per-symbol CPE tracking.</p>
+<div class="map"><span class="ui">CFO corr (before/after) button · MSE readout</span> · <code>chThetaAcc</code></div>
+</section>
+
+<!-- ============ 5. Equalization ============ -->
+<h2 id="eq">5. Equalization <small>ZF vs MMSE</small></h2>
+<section class="block"><span class="tag t2">②</span>
+<h3>Per-subcarrier equalizers</h3>
+<div class="eq">$$ \hat s_{ZF}[k]=\frac{Y[k]}{\hat H[k]} \qquad
+\hat s_{MMSE}[k]=\frac{\hat H^*[k]}{|\hat H[k]|^2+\sigma_n^2}\,Y[k] $$</div>
+<p>For per-subcarrier <b>hard detection</b> in OFDM, normalizing out the MMSE bias yields the
+same decision boundaries as ZF, so <b>BER does not change</b> — which is why the simulator
+does not let the eq choice move the BER. This conclusion is calibrated against the Python
+comparison (<code>py_ofdm_sim/compare_eq.py</code>).</p>
+<div class="map"><span class="ui">eq ZF/MMSE buttons</span> · see the <code>EQ_OPTS</code> comment</div>
+</section>
+
+<!-- ============ 6. BER model ============ -->
+<h2 id="ber">6. BER curve model <small>Monte-Carlo + per-option noise &amp; floors</small></h2>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Curve generation (scenario mode)</h3>
+<p>SNR grid \(0..38\,\mathrm{dB}\) in 2 dB steps; 30,000 Monte-Carlo symbols per grid point:</p>
+<div class="eq">$$ \sigma_n^2(\gamma)=\ell_{est}\frac{P_t}{\gamma}+F_{sel},\qquad
+\mathrm{BER}=\widehat{\Pr}\{\text{Gray bit flip}\} $$</div>
+<div class="map"><span class="ui">↻ recompute button</span> · <code>berPoint()</code> <code>computeBer()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Estimation options → noise multiplier \(\mu_{noise}\)</h3>
+<div class="eq">$$ \mu_{noise}=\underbrace{\sqrt{32/P}}_{\text{pilot count}}\cdot
+\underbrace{\kappa_{est}}_{\substack{LS:1\\ LMMSE:0.72}}\cdot
+\underbrace{\kappa_{interp}}_{\substack{CNN:0.80\ /\ 2D:0.82\\ FFT:0.92\ /\ Lin:1}} $$</div>
+<p class="note">The 0.82 for 2D applies only when Doppler &lt; 70 Hz (1 on fast channels).</p>
+<div class="map"><code>noiseMulFor()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Selectivity error floor \(F_{sel}\)</h3>
+<p>Methods that recover the CIR (FFT/2D/CNN/LMMSE) and plain Linear meet different fates:</p>
+<div class="eq">$$ F_{sel}=
+\begin{cases}
+0.02\,\mathrm{res}+\mathrm{res}\cdot\iota\cdot u\cdot 0.5, & \text{CIR recovered}\quad
+u=\max(0,\tfrac{12}{P}-\tfrac12)\\[4px]
+0.9\,\mathrm{res}\cdot(32/P)^{1.4}, & \text{Linear interpolation-bias floor}
+\end{cases} $$</div>
+<p class="note">\(\iota\): CNN 0.5, 2D 0.6, FFT 0.8 (×0.8 if LMMSE). \(u\) is an undersampling
+term that kicks in when the pilots fail to sample the CIR (below P≈24). Calibrated so the
+default (LS·Linear·P=32) matches the original per-scenario res.</p>
+<div class="map"><span class="ui">Compare mode</span>: LS·Linear / LS·FFT / CNN / LMMSE curves · <code>selectiveFloor()</code> <code>estFloorOpt()</code> <code>berPointOpt()</code></div>
+</section>
+
+<!-- ============ 7. FEC ============ -->
+<h2 id="fec">7. FEC <small>Hamming(7,4) residual BER</small></h2>
+<section class="block"><span class="tag t2">②</span>
+<h3>Residual bit error rate after single-error correction</h3>
+<p>Code rate \(R=4/7\), correction capability \(t=1\). From a raw channel BER \(p\):</p>
+<div class="eq">$$ p_{out}=\frac{1}{n}\sum_{i=t+1}^{n} i\binom{n}{i} p^i (1-p)^{\,n-i},\qquad n=7 $$</div>
+<p>Coding gain is measured as the SNR difference where the two curves cross BER \(=10^{-2}\)
+(log-linear interpolation, <code>snrAtBer()</code>): AWGN ≈ 3.0 dB, Rician ≈ 7.5 dB.</p>
+<div class="map"><span class="ui">+FEC button</span> (dashed curves) · <code>fecResidualBer()</code> <code>showCodingGain()</code></div>
+</section>
+
+<!-- ============ 8. Image ============ -->
+<h2 id="img">8. Image transmission <small>link quality made visible</small></h2>
+<section class="block"><span class="tag cm">common</span>
+<h3>BER → pixel bit flips</h3>
+<p>The TX image (112×112, RGB) is treated as a bitstream; bits are flipped at random at the
+link's current effective BER (\(p_{out}\) when FEC is ON):</p>
+<div class="eq">$$ N_{flip}=\mathrm{round}\big(112\cdot112\cdot3\cdot8\cdot \mathrm{BER}_{eff}\big),
+\qquad b_{idx}\leftarrow b_{idx}\oplus 2^{u},\ u\sim\mathcal U\{0..7\} $$</div>
+<div class="map"><span class="ui">📷 Upload / Default buttons, TX→RX panel</span> · <code>corruptImage()</code> <code>renderRxImage()</code> — refreshed every 2nd frame</div>
+</section>
+
+<!-- ============ 9. Preambles ============ -->
+<h2 id="pre">9. Preambles <small>m-sequence / Gold (BPSK, L = 127)</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>LFSR generation and cyclic shift</h3>
+<div class="eq">$$ x[i]=\big(x[i-3]+x[i-7]\big)\bmod 2,\qquad x_{init}=1110110 $$</div>
+<div class="eq">$$ p[n]=2\,x\big[(n+43\,N_{id}^{(2)})\bmod 127\big]-1 \in\{\pm1\},\qquad N_{id}^{(2)}=2 $$</div>
+<p class="note">Selecting "gold" uses a second sequence from the same generator with shift index
+\((N_{id}^{(2)}+3)\bmod 7\). This is a direct port of the C reference's
+<code>generate_m_sequence_bits()</code> used in the real receiver.</p>
+<div class="map"><span class="ui">preamble m/gold buttons</span> · <code>mSeqBpsk()</code>, \(F_s=20\,\mathrm{MHz}\)</div>
+</section>
+
+<!-- ============ 10. Timing ============ -->
+<h2 id="tim">10. Timing sync <small>sliding cross-correlation</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>Matched-filter metric and the first-path ambiguity</h3>
+<div class="eq">$$ M[k]=\Big|\sum_{n=0}^{L-1} p[n]\; r[k+n]\Big|,\qquad \hat\tau=\arg\max_k M[k] $$</div>
+<p>In multipath a later tap can beat the first one, so the \(\arg\max\) (red line) lands
+\(\Delta\) samples off the true first path (green dashed) — a classical matched-filter
+limitation (the Δ shown in the plot legend). The timing error adds decision noise:</p>
+<div class="eq">$$ \sigma^2_{tim}=
+\begin{cases}(\epsilon_\tau/42)^2, & \epsilon_\tau\le 32\ \text{(inside CP: phase ramp only)}\\
+(\epsilon_\tau/12)^2, & \epsilon_\tau&gt;32\ \text{(outside CP: ISI)}\end{cases} $$</div>
+<div class="map"><span class="ui">timing slider (true τ), Timing toggle, plot ①</span> · <code>syncTiming()</code> <code>firstErr</code></div>
+</section>
+
+<!-- ============ 11. CFO ============ -->
+<h2 id="cfo">11. CFO estimation <small>phase-slope LS fit</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>The phase ramp of z = rx·conj(ref)</h3>
+<p>Stripping the known preamble leaves a pure CFO rotation (\(|p[n]|=1\)):</p>
+<div class="eq">$$ z[k]=r[k]\,\overline{p[k]}=e^{j2\pi\Delta f k/F_s}+n'[k]
+\quad\Rightarrow\quad \phi[k]=\mathrm{unwrap}\big(\arg z[k]\big) $$</div>
+<p>A least-squares line through the unwrapped phase gives the frequency from its slope:</p>
+<div class="eq">$$ \hat\beta=\frac{m\sum k\phi_k-\sum k\sum\phi_k}{m\sum k^2-(\sum k)^2},
+\qquad \widehat{\Delta f}=\frac{\hat\beta F_s}{2\pi} $$</div>
+<p class="note">Coarse uses the first 32 samples only (large-offset capture); fine uses both
+sync blocks, \(2\times127\) samples (half the variance). With IQ imbalance on, \(\arg z\)
+is biased and the estimate skews.</p>
+<div class="map"><span class="ui">Coarse CFO / Fine CFO toggles, plot ② (blue dots + red fit line)</span> · <code>syncCfoFit()</code> <code>slope()</code></div>
+</section>
+
+<!-- ============ 12. Residuals / LOCK ============ -->
+<h2 id="res">12. Sync residual model and the LOCK rule</h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>Residual CFO per toggle combination</h3>
+<table>
+<tr><th>Coarse</th><th>Fine</th><th>Residual \(\Delta f_{res}\)</th><th>Constellation</th></tr>
+<tr><td>ON</td><td>ON</td><td>\(\pm\,40/\sqrt{\gamma}\) Hz (estimator jitter)</td><td>static</td></tr>
+<tr><td>ON</td><td>OFF</td><td>\(0.10\cdot\Delta f\) (coarse granularity)</td><td>static</td></tr>
+<tr><td>OFF</td><td>ON</td><td>\(0.60\cdot\Delta f\) (fine alone cannot acquire)</td><td>static</td></tr>
+<tr><td>OFF</td><td>OFF</td><td>all of \(\Delta f\)</td><td>spins</td></tr>
+</table>
+<p>Total noise: \( \sigma^2 = P_t/\gamma + \sigma^2_{ICI}(\Delta f_{res}) + \sigma^2_{tim}
++ \sigma^2_{SFO} + F_{csi} \); with Perfect CSI OFF, a frequency-selective estimation floor
+\(F_{csi}=0.45\cdot\mathrm{res}(L_{cir})\) is added. The LOCK rule:</p>
+<div class="eq">$$ \mathrm{LOCK} \iff |\Delta f_{res}|&lt;200\,\mathrm{Hz}\ \wedge\ \epsilon_\tau\le4\ \wedge\
+(\mathrm{CPE\ ON}\lor \beta=0)\ \wedge\ (\mathrm{SFO\ ON}\lor \delta=0) $$</div>
+<div class="map"><span class="ui">plot ③ (green = LOCKED), lock 🔒 in the status line</span> · <code>syncConst()</code> <code>locked</code></div>
+</section>
+
+<!-- ============ 13. Tracking ============ -->
+<h2 id="trk">13. Phase tracking <small>CPE random walk · SFO ramp</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>Three curves over symbol index</h3>
+<div class="eq">$$ \mathrm{CPE}[i]=\sum_{m\le i} w_m\ \ (\text{random walk}),\qquad
+\mathrm{SFO}[i]=1.5\times10^{-3}\,\delta_{ppm}\cdot i\ \ (\text{ramp}) $$</div>
+<div class="eq">$$ \mathrm{resid}[i]=(1-\mathbb 1_{CPE})\,\mathrm{CPE}[i]+(1-\mathbb 1_{SFO})\,\mathrm{SFO}[i] $$</div>
+<p class="note">CPE is a phase common to all subcarriers (estimable from pilots and removable);
+SFO is a slope proportional to subcarrier index — their signatures differ, which is exactly
+why they can be estimated separately. That separation is the point of this plot.</p>
+<div class="map"><span class="ui">Phase tracking panel (orange CPE · blue SFO · green residual)</span> · <code>syncTrack()</code></div>
+</section>
+
+<p class="note" style="margin-top:40px">
+Every equation above corresponds 1:1 to the simulator source (the JS inside the single HTML
+file). Calibration constants (0.97, 1.6, 0.35, 3.6e-4, …) are matched to the Python
+simulations in py_ofdm_sim (<code>compare_eq.py</code> and friends).
+If you find a block in the simulator that is missing here, that is a bug.
+</p>
+
+</main>
+</body>
+</html>
