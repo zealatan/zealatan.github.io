@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OFDM Live Dashboard — 수식 레퍼런스</title>
+<meta name="description" content="OFDM Live Dashboard 시뮬레이터의 모든 시나리오와 송수신 알고리즘을 수식으로 1:1 연결한 레퍼런스.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+  :root { --bg:#0e1117; --panel:#161b22; --fg:#e6edf3; --mut:#8b949e;
+          --acc:#2f81f7; --grid:#30363d; --ok:#3fb950; --warn:#f0883e; --err:#f85149; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+         line-height:1.6; }
+  header { position:sticky; top:0; z-index:5; background:rgba(14,17,23,0.95);
+           backdrop-filter:blur(4px); border-bottom:1px solid var(--grid);
+           padding:10px 18px; display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+  header h1 { font-size:17px; margin:0; }
+  header .sub { font-size:12px; color:var(--mut); }
+  header a.btn { margin-left:auto; background:var(--acc); color:#fff; text-decoration:none;
+                 border-radius:7px; padding:5px 12px; font-size:13px; }
+  main { max-width:980px; margin:0 auto; padding:22px 18px 80px; }
+  nav.toc { background:var(--panel); border:1px solid var(--grid); border-radius:10px;
+            padding:14px 18px; font-size:13.5px; columns:2; column-gap:28px; }
+  nav.toc a { color:var(--acc); text-decoration:none; display:block; padding:1.5px 0; }
+  @media (max-width:700px){ nav.toc{columns:1} }
+  h2 { font-size:19px; border-bottom:1px solid var(--grid); padding-bottom:6px;
+       margin:46px 0 10px; }
+  h2 small { font-size:12px; color:var(--mut); font-weight:400; margin-left:8px; }
+  section.block { background:var(--panel); border:1px solid var(--grid); border-radius:10px;
+                  padding:14px 18px; margin:14px 0; }
+  section.block h3 { font-size:15px; margin:0 0 6px; }
+  .eq { overflow-x:auto; padding:4px 0; }
+  .map { font-size:12.5px; color:var(--mut); border-top:1px dashed var(--grid);
+         margin-top:10px; padding-top:8px; }
+  .map b { color:var(--fg); }
+  .map .ui { color:var(--warn); }
+  .map code { background:#0b0f14; border:1px solid var(--grid); border-radius:5px;
+              padding:1px 6px; font-size:11.5px; color:#79c0ff; }
+  p { font-size:14px; }
+  table { border-collapse:collapse; font-size:13px; margin:8px 0; width:100%; }
+  th,td { border:1px solid var(--grid); padding:5px 10px; text-align:center; }
+  th { background:#0b0f14; color:var(--mut); font-weight:600; }
+  td:first-child { text-align:left; }
+  .note { font-size:12.5px; color:var(--mut); }
+  .tag { display:inline-block; font-size:10.5px; letter-spacing:.04em; border-radius:5px;
+         padding:1px 7px; margin-right:6px; vertical-align:2px; }
+  .tag.t2 { background:#13233a; color:#58a6ff; border:1px solid #1f4064; }
+  .tag.t1 { background:#15271a; color:#3fb950; border:1px solid #1f5230; }
+  .tag.cm { background:#2a2113; color:#d29922; border:1px solid #574a1e; }
+</style>
+</head>
+<body>
+<header>
+  <h1>OFDM Live Dashboard — 수식 레퍼런스</h1>
+  <span class="sub">시뮬레이터의 모든 시나리오·송수신 알고리즘 ↔ 수식 1:1 매핑</span>
+  <a class="btn" href="index.html">▶ 시뮬레이터 열기</a>
+</header>
+<main>
+
+<p>
+이 문서는 <a href="index.html" style="color:var(--acc)">OFDM Live Dashboard</a>가 브라우저에서
+실제로 계산하는 수식을 구현 그대로 정리한 것이다. 각 블록 하단의
+<span class="ui" style="color:var(--warn)">주황색</span>은 시뮬레이터의 해당 컨트롤,
+<code>코드</code>는 소스(단일 HTML 내 JS)의 함수명이다.
+<span class="tag cm">공통</span><span class="tag t2">② Channel Estimator 탭</span><span class="tag t1">① Synchronizer 탭</span>
+</p>
+
+<nav class="toc">
+  <a href="#sig">1. 공통 신호 모델 (QAM·AWGN·판정·지표)</a>
+  <a href="#imp">2. RF/동기 임페어먼트 수식</a>
+  <a href="#chan">3. 채널 시나리오 (AWGN·EPA·EVA·ETU·Rician)</a>
+  <a href="#ce">4. 채널 추정 — LS·LMMSE·Linear·FFT·2D·CNN</a>
+  <a href="#eq">5. 등화 — ZF vs MMSE</a>
+  <a href="#ber">6. BER 커브 모델과 에러 플로어</a>
+  <a href="#fec">7. FEC — Hamming(7,4)</a>
+  <a href="#img">8. 이미지 전송 (BER→픽셀 비트플립)</a>
+  <a href="#pre">9. 프리앰블 — m-시퀀스 / Gold</a>
+  <a href="#tim">10. 타이밍 동기 — 교차상관·first-path 모호성</a>
+  <a href="#cfo">11. CFO 추정 — 위상 기울기 LS 피팅</a>
+  <a href="#res">12. 동기 잔차 모델과 LOCK 판정</a>
+  <a href="#trk">13. 위상 추적 — CPE·SFO 램프</a>
+  <a href="#ntn">14. NTN — LEO/GEO Doppler·pre-comp·FLL</a>
+  <a href="#dopp">15. Doppler 추적 — α-β vs Kalman vs TCN</a>
+</nav>
+
+<!-- ============ 1. 공통 신호 모델 ============ -->
+<h2 id="sig">1. 공통 신호 모델 <small>QAM 변조 · 잡음 · 판정 · 지표</small></h2>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>정규화 정방형 QAM (Gray 매핑)</h3>
+<p>변조 차수 \(M\in\{4,16,64,256\}\), 축당 레벨 수 \(L=\sqrt{M}\). I/Q 각 축의 레벨과 Gray 코드:</p>
+<div class="eq">$$ v_i = 2i-(L-1),\quad i=0,\dots,L-1, \qquad g(i)= i \oplus (i\!\gg\!1) $$</div>
+<p>평균 심볼 에너지 \(E_s=1\)이 되도록 정규화 상수를 곱한다:</p>
+<div class="eq">$$ c=\frac{1}{\sqrt{2\cdot\frac{1}{L}\sum_{i=0}^{L-1}v_i^2}},\qquad s = c\,(v_I + j\,v_Q) $$</div>
+<div class="map"><span class="ui">QPSK/16QAM/64QAM/256QAM 버튼</span> · <code>buildAxis()</code> <code>normFactor()</code> <code>grayEncode()</code></div>
+</section>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>AWGN — Box-Muller 가우시안</h3>
+<div class="eq">$$ u,v\sim\mathcal U(0,1),\qquad z=\sqrt{-2\ln u}\,\cos(2\pi v)\ \sim\ \mathcal N(0,1) $$</div>
+<p>SNR을 선형으로 바꾸고 복소 잡음 분산을 반반 나눈다:</p>
+<div class="eq">$$ \gamma=10^{\mathrm{SNR_{dB}}/10},\qquad n = \sigma\,(z_1+j z_2),\quad \sigma=\sqrt{\tfrac{\sigma_n^2}{2}} $$</div>
+<div class="map"><span class="ui">SNR 슬라이더</span> · <code>randn()</code> (spare 변수로 sin 성분 재활용)</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>수신 잡음 분산의 조립 — 시뮬레이터의 핵심 식</h3>
+<p>등화 후 constellation에 보이는 총 잡음 분산은 네 항의 합이다:</p>
+<div class="eq">$$ \sigma_n^2 \;=\; \underbrace{\ell_{est}\cdot\frac{P_t}{\gamma}}_{\text{AWGN}\times\text{추정손실}}
+\;+\; \underbrace{F_{sel}}_{\text{선택성 플로어}}
+\;+\; \underbrace{\frac{\pi^2}{3}\Big(\frac{\Delta f_{res}}{\Delta f_{sc}}\Big)^{2}}_{\text{CFO ICI}}
+\;+\; \underbrace{(3.6\times10^{-4}\,\delta_{sfo})^2}_{\text{SFO 잔차}} $$</div>
+<p>여기서 \(P_t=0.97\)(파일럿 오버헤드 전력), 서브캐리어 간격 \(\Delta f_{sc}=20\,\mathrm{MHz}/256=78.125\,\mathrm{kHz}\),
+채널 추정 손실은</p>
+<div class="eq">$$ \ell_{est}=1+(\,\ell_P-1\,)\cdot\mu_{noise},\qquad \ell_P=1.6\ \text{(PILOT\_LOSS)} $$</div>
+<p>\(\mu_{noise}\), \(F_{sel}\)은 §6에서 추정 옵션의 함수로 정의된다.
+Perfect Sync ON이면 CFO/SFO/PN 잔차 항은 0.</p>
+<div class="map"><span class="ui">Perfect Sync 토글, PN/CFO/SFO 슬라이더</span> · <code>simulate()</code>의 <code>nVar</code> 조립부</div>
+</section>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>하드 판정·BER·EVM·블라인드 SNR</h3>
+<div class="eq">$$ \hat i=\mathrm{clip}\Big(\mathrm{round}\big(\tfrac{y/c+(L-1)}{2}\big),\,0,\,L-1\Big),
+\qquad \mathrm{BER}=\frac{\#\{\text{Gray 비트 불일치}\}}{2\log_2\!L\cdot N} $$</div>
+<div class="eq">$$ \mathrm{EVM}=\sqrt{\frac{\sum_k |y_k-s_k|^2}{\sum_k |s_k|^2}},\qquad
+\widehat{\mathrm{SNR}}_{blind}=10\log_{10}\frac{1}{\mathrm{EVM}^2} $$</div>
+<div class="map">하단 상태줄 <span class="ui">BER · EVM · blind</span> · <code>sliceIdx()</code>, <code>simulate()</code> 집계부</div>
+</section>
+
+<!-- ============ 2. 임페어먼트 ============ -->
+<h2 id="imp">2. RF/동기 임페어먼트 수식 <small>두 탭 공통 토글</small></h2>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>CFO → ICI (캐리어 간 간섭)</h3>
+<p>주파수 오프셋 \(\Delta f\)가 서브캐리어 직교성을 깨며 생기는 등가 잡음 (소신호 근사):</p>
+<div class="eq">$$ \sigma^2_{ICI}\;\approx\;\frac{\pi^2}{3}\Big(\frac{\Delta f}{\Delta f_{sc}}\Big)^{2} $$</div>
+<div class="map"><span class="ui">CFO 슬라이더</span> · <code>cfoICI</code> (②), <code>cfoICI</code> in <code>syncConst()</code> (①)</div>
+</section>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>위상잡음(PN) — 랜덤워크 + CPE</h3>
+<p>라인폭 \(\beta\)[Hz]의 위상잡음을 심볼마다 랜덤워크로 누적한다:</p>
+<div class="eq">$$ \phi_{t+1}=\phi_t+w_t,\quad w_t\sim\mathcal N\!\big(0,\ (0.18)^2\,\tfrac{2\pi\beta}{\Delta f_{sc}}\big) $$</div>
+<p>공통 위상(CPE) 추적이 켜지면 \(\phi\)의 공통 성분이 제거되고(§13), 꺼지면 constellation 전체가 \(\phi_t\)만큼 회전한다.</p>
+<div class="map"><span class="ui">PN 슬라이더 + CPE 토글</span> · <code>pnSigma</code>, <code>phiRes</code></div>
+</section>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>IQ 임밸런스</h3>
+<p>이득 불일치 \(g=10^{1/20}\) (1 dB), 위상 불일치 \(\varphi=5^\circ\):</p>
+<div class="eq">$$ y' \;=\; g\,(\sin\varphi\; x+\cos\varphi\; y) $$</div>
+<div class="map"><span class="ui">IQ 토글</span> · <code>iqG, iqP</code> — 동기기가 보정하지 않는 손상으로 분류됨</div>
+</section>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>PA 비선형 — Rapp 모델 (p=2)</h3>
+<p>포화 레벨 \(A_{sat}=10^{3/20}\) (3 dB 백오프):</p>
+<div class="eq">$$ G(|x|)=\Big(1+\big(\tfrac{|x|}{A_{sat}}\big)^{2p}\Big)^{-\frac{1}{2p}},\quad p=2
+\qquad x'\!=G(|x|)\,x $$</div>
+<div class="map"><span class="ui">PA 토글</span> · <code>Asat</code>, 포락선 압축 — 타이밍 상관 피크도 같이 눌린다 (§10)</div>
+</section>
+
+<section class="block"><span class="tag cm">공통</span>
+<h3>DC 오프셋 · SFO</h3>
+<div class="eq">$$ x' = x + 0.02 \qquad\quad \sigma^2_{SFO}=(3.6\times10^{-4}\cdot \delta_{ppm})^2 $$</div>
+<p>DC는 주로 DC 서브캐리어에만 영향(데이터에 소폭), SFO는 심볼 인덱스에 비례하는 위상 램프(§13)로 나타나며 잔차는 분산 항으로 환산된다.</p>
+<div class="map"><span class="ui">DC 토글 · SFO 슬라이더</span> · <code>dc</code>, <code>sfoRes</code>/<code>sfoVar</code></div>
+</section>
+
+<!-- ============ 3. 채널 시나리오 ============ -->
+<h2 id="chan">3. 채널 시나리오 <small>AWGN · 3GPP 페이딩 · Rician</small></h2>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>시나리오 파라미터 표</h3>
+<table>
+<tr><th>시나리오</th><th>탭 수 \(L_{cir}\)</th><th>선택성 res</th><th>Doppler [Hz]</th><th>비고</th></tr>
+<tr><td>AWGN</td><td>1</td><td>0</td><td>0</td><td>플랫, 플로어 없음</td></tr>
+<tr><td>EPA</td><td>3</td><td>0.05</td><td>5</td><td>보행자 (3GPP EPA5)</td></tr>
+<tr><td>EVA</td><td>8</td><td>0.22</td><td>70</td><td>차량 (EVA70)</td></tr>
+<tr><td>ETU</td><td>16</td><td>0.45</td><td>300</td><td>도심 고속 (ETU300)</td></tr>
+<tr><td>Rician</td><td>3</td><td>0.035</td><td>5</td><td>LOS 우세 → EPA보다 덜 선택적</td></tr>
+</table>
+<p class="note">taps 슬라이더로 \(L_{cir}\)을 직접 바꾸면 선택성은 \( \mathrm{res}=\min(0.6,\,0.03(L_{cir}-1)) \)로 재계산된다.</p>
+<div class="map"><span class="ui">AWGN/EPA/EVA/ETU/Rician 버튼 + taps 슬라이더</span> · <code>SCN</code>, <code>CIR_LEN</code>, <code>selFromTaps()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>물리 채널 생성 — 지수 PDP Rayleigh/Rician</h3>
+<p>탭 이득은 지수 전력지연 프로파일의 Rayleigh 복소 이득, Rician은 첫 탭에 LOS 성분을 더한 뒤 단위 전력으로 정규화:</p>
+<div class="eq">$$ g_n = e^{-0.35 n}\,e^{j\theta_n},\ \theta_n\sim\mathcal U(0,2\pi)
+\qquad g_0 \mathrel{+}= 1.6\ \text{(Rician)} \qquad \sum_n |g_n|^2 = 1 $$</div>
+<p>주파수 응답은 \(N=128\) 서브캐리어에 대한 DFT이고, Doppler는 탭 위상을 느리게 변조한다:</p>
+<div class="eq">$$ H[k]=\sum_{n=0}^{L_{cir}-1} g_n\,e^{j\,0.6\sin(t f_d/700+1.3n)}\;e^{-j2\pi kn/N} $$</div>
+<div class="map">|H| 패널의 <b>true|H|</b> 곡선 · <code>genBaseTaps()</code> <code>trueH()</code></div>
+</section>
+
+<section class="block"><span class="tag t1">①</span>
+<h3>동기 탭의 멀티패스 + Rician K</h3>
+<p>프리앰블이 통과하는 CIR(탭 간격 3 샘플)도 같은 지수 PDP에, K-팩터 \(K_{dB}\)의 LOS를 첫 탭에 더한다:</p>
+<div class="eq">$$ g_0 \mathrel{+}= \sqrt{10^{K_{dB}/10}},\qquad r[m]=\sum_t g_t\,p[m-3t]\,e^{j2\pi \Delta f m/F_s}+n[m] $$</div>
+<div class="map"><span class="ui">taps 슬라이더 + Rician K 슬라이더</span> · <code>syncTiming()</code> — §10의 first-path 모호성의 원인</div>
+</section>
+
+<!-- ============ 4. 채널 추정 ============ -->
+<h2 id="ce">4. 채널 추정 <small>LS · LMMSE · Linear/FFT/2D/CNN 보간</small></h2>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>LS 파일럿 추정</h3>
+<p>\(P\in\{8,16,32,64\}\)개 파일럿이 간격 \(D=N/P\)로 배치된다. 파일럿 서브캐리어에서:</p>
+<div class="eq">$$ \hat H_p[i] \;=\; \frac{Y[iD]}{X_p[iD]} \;=\; H[iD]+\frac{n_i}{X_p},\qquad
+\operatorname{Var}=\sigma_n^2 $$</div>
+<div class="map"><span class="ui">pilots 8/16/32/64 · est LS</span> · <code>estimateChannel()</code>의 <code>Hpr/Hpi</code> (주황 점)</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>Linear 보간</h3>
+<div class="eq">$$ \hat H[k]=\hat H_p[i]+\frac{k-k_i}{k_{i+1}-k_i}\big(\hat H_p[i\!+\!1]-\hat H_p[i]\big) $$</div>
+<p>선택적 채널에서는 파일럿 사이 곡률을 못 따라가는 <b>보간 바이어스</b>가 생기고, 이는 SNR을 올려도 사라지지 않는 BER 플로어가 된다 (§6).</p>
+<div class="map"><span class="ui">interp Linear</span> · <code>lerp()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>FFT(DFT) 보간 — CIR 복원</h3>
+<p>파일럿 응답을 \(P\)-점 IDFT로 시간영역에 보내고, CP 길이(16탭)까지만 남긴 뒤 다시 \(N\)-점 DFT:</p>
+<div class="eq">$$ c[n]=\frac{1}{P}\sum_{m=0}^{P-1}\hat H_p[m]e^{j2\pi mn/P}
+\;\xrightarrow{\;n&lt;\min(P,16)\;}\;
+\hat H[k]=\sum_{n} c[n]\,e^{-j2\pi kn/N} $$</div>
+<p>채널 길이가 CP 안이면 바이어스가 사라지고 잡음도 \(\tfrac{L_{cir}}{P}\)로 줄어든다.</p>
+<div class="map"><span class="ui">interp FFT</span> · <code>idftP()</code> <code>dftToN()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>LMMSE — 탭 도메인 Wiener 가중</h3>
+<p>FFT 보간과 같은 경로에, 지수 PDP를 prior로 한 per-tap Wiener 필터를 곱한다:</p>
+<div class="eq">$$ w_n=\frac{p_n}{p_n+\sigma_n^2/P},\qquad p_n=\frac{e^{-0.35n}}{\sum_m e^{-0.35m}}
+\qquad c[n]\leftarrow w_n\,c[n] $$</div>
+<p>약한 탭(잡음 우세)을 눌러서 추정 잡음을 추가로 ~28% 줄인다.</p>
+<div class="map"><span class="ui">est LMMSE</span> · <code>estimateChannel()</code> LMMSE 분기</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>2D 보간 — 시간축 평균</h3>
+<div class="eq">$$ \bar H_p[i]=\frac{1}{T}\sum_{t=1}^{T}\hat H_p^{(t)}[i],\quad T\le 5
+\;\;\to\;\; \text{Linear 보간} $$</div>
+<p>저 Doppler(코히어런스 시간이 긴) 채널에서만 유효 — EVA/ETU처럼 빠른 채널에선 시간 평균이 바이어스가 된다.</p>
+<div class="map"><span class="ui">interp 2D</span> · <code>chHist</code> 5-프레임 이동평균</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>CNN 보간 — 학습된 잔차 정제 (AI CE)</h3>
+<p>Linear 보간 결과를 RMS 정규화해 3채널 입력 \([\mathrm{Re}/\rho,\ \mathrm{Im}/\rho,\ \sigma_n]\)으로 넣고,
+원형 패딩 1-D 컨볼루션 residual 네트워크가 보정량을 출력한다:</p>
+<div class="eq">$$ h=\mathrm{ReLU}(W_{head}*x),\quad
+h\leftarrow h+\mathrm{ReLU}(W_{b}*h)\ (\times2),\quad
+\hat H = \big(x_{1,2}+W_{tail}*h\big)\cdot\rho $$</div>
+<p class="note">채널 12, 커널 7, residual 블록 2. 가중치는 파일럿 수별로 py_ofdm_sim의
+<code>cnn_export.py</code>에서 학습 후 JSON으로 내보내 브라우저에서 forward pass만 실행 — 추론이 실제로 页 안에서 돈다.</p>
+<div class="map"><span class="ui">interp CNN</span> · <code>cnnInterp()</code> <code>cnnConv()</code>, 가중치 <code>CNN_W</code> (HTML에 인라인)</div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>추정 품질 지표 + CFO 보정(전/후)</h3>
+<div class="eq">$$ \mathrm{MSE}=\frac{1}{N}\sum_{k}\big|\hat H[k]-H[k]\big|^2 $$</div>
+<p>CFO 보정 ON: 프레임 간 파일럿 내적의 위상으로 공통 위상을 누적 추적해 역회전:</p>
+<div class="eq">$$ \theta \mathrel{+}= \arg\!\Big(\sum_i \hat H_p^{(t)}[i]\,\overline{\hat H_p^{(t-1)}[i]}\Big),
+\qquad \hat H \leftarrow \hat H\,e^{-j\theta} $$</div>
+<p class="note">CFO 회전은 제거되지만 SFO 램프·PN 지터는 남는다 — 실제 per-symbol CPE 추적과 같은 한계.</p>
+<div class="map"><span class="ui">CFO 보정 (전/후) 버튼 · MSE 표시</span> · <code>chThetaAcc</code></div>
+</section>
+
+<!-- ============ 5. 등화 ============ -->
+<h2 id="eq">5. 등화 <small>ZF vs MMSE</small></h2>
+<section class="block"><span class="tag t2">②</span>
+<h3>Per-subcarrier 등화</h3>
+<div class="eq">$$ \hat s_{ZF}[k]=\frac{Y[k]}{\hat H[k]} \qquad
+\hat s_{MMSE}[k]=\frac{\hat H^*[k]}{|\hat H[k]|^2+\sigma_n^2}\,Y[k] $$</div>
+<p>OFDM per-subcarrier <b>하드 판정</b>에서는 MMSE의 바이어스를 정규화하면 ZF와 같은 판정 경계가 되어
+<b>BER이 바뀌지 않는다</b> — 시뮬레이터가 eq 선택을 BER에 반영하지 않는 이유이며,
+Python 비교(<code>py_ofdm_sim/compare_eq.py</code>)로 캘리브레이션된 결론이다.</p>
+<div class="map"><span class="ui">eq ZF/MMSE 버튼</span> · <code>EQ_OPTS</code> 주석 참조</div>
+</section>
+
+<!-- ============ 6. BER 모델 ============ -->
+<h2 id="ber">6. BER 커브 모델 <small>Monte-Carlo + 옵션별 잡음·플로어</small></h2>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>커브 생성 (시나리오 모드)</h3>
+<p>SNR 격자 \(0..38\,\mathrm{dB}\) (2 dB 간격), 격자점마다 30,000 심볼 Monte-Carlo:</p>
+<div class="eq">$$ \sigma_n^2(\gamma)=\ell_{est}\frac{P_t}{\gamma}+F_{sel},\qquad
+\mathrm{BER}=\widehat{\Pr}\{\text{Gray bit flip}\} $$</div>
+<div class="map"><span class="ui">↻ 다시 계산 버튼</span> · <code>berPoint()</code> <code>computeBer()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>추정 옵션 → 잡음 배율 \(\mu_{noise}\)</h3>
+<div class="eq">$$ \mu_{noise}=\underbrace{\sqrt{32/P}}_{\text{파일럿 수}}\cdot
+\underbrace{\kappa_{est}}_{\substack{LS:1\\ LMMSE:0.72}}\cdot
+\underbrace{\kappa_{interp}}_{\substack{CNN:0.80\ /\ 2D:0.82\\ FFT:0.92\ /\ Lin:1}} $$</div>
+<p class="note">2D의 0.82는 Doppler &lt; 70 Hz일 때만 (빠른 채널에선 1).</p>
+<div class="map"><code>noiseMulFor()</code></div>
+</section>
+
+<section class="block"><span class="tag t2">②</span>
+<h3>선택성 에러 플로어 \(F_{sel}\)</h3>
+<p>CIR을 복원하는 방법(FFT/2D/CNN/LMMSE)과 Linear의 운명이 갈린다:</p>
+<div class="eq">$$ F_{sel}=
+\begin{cases}
+0.02\,\mathrm{res}+\mathrm{res}\cdot\iota\cdot u\cdot 0.5, & \text{CIR 복원}\quad
+u=\max(0,\tfrac{12}{P}-\tfrac12)\\[4px]
+0.9\,\mathrm{res}\cdot(32/P)^{1.4}, & \text{Linear 바이어스 플로어}
+\end{cases} $$</div>
+<p class="note">\(\iota\): CNN 0.5, 2D 0.6, FFT 0.8 (LMMSE면 ×0.8). \(u\)는 파일럿이 CIR을 못 샘플링하는 undersampling 항 (P&lt;24부터).
+기본 설정(LS·Linear·P=32)이 원래 시나리오 res와 일치하도록 캘리브레이션됨.</p>
+<div class="map"><span class="ui">옵션비교 모드</span>: LS·Linear / LS·FFT / CNN / LMMSE 4곡선 비교 · <code>selectiveFloor()</code> <code>estFloorOpt()</code> <code>berPointOpt()</code></div>
+</section>
+
+<!-- ============ 7. FEC ============ -->
+<h2 id="fec">7. FEC <small>Hamming(7,4) 잔여 BER</small></h2>
+<section class="block"><span class="tag t2">②</span>
+<h3>단일 오류 정정 후 잔여 비트오류율</h3>
+<p>부호율 \(R=4/7\), 정정능력 \(t=1\). 원시 채널 BER \(p\)에서 복호 후:</p>
+<div class="eq">$$ p_{out}=\frac{1}{n}\sum_{i=t+1}^{n} i\binom{n}{i} p^i (1-p)^{\,n-i},\qquad n=7 $$</div>
+<p>코딩 이득은 두 곡선이 BER \(=10^{-2}\)를 지나는 SNR 차이로 측정 (로그-선형 보간 <code>snrAtBer()</code>):
+AWGN ≈ 3.0 dB, Rician ≈ 7.5 dB.</p>
+<div class="map"><span class="ui">+FEC 버튼</span> (점선 곡선) · <code>fecResidualBer()</code> <code>showCodingGain()</code></div>
+</section>
+
+<!-- ============ 8. 이미지 ============ -->
+<h2 id="img">8. 이미지 전송 <small>링크 품질의 시각화</small></h2>
+<section class="block"><span class="tag cm">공통</span>
+<h3>BER → 픽셀 비트 플립</h3>
+<p>TX 이미지(112×112, RGB)를 비트스트림으로 보고, 현재 링크의 유효 BER(FEC ON이면 \(p_{out}\))만큼 비트를 무작위로 뒤집는다:</p>
+<div class="eq">$$ N_{flip}=\mathrm{round}\big(112\cdot112\cdot3\cdot8\cdot \mathrm{BER}_{eff}\big),
+\qquad b_{idx}\leftarrow b_{idx}\oplus 2^{u},\ u\sim\mathcal U\{0..7\} $$</div>
+<div class="map"><span class="ui">📷 업로드 / 기본 버튼, TX→RX 패널</span> · <code>corruptImage()</code> <code>renderRxImage()</code> — 2프레임마다 갱신</div>
+</section>
+
+<!-- ============ 9. 프리앰블 ============ -->
+<h2 id="pre">9. 프리앰블 <small>m-시퀀스 / Gold (BPSK, L=127)</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>LFSR 생성과 순환 시프트</h3>
+<div class="eq">$$ x[i]=\big(x[i-3]+x[i-7]\big)\bmod 2,\qquad x_{init}=1110110 $$</div>
+<div class="eq">$$ p[n]=2\,x\big[(n+43\,N_{id}^{(2)})\bmod 127\big]-1 \in\{\pm1\},\qquad N_{id}^{(2)}=2 $$</div>
+<p class="note">"gold" 선택 시 같은 생성기에 시프트 인덱스만 \((N_{id}^{(2)}+3)\bmod 7\)로 바꾼 두 번째 시퀀스를 쓴다.
+C 레퍼런스(수신기 실장)의 <code>generate_m_sequence_bits()</code>를 그대로 포팅한 것.</p>
+<div class="map"><span class="ui">preamble m/gold 버튼</span> · <code>mSeqBpsk()</code>, \(F_s=20\,\mathrm{MHz}\)</div>
+</section>
+
+<!-- ============ 10. 타이밍 ============ -->
+<h2 id="tim">10. 타이밍 동기 <small>슬라이딩 교차상관</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>매치드 필터 메트릭과 first-path 모호성</h3>
+<div class="eq">$$ M[k]=\Big|\sum_{n=0}^{L-1} p[n]\; r[k+n]\Big|,\qquad \hat\tau=\arg\max_k M[k] $$</div>
+<p>멀티패스에서는 뒤 탭이 첫 탭보다 강할 수 있어 \(\arg\max\)(빨간 선)가 true first-path(초록 점선)에서
+\(\Delta\) 샘플 밀리는 모호성이 생긴다 — 고전 매치드 필터의 한계(초록/빨강 범례의 Δ 표시).
+타이밍 오차가 판정 잡음에 더해지는 양:</p>
+<div class="eq">$$ \sigma^2_{tim}=
+\begin{cases}(\epsilon_\tau/42)^2, & \epsilon_\tau\le 32\ \text{(CP 내: 위상 램프만)}\\
+(\epsilon_\tau/12)^2, & \epsilon_\tau&gt;32\ \text{(CP 밖: ISI)}\end{cases} $$</div>
+<div class="map"><span class="ui">timing 슬라이더(true τ), Timing 토글, 플롯 ①</span> · <code>syncTiming()</code> <code>firstErr</code></div>
+</section>
+
+<!-- ============ 11. CFO ============ -->
+<h2 id="cfo">11. CFO 추정 <small>위상 기울기 LS 피팅</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>z = rx·conj(ref) 위상 램프</h3>
+<p>알고 있는 프리앰블을 벗겨내면 순수 CFO 회전만 남는다 (\(|p[n]|=1\)):</p>
+<div class="eq">$$ z[k]=r[k]\,\overline{p[k]}=e^{j2\pi\Delta f k/F_s}+n'[k]
+\quad\Rightarrow\quad \phi[k]=\mathrm{unwrap}\big(\arg z[k]\big) $$</div>
+<p>언랩된 위상에 최소제곱 직선을 맞춰 기울기에서 주파수를 읽는다:</p>
+<div class="eq">$$ \hat\beta=\frac{m\sum k\phi_k-\sum k\sum\phi_k}{m\sum k^2-(\sum k)^2},
+\qquad \widehat{\Delta f}=\frac{\hat\beta F_s}{2\pi} $$</div>
+<p class="note">coarse는 앞 32 샘플만(큰 CFO 포착), fine은 m+Gold 두 블록 \(2\times127\) 전체(분산 ½).
+IQ 임밸런스가 켜져 있으면 \(\arg z\)가 바이어스되어 추정이 틀어진다.</p>
+<div class="map"><span class="ui">Coarse CFO / Fine CFO 토글, 플롯 ② (파란 점 + 빨간 피팅선)</span> · <code>syncCfoFit()</code> <code>slope()</code></div>
+</section>
+
+<!-- ============ 12. 잔차/LOCK ============ -->
+<h2 id="res">12. 동기 잔차 모델과 LOCK 판정</h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>토글 조합별 잔차 CFO</h3>
+<table>
+<tr><th>Coarse</th><th>Fine</th><th>잔차 \(\Delta f_{res}\)</th><th>constellation</th></tr>
+<tr><td>ON</td><td>ON</td><td>\(\pm\,40/\sqrt{\gamma}\) Hz (추정 지터)</td><td>정지</td></tr>
+<tr><td>ON</td><td>OFF</td><td>\(0.10\cdot\Delta f\) (coarse 분해능)</td><td>정지</td></tr>
+<tr><td>OFF</td><td>ON</td><td>\(0.60\cdot\Delta f\) (fine 혼자 포착 불가)</td><td>정지</td></tr>
+<tr><td>OFF</td><td>OFF</td><td>\(\Delta f\) 전부</td><td>회전(스핀)</td></tr>
+</table>
+<p>총 잡음: \( \sigma^2 = P_t/\gamma + \sigma^2_{ICI}(\Delta f_{res}) + \sigma^2_{tim} + \sigma^2_{SFO} + F_{csi} \),
+Perfect CSI OFF면 \(F_{csi}=0.45\cdot\mathrm{res}(L_{cir})\)가 추가된다. LOCK 판정:</p>
+<div class="eq">$$ \mathrm{LOCK} \iff |\Delta f_{res}|&lt;200\,\mathrm{Hz}\ \wedge\ \epsilon_\tau\le4\ \wedge\
+(\mathrm{CPE\ ON}\lor \beta=0)\ \wedge\ (\mathrm{SFO\ ON}\lor \delta=0) $$</div>
+<div class="map"><span class="ui">플롯 ③ (초록=LOCKED), 상태줄 lock 🔒</span> · <code>syncConst()</code> <code>locked</code></div>
+</section>
+
+<!-- ============ 13. 추적 ============ -->
+<h2 id="trk">13. 위상 추적 <small>CPE 랜덤워크 · SFO 램프</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>심볼 인덱스에 따른 세 곡선</h3>
+<div class="eq">$$ \mathrm{CPE}[i]=\sum_{m\le i} w_m\ \ (\text{랜덤워크}),\qquad
+\mathrm{SFO}[i]=1.5\times10^{-3}\,\delta_{ppm}\cdot i\ \ (\text{램프}) $$</div>
+<div class="eq">$$ \mathrm{resid}[i]=(1-\mathbb 1_{CPE})\,\mathrm{CPE}[i]+(1-\mathbb 1_{SFO})\,\mathrm{SFO}[i] $$</div>
+<p class="note">CPE는 모든 서브캐리어 공통 위상(파일럿으로 추정·제거 가능), SFO는 서브캐리어 인덱스 비례 기울기—둘은 서명이 달라서 분리 추정이 가능하다는 것이 이 플롯의 요지.</p>
+<div class="map"><span class="ui">위상/Doppler 추적 패널 (주황 CPE · 파랑 SFO · 초록 잔차)</span> · <code>syncTrack()</code></div>
+</section>
+
+<!-- ============ 14. NTN ============ -->
+<h2 id="ntn">14. NTN <small>위성 Doppler · ephemeris pre-comp · FLL</small></h2>
+<section class="block"><span class="tag t1">①</span>
+<h3>프리셋 (3GPP TR 38.821 대표값 스케일)</h3>
+<table>
+<tr><th>프리셋</th><th>CFO [Hz]</th><th>Doppler rate [Hz/s]</th><th>Rician K [dB]</th><th>taps</th><th>SNR [dB]</th><th>지연 [ms]</th></tr>
+<tr><td>LEO-600</td><td>48 000</td><td>540</td><td>12</td><td>2</td><td>10</td><td>6</td></tr>
+<tr><td>LEO-1200</td><td>40 000</td><td>350</td><td>12</td><td>2</td><td>11</td><td>13</td></tr>
+<tr><td>GEO</td><td>2 000</td><td>5</td><td>18</td><td>1</td><td>13</td><td>120</td></tr>
+</table>
+<div class="map"><span class="ui">NTN None/LEO-600/LEO-1200/GEO 버튼</span> · <code>NTN_PRESETS</code></div>
+</section>
+
+<section class="block"><span class="tag t1">①</span>
+<h3>위성 패스와 2단 보상</h3>
+<p>위성 통과를 삼각파로 모델링한 순시 Doppler:</p>
+<div class="eq">$$ f_{inst}(t)=\Delta f + \dot f\cdot \mathrm{tri}(t),\qquad \mathrm{tri}\in[-3,3] $$</div>
+<p><b>1단 — ephemeris pre-comp</b>: 궤도력 기반 예측 보상이 캐리어의 97%, 스윙의 70%를 제거:</p>
+<div class="eq">$$ f_{pre}(t)= 0.03\,\Delta f + 0.30\,\dot f\cdot\mathrm{tri}(t) $$</div>
+<p><b>2단 — FLL 추적</b>: 1차 루프(대역폭 \(B_L=5\,/\mathrm s\))가 잔차를 따라간다. 풀인 범위 \(\pm0.5\,\Delta f_{sc}\) 밖이면 포착 실패:</p>
+<div class="eq">$$ \hat f \mathrel{+}= B_L\,\Delta t\,(f_{pre}-\hat f),\qquad
+f_{res}=f_{pre}-\hat f\ \approx\ \frac{\dot f_{pre}}{B_L}\ \text{(루프 랙)} $$</div>
+<p class="note">pre-comp OFF → \(f_{inst}\) 전체(수십 kHz)가 그대로 상관기/FLL에 들어가 풀인을 벗어나고 타이밍 상관 피크도 뭉개진다 — NTN에서 ephemeris 보상이 필수인 이유를 그대로 보여준다.</p>
+<div class="map"><span class="ui">pre-comp / FLL track 토글, Δf/t 슬라이더</span> · <code>ntnTick()</code></div>
+</section>
+
+<!-- ============ 15. Doppler 추적 ============ -->
+<h2 id="dopp">15. Doppler 추적 비교 <small>α-β vs CA-Kalman vs 학습 TCN</small></h2>
+
+<section class="block"><span class="tag t1">①</span>
+<h3>관측 모델</h3>
+<p>참값은 사인 패스 \(f(t)=A\sin\theta_t\) (\(A=\) NTN CFO), 관측은 SNR 의존 잡음 + 아웃라이어:</p>
+<div class="eq">$$ y_t=f(t)+n_t,\ \ n_t\sim\mathcal N(0,R),\qquad
+\Pr\{\text{outlier}\}=\min(0.12,\,0.006(5-\mathrm{SNR}))\!_+ $$</div>
+</section>
+
+<section class="block"><span class="tag t1">①</span>
+<h3>α-β 트래커 (약한 고전)</h3>
+<div class="eq">$$ \hat x^-=\hat x+\hat v,\quad r=y-\hat x^-,\quad
+\hat x=\hat x^-+\alpha r,\quad \hat v\mathrel{+}=\beta r
+\qquad(\alpha=0.35,\ \beta=0.06) $$</div>
+<div class="map">주황 곡선 · <code>alphaBetaJS()</code> — 등속 모델이라 사인 곡률에서 랙 발생</div>
+</section>
+
+<section class="block"><span class="tag t1">①</span>
+<h3>등가속 Kalman + 게이팅 (강한 고전)</h3>
+<p>상태 \( \mathbf x=[f,\dot f,\ddot f]^\top \), 등가속 전이와 프로세스 잡음:</p>
+<div class="eq">$$ F=\begin{bmatrix}1&1&\tfrac12\\0&1&1\\0&0&1\end{bmatrix},\quad
+P^-=FPF^\top+qQ,\quad K=\frac{P^-_{\cdot,0}}{P^-_{00}+R} $$</div>
+<p>혁신 게이팅 \(y^2/S\le 3^2\)로 아웃라이어를 버리고, 4 프레임 연속 기각 시 코스트 후 재포착.</p>
+<div class="map">파란 곡선 · <code>caKfJS()</code> (q=30, gate=3σ, maxcoast=4)</div>
+</section>
+
+<section class="block"><span class="tag t1">①</span>
+<h3>학습 TCN (인과 dilated CNN)</h3>
+<p>정규화 관측 \(y_t/f_{max}\)를 받아, 인과(과거만 보는) dilated 컨볼루션 residual 블록을 통과:</p>
+<div class="eq">$$ h^{(b)}_t = h^{(b-1)}_t+\mathrm{ReLU}\!\Big(\sum_{j=0}^{k-1}W_j\,h^{(b-1)}_{\,t-(k-1-j)d_b}\Big),
+\qquad d_b\in\{1,2,4,8\} $$</div>
+<p class="note">채널 16, 커널 3. <code>py_ofdm_sim/ntn_track_export.py</code>에서 학습한 가중치(<code>NTN_TCN</code> 인라인)로
+브라우저에서 실시간 forward. 패널 상단에 세 추적기의 RMSE[kHz]가 비교 표시된다.</p>
+<div class="map">초록 곡선 + RMSE 표시 · <code>tcnForward()</code> <code>drawDopplerTrack()</code></div>
+</section>
+
+<p class="note" style="margin-top:40px">
+수식은 전부 시뮬레이터 소스(단일 HTML의 JS)와 1:1로 대응하며, 캘리브레이션 상수(0.97, 1.6, 0.35, 3.6e-4 등)는
+py_ofdm_sim의 Python 시뮬레이션(<code>compare_eq.py</code> 등)과 맞춘 값이다.
+빠진 블록을 발견하면 그것이 버그다.
+</p>
+
+</main>
+</body>
+</html>

@@ -25,7 +25,10 @@ export const projects = [
     tags: ["OFDM", "CNN Channel Est.", "NTN Doppler", "BER / EVM", "Vanilla JS"],
     image: null,
     detailUrl: null,
-    links: [{ label: "Open Live Simulator →", href: "ofdm-sim/index.html" }],
+    links: [
+      { label: "Open Live Simulator →", href: "ofdm-sim/index.html" },
+      { label: "Math Reference →", href: "ofdm-sim/theory.html" },
+    ],
   },
   {
     badge: "Real-Time PHY",
