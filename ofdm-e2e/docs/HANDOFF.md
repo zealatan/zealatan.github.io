@@ -11,15 +11,15 @@ The OFDM E2E simulator (`ofdm-e2e/`) is a sample-level floating-point transceive
 IQ arrays flow TX → channel/RF → RX, and the dashboard renders arrays from that same run. A
 verification pass was run against it. Verdict: **NOT YET VALIDATED (PARTIAL)**. The chain is
 verified and reproducible; one acceptance criterion fails (practical fractional-CFO accuracy under
-200 Hz phase noise); several features are approximations or unvalidated. **Nothing from this pass
-is committed.** Commit base is `db14276`.
+200 Hz phase noise); several features are approximations or unvalidated. This pass is committed locally as `c05d645`
+(on top of `db14276`). **Not pushed.**
 
 ---
 
 ## 2. Repository state (as of handoff)
 
-- Repo: `zealatan/zealatan.github.io`, branch `main`, HEAD `db14276`.
-- Remote: `origin/main` = `db14276` (the E2E simulator and the first version of its docs are pushed).
+- Repo: `zealatan/zealatan.github.io`, branch `main`, local HEAD `c05d645` (verification pass), ahead of origin by 1.
+- Remote: `origin/main` = `db14276`. `c05d645` is local only; push requires user authorization.
 - **Uncommitted** (this verification pass):
 
 | Status | Path | Purpose |
