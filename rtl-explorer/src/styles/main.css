@@ -218,3 +218,8 @@ details summary { cursor: pointer; color: var(--muted); margin-top: 14px; }
   #right-pane { width: 300px; }
   #left-pane { width: 210px; }
 }
+
+/* measured waveforms */
+.wave-title.measured { color: var(--sel); }
+.wave-ready { stroke: var(--c-axil); }
+.wave-last { stroke: var(--c-clk); }

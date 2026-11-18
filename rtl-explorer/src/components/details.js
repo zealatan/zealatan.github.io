@@ -117,6 +117,22 @@ export class DetailsView {
         h.push(`<div class="small">ROM init files: ${sc.readmemh_files.map(f => `<code>${f}</code>`).join(', ')}</div>`);
       }
     }
+    const thr = this.store.throughput && this.store.throughput.modules &&
+                this.store.throughput.modules[treeNode.module_base];
+    if (thr) {
+      const rows = Object.entries(thr).filter(([k, v]) => typeof v === 'object' && v.interface);
+      h.push(`<h3>Measured streaming (Tier-2, cycle-accurate)</h3>
+        <table class="tbl"><tr><th>interface</th><th>sustained<br>smp/clk</th>
+        <th>transfers</th><th>max gap</th><th>stall cyc</th></tr>` +
+        rows.map(([k, v]) =>
+          `<tr><td><code>${k}</code></td>
+           <td>${v.sustained_rate_samples_per_clock ?? '—'}</td>
+           <td>${v.transfers}</td><td>${v.max_gap_cycles ?? '—'}</td>
+           <td>${v.stall_cycles}</td></tr>`).join('') + `</table>
+        <div class="muted small">transfers = tvalid && tready, recorded every clock
+        (cocotb+Verilator multi-frame runs; see reports/THROUGHPUT_AUDIT.md).
+        ${thr.notes ? thr.notes : ''}</div>`);
+    }
     if (verif) {
       h.push(`<h3>Verification (Tier-2)</h3>
         <div><span class="status status-${verif.status.replace(/ /g, '-')}">${verif.status}</span></div>

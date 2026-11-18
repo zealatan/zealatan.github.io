@@ -56,6 +56,23 @@ export class TimingView {
         `No captured waveform traces (VCD/FST) exist under ~/zedboard-digital-twin, ` +
         `so the diagrams below are labeled protocol examples.</p>`);
     }
+    const thr = this.store.throughput;
+    if (thr && thr.windows && thr.windows.length) {
+      h.push(`<h3>Measured streaming traces — REAL simulation data</h3>
+        <p class="small">Per-cycle <code>tvalid/tready/tlast</code> recorded by the
+        tier-2 cocotb+Verilator multi-frame throughput runs
+        (reports/THROUGHPUT_AUDIT.md). Transfers = valid && ready.</p>`);
+      if (thr.summary) {
+        h.push(`<div class="callout warn small">
+          <b>Audit summary:</b>
+          RX sustained (continuous frames): ${thr.summary.rx_continuous_loopback_rate} smp/clk ·
+          RX back-to-back input stalls: ${thr.summary.rx_b2b_stall_cycles} cycles / 3 frames ·
+          1 smp/clk gapless-frame acceptance: ${thr.summary.rx_b2b_acceptance_1smp_clk ? 'PASS' : 'FAIL'} ·
+          per-frame bit errors: ${JSON.stringify(thr.summary.per_frame_bit_errors_cont5)}<br>
+          <span class="muted">${thr.summary.caveat_xfft}</span></div>`);
+      }
+      h.push('<div id="wave-measured"></div>');
+    }
     h.push('<div id="wave-axis"></div>');
     h.push('<div id="wave-axil"></div>');
     if (scen.length) {
@@ -70,6 +87,10 @@ export class TimingView {
         ${scen[0]?.latency_bits_last_us_at_250mhz} µs. Source: ${scen.map(s => s.source_report).join(', ')}</div>`);
     }
     this.el.innerHTML = h.join('\n');
+    const wm = this.el.querySelector('#wave-measured');
+    if (wm && thr && thr.windows) {
+      for (const w of thr.windows) wm.appendChild(renderMeasured(w));
+    }
     this.el.querySelector('#wave-axis').appendChild(renderWave(AXIS_EXAMPLE));
     this.el.querySelector('#wave-axil').appendChild(renderWave(AXIL_EXAMPLE));
     this.el.querySelector('#btn-close-timing').onclick = () => this.hide();
@@ -77,6 +98,49 @@ export class TimingView {
   }
 
   hide() { this.el.classList.remove('open'); }
+}
+
+// Render a recorded trace window (arrays of 0/1 per cycle) as a waveform.
+function renderMeasured(win) {
+  const CW = 9, RH = 20, LBL = 150, n = win.signals[0].wave.length;
+  const W = LBL + n * CW + 10;
+  const wrap = document.createElement('div');
+  wrap.className = 'wave-block';
+  const title = document.createElement('div');
+  title.className = 'wave-title measured';
+  title.textContent = `▮ ${win.label} — cycles ${win.start_cycle}…${win.start_cycle + n - 1}`;
+  wrap.appendChild(title);
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${win.signals.length * RH + 16}`);
+  svg.setAttribute('class', 'wave-svg');
+  win.signals.forEach((sig, si) => {
+    const y0 = si * RH + 4, hi = y0 + 2, lo = y0 + RH - 6;
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('x', 4); t.setAttribute('y', lo - 1);
+    t.setAttribute('class', 'wave-label');
+    t.textContent = sig.name;
+    svg.appendChild(t);
+    let prev = sig.wave[0];
+    let d = `M ${LBL} ${prev ? hi : lo} `;
+    for (let c = 0; c < n; c++) {
+      const v = sig.wave[c], x = LBL + c * CW;
+      if (v !== prev) d += `L ${x} ${prev ? hi : lo} L ${x} ${v ? hi : lo} `;
+      d += `L ${x + CW} ${v ? hi : lo} `;
+      prev = v;
+    }
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', d);
+    p.setAttribute('class', 'wave-line' + (sig.name.endsWith('tready') ? ' wave-ready'
+      : sig.name.endsWith('tlast') ? ' wave-last' : ''));
+    p.setAttribute('fill', 'none');
+    svg.appendChild(p);
+  });
+  wrap.appendChild(svg);
+  const note = document.createElement('div');
+  note.className = 'wave-notes';
+  note.textContent = win.note;
+  wrap.appendChild(note);
+  return wrap;
 }
 
 function renderWave(spec) {

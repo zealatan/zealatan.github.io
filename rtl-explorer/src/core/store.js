@@ -8,13 +8,14 @@ export class Store {
     this.connections = data.connections;
     this.verification = data.verification;
     this.report = data.extraction_report || null;
+    this.throughput = data.throughput || null;
     this._byHier = new Map();
     this._indexTree(this.hierarchy.tree, null);
   }
 
   static async load(base = 'generated') {
     const names = ['hierarchy', 'modules', 'connections', 'verification',
-                   'extraction_report'];
+                   'extraction_report', 'throughput'];
     const out = {};
     await Promise.all(names.map(async n => {
       const r = await fetch(`${base}/${n}.json`);
