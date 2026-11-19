@@ -11,6 +11,10 @@
   <div class="brand">OFDM RTL Architecture Explorer
     <span class="muted small">ofdm_transceiver_top · source-accurate (Verilator elaboration)</span>
   </div>
+  <nav id="tabs">
+    <button id="tab-explorer" class="tab active">Explorer</button>
+    <button id="tab-insights" class="tab">Design Insights</button>
+  </nav>
   <div class="searchbox">
     <input id="search" type="search" placeholder="Search modules, instances, ports, nets…" autocomplete="off">
     <div id="search-results"></div>
@@ -42,6 +46,8 @@
   <aside id="right-pane">
     <div id="details"></div>
   </aside>
+
+  <div id="insights-view"></div>
 </main>
 
 <footer id="toolbar">

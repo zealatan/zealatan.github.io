@@ -63,13 +63,25 @@ export class TimingView {
         tier-2 cocotb+Verilator multi-frame throughput runs
         (reports/THROUGHPUT_AUDIT.md). Transfers = valid && ready.</p>`);
       if (thr.summary) {
+        const ba = thr.summary.before_after;
+        const sf = thr.summary.streaming_fix || {};
         h.push(`<div class="callout warn small">
           <b>Audit summary:</b>
           RX sustained (continuous frames): ${thr.summary.rx_continuous_loopback_rate} smp/clk ·
-          RX back-to-back input stalls: ${thr.summary.rx_b2b_stall_cycles} cycles / 3 frames ·
+          RX back-to-back input stalls: ${thr.summary.rx_b2b_stall_cycles} cycles ·
           1 smp/clk gapless-frame acceptance: ${thr.summary.rx_b2b_acceptance_1smp_clk ? 'PASS' : 'FAIL'} ·
-          per-frame bit errors: ${JSON.stringify(thr.summary.per_frame_bit_errors_cont5)}<br>
-          <span class="muted">${thr.summary.caveat_xfft}</span></div>`);
+          per-frame bit errors: ${JSON.stringify(thr.summary.per_frame_bit_errors_cont5)}
+          ${sf.rxrf100 ? `<br><b>Streaming-fix 100-frame runs:</b>
+            non-backpressurable RF source: ${sf.rxrf100.rf_samples_lost} samples lost /
+            ${sf.rxrf100.rx_transfers} driven, total bit errors ${sf.rxrf100.total_bit_errors}
+            over ${sf.rxrf100.frames} frames · TX chained slots: total gap
+            ${sf.txchain ? sf.txchain.tx_total_gap_cycles : '—'} cycles` : ''}
+          ${ba ? `<br><b>Before → after (architecture fix):</b>
+            RX rate ${ba.rx_in_steady_rate.before} → ${ba.rx_in_steady_rate.after} smp/clk ·
+            back-to-back stalls ${ba.rxb2b_input_stall_cycles.before} → ${ba.rxb2b_input_stall_cycles.after} ·
+            TX in-slot gaps ${ba.tx_slot_internal_gaps.before} → ${ba.tx_slot_internal_gaps.after} ·
+            steady frame latency ${ba.frame_latency_steady.before} → ${ba.frame_latency_steady.after} cycles` : ''}
+          <br><span class="muted">${thr.summary.caveat_xfft}</span></div>`);
       }
       h.push('<div id="wave-measured"></div>');
     }

@@ -2775,7 +2775,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
-         "line": 227
+         "line": 229
         }
        }
       ]
@@ -3227,7 +3227,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
-         "line": 305
+         "line": 331
         }
        }
       ]
@@ -3259,7 +3259,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
-         "line": 306
+         "line": 332
         }
        }
       ]
@@ -3291,7 +3291,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
-         "line": 307
+         "line": 333
         }
        }
       ]
@@ -3770,15 +3770,15 @@
     }
    },
    {
-    "name": "u_map_busy",
+    "name": "start_pend",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
-     "line": 202
+     "line": 199
     }
    },
    {
-    "name": "map_free",
+    "name": "u_map_busy",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
@@ -3786,11 +3786,19 @@
     }
    },
    {
+    "name": "map_free",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
+     "line": 204
+    }
+   },
+   {
     "name": "_unused",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ofdm_top.v",
-     "line": 309
+     "line": 335
     }
    },
    {
@@ -4272,7 +4280,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ifft_frontend.v",
-         "line": 304
+         "line": 311
         }
        }
       ]
@@ -4520,7 +4528,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ifft_frontend.v",
-         "line": 306
+         "line": 313
         }
        }
       ]
@@ -4552,7 +4560,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ifft_frontend.v",
-         "line": 307
+         "line": 314
         }
        }
       ]
@@ -4584,7 +4592,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ifft_frontend.v",
-         "line": 308
+         "line": 315
         }
        }
       ]
@@ -5169,7 +5177,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/tx_ifft_frontend.v",
-     "line": 310
+     "line": 317
     }
    }
   ]
@@ -17382,7 +17390,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 332
+       "line": 343
       }
      },
      {
@@ -17394,7 +17402,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 367
+       "line": 378
       }
      },
      {
@@ -17406,7 +17414,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 389
+       "line": 400
       }
      },
      {
@@ -17418,7 +17426,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 416
+       "line": 427
       }
      },
      {
@@ -17430,7 +17438,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 438
+       "line": 449
       }
      }
     ],
@@ -17457,7 +17465,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 333
+       "line": 344
       }
      },
      {
@@ -17469,7 +17477,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 368
+       "line": 379
       }
      },
      {
@@ -17481,7 +17489,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 390
+       "line": 401
       }
      },
      {
@@ -17493,7 +17501,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 417
+       "line": 428
       }
      },
      {
@@ -17505,7 +17513,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 439
+       "line": 450
       }
      }
     ],
@@ -17532,7 +17540,7 @@
       "expr": "s_axis_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 334
+       "line": 345
       }
      }
     ],
@@ -17559,7 +17567,7 @@
       "expr": "s_axis_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 335
+       "line": 346
       }
      }
     ],
@@ -17579,7 +17587,7 @@
       "expr": "s_axis_tready",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 336
+       "line": 347
       }
      }
     ],
@@ -17613,7 +17621,7 @@
       "expr": "s_axis_tlast",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 337
+       "line": 348
       }
      }
     ],
@@ -17634,7 +17642,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 265
+         "line": 272
         }
        }
       ]
@@ -17650,7 +17658,7 @@
       "expr": "frac_start_r",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 338
+       "line": 349
       }
      }
     ],
@@ -17670,7 +17678,7 @@
       "expr": "frac_done",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 339
+       "line": 350
       }
      }
     ],
@@ -17684,7 +17692,7 @@
       "expr": "frac_done",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 369
+       "line": 380
       }
      }
     ],
@@ -17717,7 +17725,7 @@
       "expr": "frac_frame_error",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 341
+       "line": 352
       }
      }
     ],
@@ -17738,7 +17746,7 @@
       "expr": "frac_error_code",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 342
+       "line": 353
       }
      }
     ],
@@ -17766,7 +17774,7 @@
       "expr": "threshold_in",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 343
+       "line": 354
       }
      }
     ],
@@ -17793,7 +17801,7 @@
       "expr": "window_len_in",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 344
+       "line": 355
       }
      }
     ],
@@ -17820,7 +17828,7 @@
       "expr": "hit_count_in",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 345
+       "line": 356
       }
      }
     ],
@@ -17840,7 +17848,7 @@
       "expr": "frac_frame_index",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 346
+       "line": 357
       }
      }
     ],
@@ -17854,7 +17862,7 @@
       "expr": "frac_frame_index",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 370
+       "line": 381
       }
      }
     ],
@@ -17887,7 +17895,7 @@
       "expr": "frac_peak_lag",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 348
+       "line": 359
       }
      }
     ],
@@ -17901,7 +17909,7 @@
       "expr": "frac_peak_lag",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 371
+       "line": 382
       }
      }
     ],
@@ -17934,7 +17942,7 @@
       "expr": "frac_frac_phase",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 350
+       "line": 361
       }
      }
     ],
@@ -17963,7 +17971,7 @@
       "expr": "frac_frac_phase_valid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 351
+       "line": 362
       }
      }
     ],
@@ -17994,7 +18002,7 @@
       "expr": "frac_m_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 352
+       "line": 363
       }
      }
     ],
@@ -18008,7 +18016,7 @@
       "expr": "frac_m_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 391
+       "line": 402
       }
      }
     ],
@@ -18028,7 +18036,7 @@
       "expr": "frac_m_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 353
+       "line": 364
       }
      }
     ],
@@ -18042,7 +18050,7 @@
       "expr": "frac_m_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 392
+       "line": 403
       }
      }
     ],
@@ -18067,7 +18075,7 @@
       "expr": "1'h1",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 354
+       "line": 365
       },
       "simple": false
      }
@@ -18088,7 +18096,7 @@
       "expr": "frac_m_tlast",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 355
+       "line": 366
       }
      }
     ],
@@ -18117,7 +18125,7 @@
       "expr": "ssc_slot_start",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 372
+       "line": 383
       }
      }
     ],
@@ -18146,7 +18154,7 @@
       "expr": "ssc_slot_valid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 373
+       "line": 384
       }
      }
     ],
@@ -18175,7 +18183,7 @@
       "expr": "ssc_pss_fft_start",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 374
+       "line": 385
       }
      }
     ],
@@ -18204,7 +18212,7 @@
       "expr": "ssc_sss_fft_start",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 375
+       "line": 386
       }
      }
     ],
@@ -18233,7 +18241,7 @@
       "expr": "ssc_frame_len",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 376
+       "line": 387
       }
      }
     ],
@@ -18258,7 +18266,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 160
+         "line": 167
         }
        }
       ]
@@ -18274,7 +18282,7 @@
       "expr": "frac_m_first_beat",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 398
+       "line": 409
       }
      }
     ],
@@ -18294,7 +18302,7 @@
       "expr": "sfe_meyr_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 399
+       "line": 410
       }
      }
     ],
@@ -18308,7 +18316,7 @@
       "expr": "sfe_meyr_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 418
+       "line": 429
       }
      }
     ],
@@ -18328,7 +18336,7 @@
       "expr": "sfe_meyr_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 400
+       "line": 411
       }
      }
     ],
@@ -18342,7 +18350,7 @@
       "expr": "sfe_meyr_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 419
+       "line": 430
       }
      }
     ],
@@ -18362,7 +18370,7 @@
       "expr": "sfe_pss_first_beat",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 401
+       "line": 412
       }
      }
     ],
@@ -18376,7 +18384,7 @@
       "expr": "sfe_pss_first_beat",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 420
+       "line": 431
       }
      }
     ],
@@ -18396,7 +18404,7 @@
       "expr": "sfe_sss_first_beat",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 402
+       "line": 413
       }
      }
     ],
@@ -18410,7 +18418,7 @@
       "expr": "sfe_sss_first_beat",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 421
+       "line": 432
       }
      }
     ],
@@ -18435,7 +18443,7 @@
       "expr": "1'h1",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 403
+       "line": 414
       },
       "simple": false
      }
@@ -18456,7 +18464,7 @@
       "expr": "sfe_data_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 404
+       "line": 415
       }
      }
     ],
@@ -18477,7 +18485,7 @@
       "expr": "sfe_data_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 405
+       "line": 416
       }
      }
     ],
@@ -18498,7 +18506,7 @@
       "expr": "sfe_data_sym_idx",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 406
+       "line": 417
       }
      }
     ],
@@ -18519,7 +18527,7 @@
       "expr": "cap_out_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 422
+       "line": 433
       }
      }
     ],
@@ -18533,7 +18541,7 @@
       "expr": "cap_out_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 444
+       "line": 455
       }
      }
     ],
@@ -18553,7 +18561,7 @@
       "expr": "cap_out_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 423
+       "line": 434
       }
      }
     ],
@@ -18567,7 +18575,7 @@
       "expr": "cap_out_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 445
+       "line": 456
       }
      }
     ],
@@ -18587,7 +18595,7 @@
       "expr": "cap_out_tready",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 446
+       "line": 457
       }
      }
     ],
@@ -18601,7 +18609,7 @@
       "expr": "cap_out_tready",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 424
+       "line": 435
       }
      }
     ],
@@ -18621,7 +18629,7 @@
       "expr": "cap_overrun",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 425
+       "line": 436
       }
      }
     ],
@@ -18642,7 +18650,7 @@
       "expr": "cap_done",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 426
+       "line": 437
       }
      }
     ],
@@ -18668,7 +18676,7 @@
       "expr": "5'h8",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 440
+       "line": 451
       },
       "simple": false
      }
@@ -18694,7 +18702,7 @@
       "expr": "1'h0",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 441
+       "line": 452
       },
       "simple": false
      }
@@ -18720,7 +18728,7 @@
       "expr": "13'h0",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 442
+       "line": 453
       },
       "simple": false
      }
@@ -18746,7 +18754,7 @@
       "expr": "64'h0",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 443
+       "line": 454
       },
       "simple": false
      }
@@ -18767,7 +18775,7 @@
       "expr": "meyr_cfo_int",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 447
+       "line": 458
       }
      }
     ],
@@ -18796,7 +18804,7 @@
       "expr": "meyr_peak_idx",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 448
+       "line": 459
       }
      }
     ],
@@ -18817,7 +18825,7 @@
       "expr": "meyr_cfo_valid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-       "line": 449
+       "line": 460
       }
      }
     ],
@@ -18878,7 +18886,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 264
+         "line": 271
         }
        }
       ]
@@ -18908,7 +18916,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 273
+         "line": 291
         }
        }
       ]
@@ -18938,7 +18946,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 270
+         "line": 288
         }
        }
       ]
@@ -18968,7 +18976,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 271
+         "line": 289
         }
        }
       ]
@@ -19000,7 +19008,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 227
+         "line": 234
         }
        }
       ]
@@ -19032,7 +19040,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 228
+         "line": 235
         }
        }
       ]
@@ -19064,7 +19072,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 229
+         "line": 236
         }
        }
       ]
@@ -19096,7 +19104,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 230
+         "line": 237
         }
        }
       ]
@@ -19128,7 +19136,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 231
+         "line": 238
         }
        }
       ]
@@ -19160,7 +19168,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 232
+         "line": 239
         }
        }
       ]
@@ -19192,7 +19200,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 233
+         "line": 240
         }
        }
       ]
@@ -19224,7 +19232,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 234
+         "line": 241
         }
        }
       ]
@@ -19256,7 +19264,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 235
+         "line": 242
         }
        }
       ]
@@ -19288,7 +19296,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 236
+         "line": 243
         }
        }
       ]
@@ -19320,7 +19328,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 237
+         "line": 244
         }
        }
       ]
@@ -19352,7 +19360,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 238
+         "line": 245
         }
        }
       ]
@@ -19384,7 +19392,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 239
+         "line": 246
         }
        }
       ]
@@ -19416,7 +19424,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 240
+         "line": 247
         }
        }
       ]
@@ -19448,7 +19456,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 242
+         "line": 249
         }
        }
       ]
@@ -19480,7 +19488,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 243
+         "line": 250
         }
        }
       ]
@@ -19510,7 +19518,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 244
+         "line": 251
         }
        }
       ]
@@ -19542,7 +19550,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 245
+         "line": 252
         }
        }
       ]
@@ -19574,7 +19582,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-         "line": 246
+         "line": 253
         }
        }
       ]
@@ -19600,7 +19608,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 332
+      "line": 343
      }
     },
     "aresetn": {
@@ -19611,7 +19619,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 333
+      "line": 344
      }
     },
     "s_axis_tdata": {
@@ -19622,7 +19630,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 334
+      "line": 345
      }
     },
     "s_axis_tvalid": {
@@ -19633,7 +19641,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 335
+      "line": 346
      }
     },
     "s_axis_tready": {
@@ -19644,7 +19652,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 336
+      "line": 347
      }
     },
     "s_axis_tlast": {
@@ -19655,7 +19663,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 337
+      "line": 348
      }
     },
     "start": {
@@ -19666,7 +19674,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 338
+      "line": 349
      }
     },
     "done": {
@@ -19677,7 +19685,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 339
+      "line": 350
      }
     },
     "busy": {
@@ -19686,7 +19694,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 340
+      "line": 351
      }
     },
     "frame_error": {
@@ -19697,7 +19705,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 341
+      "line": 352
      }
     },
     "error_code": {
@@ -19708,7 +19716,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 342
+      "line": 353
      }
     },
     "threshold_in": {
@@ -19719,7 +19727,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 343
+      "line": 354
      }
     },
     "window_len_in": {
@@ -19730,7 +19738,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 344
+      "line": 355
      }
     },
     "hit_count_in": {
@@ -19741,7 +19749,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 345
+      "line": 356
      }
     },
     "frame_index": {
@@ -19752,7 +19760,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 346
+      "line": 357
      }
     },
     "frame_found": {
@@ -19761,7 +19769,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 347
+      "line": 358
      }
     },
     "peak_lag": {
@@ -19772,7 +19780,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 348
+      "line": 359
      }
     },
     "peak_metric": {
@@ -19781,7 +19789,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 349
+      "line": 360
      }
     },
     "frac_phase": {
@@ -19792,7 +19800,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 350
+      "line": 361
      }
     },
     "frac_phase_valid": {
@@ -19803,7 +19811,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 351
+      "line": 362
      }
     },
     "m_axis_tdata": {
@@ -19814,7 +19822,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 352
+      "line": 363
      }
     },
     "m_axis_tvalid": {
@@ -19825,7 +19833,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 353
+      "line": 364
      }
     },
     "m_axis_tready": {
@@ -19834,7 +19842,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 354
+      "line": 365
      }
     },
     "m_axis_tlast": {
@@ -19845,7 +19853,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 355
+      "line": 366
      }
     }
    },
@@ -19858,7 +19866,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 367
+      "line": 378
      }
     },
     "aresetn": {
@@ -19869,7 +19877,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 368
+      "line": 379
      }
     },
     "done_in": {
@@ -19880,7 +19888,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 369
+      "line": 380
      }
     },
     "frame_index_in": {
@@ -19891,7 +19899,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 370
+      "line": 381
      }
     },
     "peak_lag_in": {
@@ -19902,7 +19910,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 371
+      "line": 382
      }
     },
     "slot_start": {
@@ -19913,7 +19921,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 372
+      "line": 383
      }
     },
     "slot_valid": {
@@ -19924,7 +19932,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 373
+      "line": 384
      }
     },
     "pss_fft_start": {
@@ -19935,7 +19943,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 374
+      "line": 385
      }
     },
     "sss_fft_start": {
@@ -19946,7 +19954,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 375
+      "line": 386
      }
     },
     "frame_len": {
@@ -19957,7 +19965,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 376
+      "line": 387
      }
     }
    },
@@ -19970,7 +19978,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 389
+      "line": 400
      }
     },
     "rst_n": {
@@ -19981,7 +19989,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 390
+      "line": 401
      }
     },
     "s_tdata": {
@@ -19992,7 +20000,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 391
+      "line": 402
      }
     },
     "s_tvalid": {
@@ -20003,7 +20011,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 392
+      "line": 403
      }
     },
     "slot_start": {
@@ -20014,7 +20022,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 398
+      "line": 409
      }
     },
     "meyr_tdata": {
@@ -20025,7 +20033,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 399
+      "line": 410
      }
     },
     "meyr_tvalid": {
@@ -20036,7 +20044,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 400
+      "line": 411
      }
     },
     "pss_first_beat": {
@@ -20047,7 +20055,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 401
+      "line": 412
      }
     },
     "sss_first_beat": {
@@ -20058,7 +20066,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 402
+      "line": 413
      }
     },
     "meyr_tready": {
@@ -20067,7 +20075,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 403
+      "line": 414
      }
     },
     "data_tdata": {
@@ -20078,7 +20086,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 404
+      "line": 415
      }
     },
     "data_tvalid": {
@@ -20089,7 +20097,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 405
+      "line": 416
      }
     },
     "data_sym_idx": {
@@ -20100,7 +20108,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 406
+      "line": 417
      }
     }
    },
@@ -20113,7 +20121,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 416
+      "line": 427
      }
     },
     "rst_n": {
@@ -20124,7 +20132,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 417
+      "line": 428
      }
     },
     "in_tdata": {
@@ -20135,7 +20143,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 418
+      "line": 429
      }
     },
     "in_tvalid": {
@@ -20146,7 +20154,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 419
+      "line": 430
      }
     },
     "pss_first_beat": {
@@ -20157,7 +20165,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 420
+      "line": 431
      }
     },
     "sss_first_beat": {
@@ -20168,7 +20176,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 421
+      "line": 432
      }
     },
     "out_tdata": {
@@ -20179,7 +20187,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 422
+      "line": 433
      }
     },
     "out_tvalid": {
@@ -20190,7 +20198,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 423
+      "line": 434
      }
     },
     "out_tready": {
@@ -20201,7 +20209,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 424
+      "line": 435
      }
     },
     "overrun_event": {
@@ -20212,7 +20220,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 425
+      "line": 436
      }
     },
     "capture_done": {
@@ -20223,7 +20231,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 426
+      "line": 437
      }
     }
    },
@@ -20236,7 +20244,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 438
+      "line": 449
      }
     },
     "rst_n": {
@@ -20247,7 +20255,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 439
+      "line": 450
      }
     },
     "n_log2": {
@@ -20256,7 +20264,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 440
+      "line": 451
      }
     },
     "rom_we": {
@@ -20265,7 +20273,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 441
+      "line": 452
      }
     },
     "rom_waddr": {
@@ -20274,7 +20282,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 442
+      "line": 453
      }
     },
     "rom_wdata": {
@@ -20283,7 +20291,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 443
+      "line": 454
      }
     },
     "s_tdata": {
@@ -20294,7 +20302,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 444
+      "line": 455
      }
     },
     "s_tvalid": {
@@ -20305,7 +20313,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 445
+      "line": 456
      }
     },
     "s_tready": {
@@ -20316,7 +20324,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 446
+      "line": 457
      }
     },
     "cfo_int": {
@@ -20327,7 +20335,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 447
+      "line": 458
      }
     },
     "peak_idx": {
@@ -20338,7 +20346,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 448
+      "line": 459
      }
     },
     "cfo_valid": {
@@ -20349,7 +20357,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 449
+      "line": 460
      }
     },
     "dbg_ifft_tdata": {
@@ -20358,7 +20366,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 450
+      "line": 461
      }
     },
     "dbg_ifft_tvalid": {
@@ -20367,7 +20375,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 451
+      "line": 462
      }
     },
     "dbg_ifft_tlast": {
@@ -20376,7 +20384,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-      "line": 452
+      "line": 463
      }
     }
    }
@@ -20435,7 +20443,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 146
+     "line": 153
     }
    },
    {
@@ -20443,7 +20451,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 147
+     "line": 154
     }
    },
    {
@@ -20451,7 +20459,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 160
+     "line": 167
     }
    },
    {
@@ -20459,7 +20467,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 161
+     "line": 168
     }
    },
    {
@@ -20467,7 +20475,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 162
+     "line": 169
     }
    },
    {
@@ -20475,7 +20483,7 @@
     "width": 4,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 163
+     "line": 170
     }
    },
    {
@@ -20483,7 +20491,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 164
+     "line": 171
     }
    },
    {
@@ -20491,7 +20499,7 @@
     "width": 9,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 165
+     "line": 172
     }
    },
    {
@@ -20499,7 +20507,7 @@
     "width": 16,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 166
+     "line": 173
     }
    },
    {
@@ -20507,7 +20515,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 167
+     "line": 174
     }
    },
    {
@@ -20515,7 +20523,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 172
+     "line": 179
     }
    },
    {
@@ -20523,7 +20531,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 173
+     "line": 180
     }
    },
    {
@@ -20531,7 +20539,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 174
+     "line": 181
     }
    },
    {
@@ -20539,7 +20547,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 175
+     "line": 182
     }
    },
    {
@@ -20547,7 +20555,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 176
+     "line": 183
     }
    },
    {
@@ -20555,7 +20563,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 181
+     "line": 188
     }
    },
    {
@@ -20563,7 +20571,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 182
+     "line": 189
     }
    },
    {
@@ -20571,7 +20579,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 183
+     "line": 190
     }
    },
    {
@@ -20579,7 +20587,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 184
+     "line": 191
     }
    },
    {
@@ -20587,7 +20595,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 185
+     "line": 192
     }
    },
    {
@@ -20595,7 +20603,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 186
+     "line": 193
     }
    },
    {
@@ -20603,7 +20611,7 @@
     "width": 4,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 187
+     "line": 194
     }
    },
    {
@@ -20611,7 +20619,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 189
+     "line": 196
     }
    },
    {
@@ -20619,7 +20627,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 190
+     "line": 197
     }
    },
    {
@@ -20627,7 +20635,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 191
+     "line": 198
     }
    },
    {
@@ -20635,7 +20643,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 192
+     "line": 199
     }
    },
    {
@@ -20643,7 +20651,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 193
+     "line": 200
     }
    },
    {
@@ -20651,7 +20659,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 195
+     "line": 202
     }
    },
    {
@@ -20659,7 +20667,7 @@
     "width": 13,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 196
+     "line": 203
     }
    },
    {
@@ -20667,7 +20675,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 197
+     "line": 204
     }
    },
    {
@@ -20675,7 +20683,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 203
+     "line": 210
     }
    },
    {
@@ -20683,7 +20691,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 217
+     "line": 224
     }
    },
    {
@@ -20691,7 +20699,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 220
+     "line": 227
     }
    },
    {
@@ -20699,7 +20707,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 221
+     "line": 228
     }
    },
    {
@@ -20707,7 +20715,7 @@
     "width": 9,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 222
+     "line": 229
     }
    }
   ]
@@ -24931,7 +24939,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 258
+       "line": 263
       }
      },
      {
@@ -24943,7 +24951,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 288
+       "line": 302
       }
      },
      {
@@ -24955,7 +24963,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 322
+       "line": 336
       }
      },
      {
@@ -24967,7 +24975,7 @@
       "expr": "aclk",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 353
+       "line": 367
       }
      }
     ],
@@ -24994,7 +25002,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 259
+       "line": 264
       }
      },
      {
@@ -25006,7 +25014,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 289
+       "line": 303
       }
      },
      {
@@ -25018,7 +25026,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 323
+       "line": 337
       }
      },
      {
@@ -25030,7 +25038,7 @@
       "expr": "aresetn",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 354
+       "line": 368
       }
      }
     ],
@@ -25057,7 +25065,7 @@
       "expr": "s_axis_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 260
+       "line": 265
       }
      }
     ],
@@ -25084,7 +25092,7 @@
       "expr": "s_axis_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 261
+       "line": 266
       }
      }
     ],
@@ -25104,7 +25112,7 @@
       "expr": "s_axis_tready",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 262
+       "line": 267
       }
      }
     ],
@@ -25138,7 +25146,7 @@
       "expr": "s_axis_tlast",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 263
+       "line": 268
       }
      }
     ],
@@ -25158,7 +25166,7 @@
       "expr": "cap_buf_ready",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 264
+       "line": 269
       }
      }
     ],
@@ -25179,7 +25187,7 @@
       "expr": "cap_buf_len",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 265
+       "line": 270
       }
      }
     ],
@@ -25187,13 +25195,13 @@
     "direction_resolved": false
    },
    {
-    "net": "proc_take_r",
+    "net": "ana_take_r",
     "width": 1,
     "class": "control",
     "drivers": [
      {
       "kind": "logic",
-      "port": "proc_take_r",
+      "port": "ana_take_r",
       "assigns": [
        {
         "kind": "seq",
@@ -25201,7 +25209,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 429
+         "line": 431
         }
        }
       ]
@@ -25211,26 +25219,26 @@
      {
       "kind": "inst",
       "inst": "u_cap",
-      "port": "proc_take",
+      "port": "ana_take",
       "dir": "in",
       "simple": true,
-      "expr": "proc_take_r",
+      "expr": "ana_take_r",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 266
+       "line": 271
       }
      }
     ],
     "direction_resolved": true
    },
    {
-    "net": "proc_free_r",
+    "net": "ana_pass_r",
     "width": 1,
     "class": "control",
     "drivers": [
      {
       "kind": "logic",
-      "port": "proc_free_r",
+      "port": "ana_pass_r",
       "assigns": [
        {
         "kind": "seq",
@@ -25238,7 +25246,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 430
+         "line": 432
         }
        }
       ]
@@ -25248,26 +25256,26 @@
      {
       "kind": "inst",
       "inst": "u_cap",
-      "port": "proc_free",
+      "port": "ana_pass",
       "dir": "in",
       "simple": true,
-      "expr": "proc_free_r",
+      "expr": "ana_pass_r",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 267
+       "line": 272
       }
      }
     ],
     "direction_resolved": true
    },
    {
-    "net": "buf_rd_en",
+    "net": "ana_abort_r",
     "width": 1,
     "class": "control",
     "drivers": [
      {
       "kind": "logic",
-      "port": "buf_rd_en",
+      "port": "ana_abort_r",
       "assigns": [
        {
         "kind": "seq",
@@ -25275,7 +25283,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 379
+         "line": 433
         }
        }
       ]
@@ -25285,26 +25293,158 @@
      {
       "kind": "inst",
       "inst": "u_cap",
-      "port": "rd_en",
+      "port": "ana_abort",
       "dir": "in",
       "simple": true,
-      "expr": "buf_rd_en",
+      "expr": "ana_abort_r",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 268
+       "line": 273
       }
      }
     ],
     "direction_resolved": true
    },
    {
-    "net": "buf_rd_addr",
+    "net": "cap_play_ready",
+    "width": 1,
+    "class": "axis",
+    "drivers": [
+     {
+      "kind": "inst",
+      "inst": "u_cap",
+      "port": "play_ready",
+      "dir": "out",
+      "simple": true,
+      "expr": "cap_play_ready",
+      "loc": {
+       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+       "line": 274
+      }
+     }
+    ],
+    "sinks": [],
+    "direction_resolved": false
+   },
+   {
+    "net": "play_take_r",
+    "width": 1,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "play_take_r",
+      "assigns": [
+       {
+        "kind": "seq",
+        "rhs": null,
+        "rhs_refs": [],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+         "line": 534
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "inst",
+      "inst": "u_cap",
+      "port": "play_take",
+      "dir": "in",
+      "simple": true,
+      "expr": "play_take_r",
+      "loc": {
+       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+       "line": 275
+      }
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "play_free_r",
+    "width": 1,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "play_free_r",
+      "assigns": [
+       {
+        "kind": "seq",
+        "rhs": null,
+        "rhs_refs": [],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+         "line": 535
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "inst",
+      "inst": "u_cap",
+      "port": "play_free",
+      "dir": "in",
+      "simple": true,
+      "expr": "play_free_r",
+      "loc": {
+       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+       "line": 276
+      }
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "a_rd_en",
+    "width": 1,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "a_rd_en",
+      "assigns": [
+       {
+        "kind": "seq",
+        "rhs": null,
+        "rhs_refs": [],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+         "line": 393
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "inst",
+      "inst": "u_cap",
+      "port": "a_rd_en",
+      "dir": "in",
+      "simple": true,
+      "expr": "a_rd_en",
+      "loc": {
+       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+       "line": 277
+      }
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "a_rd_addr",
     "width": 13,
     "class": "control",
     "drivers": [
      {
       "kind": "logic",
-      "port": "buf_rd_addr",
+      "port": "a_rd_addr",
       "assigns": [
        {
         "kind": "seq",
@@ -25312,7 +25452,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 380
+         "line": 394
         }
        }
       ]
@@ -25322,33 +25462,33 @@
      {
       "kind": "inst",
       "inst": "u_cap",
-      "port": "rd_addr",
+      "port": "a_rd_addr",
       "dir": "in",
       "simple": true,
-      "expr": "buf_rd_addr",
+      "expr": "a_rd_addr",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 269
+       "line": 278
       }
      }
     ],
     "direction_resolved": true
    },
    {
-    "net": "buf_rd_data",
+    "net": "a_rd_data",
     "width": 32,
     "class": "data",
     "drivers": [
      {
       "kind": "inst",
       "inst": "u_cap",
-      "port": "rd_data",
+      "port": "a_rd_data",
       "dir": "out",
       "simple": true,
-      "expr": "buf_rd_data",
+      "expr": "a_rd_data",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 270
+       "line": 279
       }
      }
     ],
@@ -25359,10 +25499,10 @@
       "port": "buf_rd_data_I",
       "dir": "in",
       "simple": false,
-      "expr": "buf_rd_data[15:0]",
+      "expr": "a_rd_data[15:0]",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 298
+       "line": 312
       }
      },
      {
@@ -25371,14 +25511,145 @@
       "port": "buf_rd_data_Q",
       "dir": "in",
       "simple": false,
-      "expr": "buf_rd_data[31:16]",
+      "expr": "a_rd_data[31:16]",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 299
+       "line": 313
       }
      }
     ],
     "direction_resolved": true
+   },
+   {
+    "net": "b_rd_en",
+    "width": 1,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "b_rd_en",
+      "assigns": [
+       {
+        "kind": "comb",
+        "rhs": "and(__VdfgRegularize_h45a3cd87_0_1, and(gt(12'hfc0, play_rd_ptr), gt(3'h2, sub(add(extend(add(extend(play_hold_valid), e",
+        "rhs_refs": [
+         "__VdfgRegularize_h45a3cd87_0_1",
+         "play_rd_ptr",
+         "play_hold_valid",
+         "play_hold2_valid",
+         "play_rd_pend",
+         "corr_accept"
+        ],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+         "line": 253
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "inst",
+      "inst": "u_cap",
+      "port": "b_rd_en",
+      "dir": "in",
+      "simple": true,
+      "expr": "b_rd_en",
+      "loc": {
+       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+       "line": 280
+      }
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "b_rd_addr",
+    "width": 13,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "b_rd_addr",
+      "assigns": [
+       {
+        "kind": "comb",
+        "rhs": "add(play_slot_start, extend(play_rd_ptr))",
+        "rhs_refs": [
+         "play_slot_start",
+         "play_rd_ptr"
+        ],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+         "line": 254
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "inst",
+      "inst": "u_cap",
+      "port": "b_rd_addr",
+      "dir": "in",
+      "simple": true,
+      "expr": "b_rd_addr",
+      "loc": {
+       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+       "line": 281
+      }
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "b_rd_data",
+    "width": 32,
+    "class": "data",
+    "drivers": [
+     {
+      "kind": "inst",
+      "inst": "u_cap",
+      "port": "b_rd_data",
+      "dir": "out",
+      "simple": true,
+      "expr": "b_rd_data",
+      "loc": {
+       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+       "line": 282
+      }
+     }
+    ],
+    "sinks": [],
+    "direction_resolved": false
+   },
+   {
+    "net": null,
+    "width": null,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "const",
+      "expr": ""
+     }
+    ],
+    "sinks": [],
+    "direction_resolved": false
+   },
+   {
+    "net": null,
+    "width": null,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "const",
+      "expr": ""
+     }
+    ],
+    "sinks": [],
+    "direction_resolved": false
    },
    {
     "net": null,
@@ -25421,7 +25692,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 431
+         "line": 434
         }
        }
       ]
@@ -25437,7 +25708,7 @@
       "expr": "fd_start_r",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 290
+       "line": 304
       }
      }
     ],
@@ -25464,7 +25735,7 @@
       "expr": "threshold_in",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 291
+       "line": 305
       }
      }
     ],
@@ -25491,7 +25762,7 @@
       "expr": "window_len_in",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 292
+       "line": 306
       }
      }
     ],
@@ -25518,7 +25789,7 @@
       "expr": "hit_count_in",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 293
+       "line": 307
       }
      }
     ],
@@ -25543,7 +25814,7 @@
       "expr": "12'h0",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 294
+       "line": 308
       },
       "simple": false
      }
@@ -25569,7 +25840,7 @@
       "expr": "13'h1000",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 295
+       "line": 309
       },
       "simple": false
      }
@@ -25590,7 +25861,7 @@
       "expr": "fd_buf_rd_addr",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 296
+       "line": 310
       }
      }
     ],
@@ -25611,7 +25882,7 @@
       "expr": "fd_buf_rd_en",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 297
+       "line": 311
       }
      }
     ],
@@ -25632,7 +25903,7 @@
       "expr": "fd_frame_index",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 300
+       "line": 314
       }
      }
     ],
@@ -25661,7 +25932,7 @@
       "expr": "fd_frame_found",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 301
+       "line": 315
       }
      }
     ],
@@ -25690,7 +25961,7 @@
       "expr": "fd_done",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 302
+       "line": 316
       }
      }
     ],
@@ -25725,7 +25996,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 432
+         "line": 435
         }
        }
       ]
@@ -25741,7 +26012,7 @@
       "expr": "tfc_start_r",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 324
+       "line": 338
       }
      }
     ],
@@ -25762,7 +26033,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 464
+         "line": 465
         }
        }
       ]
@@ -25778,7 +26049,7 @@
       "expr": "frame_index_r",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 325
+       "line": 339
       }
      }
     ],
@@ -25798,7 +26069,7 @@
       "expr": "tfc_done",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 326
+       "line": 340
       }
      }
     ],
@@ -25832,7 +26103,7 @@
       "expr": "tfc_buf_rd_addr",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 328
+       "line": 342
       }
      }
     ],
@@ -25853,7 +26124,7 @@
       "expr": "tfc_buf_rd_en",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 329
+       "line": 343
       }
      }
     ],
@@ -25861,23 +26132,23 @@
     "direction_resolved": false
    },
    {
-    "net": "buf_rd_data_I",
+    "net": "a_rd_data_I",
     "width": 16,
     "class": "data",
     "drivers": [
      {
       "kind": "logic",
-      "port": "buf_rd_data_I",
+      "port": "a_rd_data_I",
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "buf_rd_data[15:0]",
+        "rhs": "a_rd_data[15:0]",
         "rhs_refs": [
-         "buf_rd_data"
+         "a_rd_data"
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 176
+         "line": 174
         }
        }
       ]
@@ -25890,33 +26161,33 @@
       "port": "buf_rd_data_I",
       "dir": "in",
       "simple": true,
-      "expr": "buf_rd_data_I",
+      "expr": "a_rd_data_I",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 330
+       "line": 344
       }
      }
     ],
     "direction_resolved": true
    },
    {
-    "net": "buf_rd_data_Q",
+    "net": "a_rd_data_Q",
     "width": 16,
     "class": "data",
     "drivers": [
      {
       "kind": "logic",
-      "port": "buf_rd_data_Q",
+      "port": "a_rd_data_Q",
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "buf_rd_data[31:16]",
+        "rhs": "a_rd_data[31:16]",
         "rhs_refs": [
-         "buf_rd_data"
+         "a_rd_data"
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 177
+         "line": 175
         }
        }
       ]
@@ -25929,10 +26200,10 @@
       "port": "buf_rd_data_Q",
       "dir": "in",
       "simple": true,
-      "expr": "buf_rd_data_Q",
+      "expr": "a_rd_data_Q",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 331
+       "line": 345
       }
      }
     ],
@@ -25952,7 +26223,7 @@
       "expr": "peak_lag",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 332
+       "line": 346
       }
      }
     ],
@@ -25979,7 +26250,7 @@
       "expr": "peak_metric",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 333
+       "line": 347
       }
      }
     ],
@@ -26045,7 +26316,7 @@
       "expr": "frac_phase",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 337
+       "line": 351
       }
      }
     ],
@@ -26072,7 +26343,7 @@
       "expr": "frac_phase_valid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 338
+       "line": 352
       }
      }
     ],
@@ -26096,14 +26367,14 @@
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "and(__VdfgRegularize_h45a3cd87_0_0, eq(5'h0, nco_cnt))",
+        "rhs": "and(__VdfgRegularize_h45a3cd87_0_0, eq(5'h0, pnco_cnt))",
         "rhs_refs": [
          "__VdfgRegularize_h45a3cd87_0_0",
-         "nco_cnt"
+         "pnco_cnt"
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 210
+         "line": 220
         }
        }
       ]
@@ -26119,7 +26390,7 @@
       "expr": "nco_load_step_w",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 355
+       "line": 369
       }
      }
     ],
@@ -26136,14 +26407,14 @@
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "{replicate(frac_phase_r[15], 32'sh8), {frac_phase_r, 8'h0}}",
+        "rhs": "{replicate(play_phase[15], 32'sh8), {play_phase, 8'h0}}",
         "rhs_refs": [
-         "frac_phase_r",
-         "frac_phase_r"
+         "play_phase",
+         "play_phase"
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 217
+         "line": 225
         }
        }
       ]
@@ -26159,7 +26430,7 @@
       "expr": "step_word_w",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 356
+       "line": 370
       }
      }
     ],
@@ -26176,14 +26447,14 @@
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "and(__VdfgRegularize_h45a3cd87_0_0, eq(5'h1, nco_cnt))",
+        "rhs": "and(__VdfgRegularize_h45a3cd87_0_0, eq(5'h1, pnco_cnt))",
         "rhs_refs": [
          "__VdfgRegularize_h45a3cd87_0_0",
-         "nco_cnt"
+         "pnco_cnt"
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 211
+         "line": 221
         }
        }
       ]
@@ -26199,7 +26470,7 @@
       "expr": "nco_phase_reset_w",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 357
+       "line": 371
       }
      }
     ],
@@ -26216,15 +26487,15 @@
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "or(and(__VdfgRegularize_h45a3cd87_0_0, lte(5'h2, nco_cnt)), __VdfgRegularize_h45a3cd87_0_1)",
+        "rhs": "or(and(__VdfgRegularize_h45a3cd87_0_0, lte(5'h2, pnco_cnt)), __VdfgRegularize_h45a3cd87_0_1)",
         "rhs_refs": [
          "__VdfgRegularize_h45a3cd87_0_0",
-         "nco_cnt",
+         "pnco_cnt",
          "__VdfgRegularize_h45a3cd87_0_1"
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 212
+         "line": 222
         }
        }
       ]
@@ -26240,7 +26511,7 @@
       "expr": "nco_enable_w",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 358
+       "line": 372
       }
      }
     ],
@@ -26261,7 +26532,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 494
+         "line": 556
         }
        }
       ]
@@ -26277,7 +26548,7 @@
       "expr": "play_hold_data",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 359
+       "line": 373
       }
      }
     ],
@@ -26298,7 +26569,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 493
+         "line": 555
         }
        }
       ]
@@ -26314,7 +26585,7 @@
       "expr": "play_hold_valid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 360
+       "line": 374
       }
      }
     ],
@@ -26334,7 +26605,7 @@
       "expr": "corr_tready",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 361
+       "line": 375
       }
      }
     ],
@@ -26364,7 +26635,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 495
+         "line": 557
         }
        }
       ]
@@ -26380,7 +26651,7 @@
       "expr": "play_hold_last",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 362
+       "line": 376
       }
      }
     ],
@@ -26400,7 +26671,7 @@
       "expr": "m_axis_tdata",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 363
+       "line": 377
       }
      }
     ],
@@ -26427,7 +26698,7 @@
       "expr": "m_axis_tvalid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 364
+       "line": 378
       }
      }
     ],
@@ -26461,7 +26732,7 @@
       "expr": "m_axis_tready",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 365
+       "line": 379
       }
      }
     ],
@@ -26481,7 +26752,7 @@
       "expr": "m_axis_tlast",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 366
+       "line": 380
       }
      }
     ],
@@ -26547,7 +26818,7 @@
       "expr": "sincos_valid",
       "loc": {
        "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-       "line": 370
+       "line": 384
       }
      }
     ],
@@ -26569,7 +26840,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 428
+         "line": 430
         }
        }
       ]
@@ -26599,7 +26870,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 439
+         "line": 444
         }
        }
       ]
@@ -26629,7 +26900,7 @@
         "rhs_refs": [],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 437
+         "line": 442
         }
        }
       ]
@@ -26661,7 +26932,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 135
+         "line": 142
         }
        }
       ]
@@ -26693,7 +26964,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 306
+         "line": 320
         }
        }
       ]
@@ -26725,7 +26996,7 @@
         ],
         "loc": {
          "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-         "line": 307
+         "line": 321
         }
        }
       ]
@@ -26751,7 +27022,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 258
+      "line": 263
      }
     },
     "aresetn": {
@@ -26762,7 +27033,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 259
+      "line": 264
      }
     },
     "s_axis_tdata": {
@@ -26773,7 +27044,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 260
+      "line": 265
      }
     },
     "s_axis_tvalid": {
@@ -26784,7 +27055,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 261
+      "line": 266
      }
     },
     "s_axis_tready": {
@@ -26795,7 +27066,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 262
+      "line": 267
      }
     },
     "s_axis_tlast": {
@@ -26806,7 +27077,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 263
+      "line": 268
      }
     },
     "buf_ready": {
@@ -26817,7 +27088,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 264
+      "line": 269
      }
     },
     "buf_len": {
@@ -26828,71 +27099,148 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 265
+      "line": 270
      }
     },
-    "proc_take": {
-     "expr": "proc_take_r",
+    "ana_take": {
+     "expr": "ana_take_r",
      "refs": [
-      "proc_take_r"
+      "ana_take_r"
      ],
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 266
+      "line": 271
      }
     },
-    "proc_free": {
-     "expr": "proc_free_r",
+    "ana_pass": {
+     "expr": "ana_pass_r",
      "refs": [
-      "proc_free_r"
+      "ana_pass_r"
      ],
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 267
+      "line": 272
      }
     },
-    "rd_en": {
-     "expr": "buf_rd_en",
+    "ana_abort": {
+     "expr": "ana_abort_r",
      "refs": [
-      "buf_rd_en"
+      "ana_abort_r"
      ],
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 268
+      "line": 273
      }
     },
-    "rd_addr": {
-     "expr": "buf_rd_addr",
+    "play_ready": {
+     "expr": "cap_play_ready",
      "refs": [
-      "buf_rd_addr"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 269
-     }
-    },
-    "rd_data": {
-     "expr": "buf_rd_data",
-     "refs": [
-      "buf_rd_data"
+      "cap_play_ready"
      ],
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 270
+      "line": 274
      }
     },
-    "both_full": {
+    "play_take": {
+     "expr": "play_take_r",
+     "refs": [
+      "play_take_r"
+     ],
+     "direction": "in",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 275
+     }
+    },
+    "play_free": {
+     "expr": "play_free_r",
+     "refs": [
+      "play_free_r"
+     ],
+     "direction": "in",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 276
+     }
+    },
+    "a_rd_en": {
+     "expr": "a_rd_en",
+     "refs": [
+      "a_rd_en"
+     ],
+     "direction": "in",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 277
+     }
+    },
+    "a_rd_addr": {
+     "expr": "a_rd_addr",
+     "refs": [
+      "a_rd_addr"
+     ],
+     "direction": "in",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 278
+     }
+    },
+    "a_rd_data": {
+     "expr": "a_rd_data",
+     "refs": [
+      "a_rd_data"
+     ],
+     "direction": "out",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 279
+     }
+    },
+    "b_rd_en": {
+     "expr": "b_rd_en",
+     "refs": [
+      "b_rd_en"
+     ],
+     "direction": "in",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 280
+     }
+    },
+    "b_rd_addr": {
+     "expr": "b_rd_addr",
+     "refs": [
+      "b_rd_addr"
+     ],
+     "direction": "in",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 281
+     }
+    },
+    "b_rd_data": {
+     "expr": "b_rd_data",
+     "refs": [
+      "b_rd_data"
+     ],
+     "direction": "out",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 282
+     }
+    },
+    "all_full": {
      "expr": "",
      "refs": [],
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 271
+      "line": 283
      }
     },
     "cap_overflow": {
@@ -26901,7 +27249,25 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 272
+      "line": 284
+     }
+    },
+    "dbg_active_bank": {
+     "expr": "",
+     "refs": [],
+     "direction": "out",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 285
+     }
+    },
+    "dbg_bank_busy": {
+     "expr": "",
+     "refs": [],
+     "direction": "out",
+     "loc": {
+      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+      "line": 286
      }
     }
    },
@@ -26914,7 +27280,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 288
+      "line": 302
      }
     },
     "aresetn": {
@@ -26925,7 +27291,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 289
+      "line": 303
      }
     },
     "start": {
@@ -26936,7 +27302,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 290
+      "line": 304
      }
     },
     "threshold_in": {
@@ -26947,7 +27313,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 291
+      "line": 305
      }
     },
     "window_len_in": {
@@ -26958,7 +27324,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 292
+      "line": 306
      }
     },
     "hit_count_in": {
@@ -26969,7 +27335,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 293
+      "line": 307
      }
     },
     "search_base": {
@@ -26978,7 +27344,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 294
+      "line": 308
      }
     },
     "search_len": {
@@ -26987,7 +27353,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 295
+      "line": 309
      }
     },
     "buf_rd_addr": {
@@ -26998,7 +27364,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 296
+      "line": 310
      }
     },
     "buf_rd_en": {
@@ -27009,29 +27375,29 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 297
+      "line": 311
      }
     },
     "buf_rd_data_I": {
-     "expr": "buf_rd_data[15:0]",
+     "expr": "a_rd_data[15:0]",
      "refs": [
-      "buf_rd_data"
+      "a_rd_data"
      ],
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 298
+      "line": 312
      }
     },
     "buf_rd_data_Q": {
-     "expr": "buf_rd_data[31:16]",
+     "expr": "a_rd_data[31:16]",
      "refs": [
-      "buf_rd_data"
+      "a_rd_data"
      ],
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 299
+      "line": 313
      }
     },
     "frame_index": {
@@ -27042,7 +27408,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 300
+      "line": 314
      }
     },
     "frame_found": {
@@ -27053,7 +27419,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 301
+      "line": 315
      }
     },
     "done": {
@@ -27064,7 +27430,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 302
+      "line": 316
      }
     },
     "busy": {
@@ -27073,7 +27439,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 303
+      "line": 317
      }
     }
    },
@@ -27086,7 +27452,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 322
+      "line": 336
      }
     },
     "aresetn": {
@@ -27097,7 +27463,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 323
+      "line": 337
      }
     },
     "start": {
@@ -27108,7 +27474,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 324
+      "line": 338
      }
     },
     "base_addr": {
@@ -27119,7 +27485,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 325
+      "line": 339
      }
     },
     "done": {
@@ -27130,7 +27496,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 326
+      "line": 340
      }
     },
     "busy": {
@@ -27139,7 +27505,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 327
+      "line": 341
      }
     },
     "buf_rd_addr": {
@@ -27150,7 +27516,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 328
+      "line": 342
      }
     },
     "buf_rd_en": {
@@ -27161,29 +27527,29 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 329
+      "line": 343
      }
     },
     "buf_rd_data_I": {
-     "expr": "buf_rd_data_I",
+     "expr": "a_rd_data_I",
      "refs": [
-      "buf_rd_data_I"
+      "a_rd_data_I"
      ],
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 330
+      "line": 344
      }
     },
     "buf_rd_data_Q": {
-     "expr": "buf_rd_data_Q",
+     "expr": "a_rd_data_Q",
      "refs": [
-      "buf_rd_data_Q"
+      "a_rd_data_Q"
      ],
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 331
+      "line": 345
      }
     },
     "peak_lag": {
@@ -27194,7 +27560,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 332
+      "line": 346
      }
     },
     "peak_metric": {
@@ -27205,7 +27571,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 333
+      "line": 347
      }
     },
     "peak_corr_i": {
@@ -27214,7 +27580,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 334
+      "line": 348
      }
     },
     "peak_corr_q": {
@@ -27223,7 +27589,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 335
+      "line": 349
      }
     },
     "peak_energy": {
@@ -27232,7 +27598,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 336
+      "line": 350
      }
     },
     "frac_phase": {
@@ -27243,7 +27609,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 337
+      "line": 351
      }
     },
     "frac_phase_valid": {
@@ -27254,7 +27620,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 338
+      "line": 352
      }
     }
    },
@@ -27267,7 +27633,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 353
+      "line": 367
      }
     },
     "aresetn": {
@@ -27278,7 +27644,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 354
+      "line": 368
      }
     },
     "load_step": {
@@ -27289,7 +27655,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 355
+      "line": 369
      }
     },
     "step_word": {
@@ -27300,7 +27666,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 356
+      "line": 370
      }
     },
     "phase_reset": {
@@ -27311,7 +27677,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 357
+      "line": 371
      }
     },
     "enable": {
@@ -27322,7 +27688,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 358
+      "line": 372
      }
     },
     "s_axis_iq_tdata": {
@@ -27333,7 +27699,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 359
+      "line": 373
      }
     },
     "s_axis_iq_tvalid": {
@@ -27344,7 +27710,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 360
+      "line": 374
      }
     },
     "s_axis_iq_tready": {
@@ -27355,7 +27721,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 361
+      "line": 375
      }
     },
     "s_axis_iq_tlast": {
@@ -27366,7 +27732,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 362
+      "line": 376
      }
     },
     "m_axis_tdata": {
@@ -27377,7 +27743,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 363
+      "line": 377
      }
     },
     "m_axis_tvalid": {
@@ -27388,7 +27754,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 364
+      "line": 378
      }
     },
     "m_axis_tready": {
@@ -27399,7 +27765,7 @@
      "direction": "in",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 365
+      "line": 379
      }
     },
     "m_axis_tlast": {
@@ -27410,7 +27776,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 366
+      "line": 380
      }
     },
     "phase_acc": {
@@ -27419,7 +27785,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 367
+      "line": 381
      }
     },
     "sin_out": {
@@ -27428,7 +27794,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 368
+      "line": 382
      }
     },
     "cos_out": {
@@ -27437,7 +27803,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 369
+      "line": 383
      }
     },
     "sincos_valid": {
@@ -27448,7 +27814,7 @@
      "direction": "out",
      "loc": {
       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-      "line": 370
+      "line": 384
      }
     }
    }
@@ -27459,7 +27825,15 @@
     "width": 3,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 117
+     "line": 122
+    }
+   },
+   {
+    "name": "pstate",
+    "width": 2,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 130
     }
    },
    {
@@ -27467,7 +27841,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 127
+     "line": 135
     }
    },
    {
@@ -27475,7 +27849,7 @@
     "width": 16,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 128
+     "line": 136
     }
    },
    {
@@ -27483,7 +27857,7 @@
     "width": 4,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 129
+     "line": 137
     }
    },
    {
@@ -27491,7 +27865,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 130
+     "line": 138
     }
    },
    {
@@ -27499,7 +27873,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 158
+     "line": 161
     }
    },
    {
@@ -27507,63 +27881,119 @@
     "width": 14,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 159
+     "line": 162
     }
    },
    {
-    "name": "proc_take_r",
+    "name": "cap_play_ready",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 160
+     "line": 163
     }
    },
    {
-    "name": "proc_free_r",
+    "name": "ana_take_r",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 161
+     "line": 164
     }
    },
    {
-    "name": "buf_rd_addr",
+    "name": "ana_pass_r",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 165
+    }
+   },
+   {
+    "name": "ana_abort_r",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 166
+    }
+   },
+   {
+    "name": "play_take_r",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 167
+    }
+   },
+   {
+    "name": "play_free_r",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 168
+    }
+   },
+   {
+    "name": "a_rd_addr",
     "width": 13,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 171
+    }
+   },
+   {
+    "name": "a_rd_en",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 172
+    }
+   },
+   {
+    "name": "a_rd_data",
+    "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
      "line": 173
     }
    },
    {
-    "name": "buf_rd_en",
-    "width": 1,
+    "name": "a_rd_data_I",
+    "width": 16,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
      "line": 174
     }
    },
    {
-    "name": "buf_rd_data",
-    "width": 32,
+    "name": "a_rd_data_Q",
+    "width": 16,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
      "line": 175
     }
    },
    {
-    "name": "buf_rd_data_I",
-    "width": 16,
+    "name": "b_rd_en",
+    "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 176
+     "line": 178
     }
    },
    {
-    "name": "buf_rd_data_Q",
-    "width": 16,
+    "name": "b_rd_addr",
+    "width": 13,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 177
+     "line": 179
+    }
+   },
+   {
+    "name": "b_rd_data",
+    "width": 32,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 180
     }
    },
    {
@@ -27571,7 +28001,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 182
+     "line": 185
     }
    },
    {
@@ -27579,7 +28009,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 183
+     "line": 186
     }
    },
    {
@@ -27587,7 +28017,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 184
+     "line": 187
     }
    },
    {
@@ -27595,7 +28025,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 185
+     "line": 188
     }
    },
    {
@@ -27603,7 +28033,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 186
+     "line": 189
     }
    },
    {
@@ -27611,7 +28041,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 187
+     "line": 190
     }
    },
    {
@@ -27619,7 +28049,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 192
+     "line": 195
     }
    },
    {
@@ -27627,7 +28057,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 193
+     "line": 196
     }
    },
    {
@@ -27635,7 +28065,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 194
+     "line": 197
     }
    },
    {
@@ -27643,7 +28073,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 195
+     "line": 198
     }
    },
    {
@@ -27651,7 +28081,7 @@
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 200
+     "line": 203
     }
    },
    {
@@ -27659,7 +28089,7 @@
     "width": 9,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 201
+     "line": 204
     }
    },
    {
@@ -27667,7 +28097,7 @@
     "width": 16,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 202
+     "line": 205
     }
    },
    {
@@ -27675,27 +28105,35 @@
     "width": 13,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 203
+     "line": 206
     }
    },
    {
-    "name": "nco_cnt",
-    "width": 5,
+    "name": "job_v",
+    "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
      "line": 208
     }
    },
    {
-    "name": "nco_load_step_w",
-    "width": 1,
+    "name": "job_slot_start",
+    "width": 13,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 209
+    }
+   },
+   {
+    "name": "job_phase",
+    "width": 16,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
      "line": 210
     }
    },
    {
-    "name": "nco_phase_reset_w",
+    "name": "job_pop",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
@@ -27703,31 +28141,31 @@
     }
    },
    {
-    "name": "nco_enable_w",
-    "width": 1,
+    "name": "pnco_cnt",
+    "width": 5,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 212
+     "line": 216
     }
    },
    {
-    "name": "step_word_w",
-    "width": 32,
+    "name": "play_slot_start",
+    "width": 13,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
      "line": 217
     }
    },
    {
-    "name": "sincos_valid",
-    "width": 1,
+    "name": "play_phase",
+    "width": 16,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 219
+     "line": 218
     }
    },
    {
-    "name": "corr_tready",
+    "name": "nco_load_step_w",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
@@ -27735,11 +28173,51 @@
     }
    },
    {
+    "name": "nco_phase_reset_w",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 221
+    }
+   },
+   {
+    "name": "nco_enable_w",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 222
+    }
+   },
+   {
+    "name": "step_word_w",
+    "width": 32,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 225
+    }
+   },
+   {
+    "name": "sincos_valid",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 227
+    }
+   },
+   {
+    "name": "corr_tready",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
+     "line": 228
+    }
+   },
+   {
     "name": "play_rd_ptr",
     "width": 12,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 231
+     "line": 233
     }
    },
    {
@@ -27747,7 +28225,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 232
+     "line": 234
     }
    },
    {
@@ -27755,7 +28233,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 233
+     "line": 235
     }
    },
    {
@@ -27763,7 +28241,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 234
+     "line": 236
     }
    },
    {
@@ -27771,7 +28249,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 235
+     "line": 237
     }
    },
    {
@@ -27779,7 +28257,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 236
+     "line": 238
     }
    },
    {
@@ -27787,7 +28265,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 237
+     "line": 239
     }
    },
    {
@@ -27795,7 +28273,7 @@
     "width": 32,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 238
+     "line": 240
     }
    },
    {
@@ -27803,7 +28281,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 239
+     "line": 241
     }
    },
    {
@@ -27811,15 +28289,15 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 241
+     "line": 243
     }
    },
    {
-    "name": "can_issue",
+    "name": "_unused",
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 247
+     "line": 620
     }
    },
    {
@@ -27827,7 +28305,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 210
+     "line": 220
     }
    },
    {
@@ -27835,7 +28313,7 @@
     "width": 1,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 213
+     "line": 223
     }
    }
   ]
@@ -30027,933 +30505,8 @@
    }
   ]
  },
- "iq_capture_pingpong": {
+ "iq_capture_multibank": {
   "edges": [
-   {
-    "net": "aclk",
-    "width": 1,
-    "class": "clock",
-    "drivers": [
-     {
-      "kind": "port",
-      "port": "aclk",
-      "dir": "in"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "aclk",
-      "dir": "in",
-      "simple": true,
-      "expr": "aclk",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 220
-      }
-     },
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "aclk",
-      "dir": "in",
-      "simple": true,
-      "expr": "aclk",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 245
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "aresetn",
-    "width": 1,
-    "class": "reset",
-    "drivers": [
-     {
-      "kind": "port",
-      "port": "aresetn",
-      "dir": "in"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "aresetn",
-      "dir": "in",
-      "simple": true,
-      "expr": "aresetn",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 221
-      }
-     },
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "aresetn",
-      "dir": "in",
-      "simple": true,
-      "expr": "aresetn",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 246
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "cs_a",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "logic",
-      "port": "cs_a",
-      "assigns": [
-       {
-        "kind": "seq",
-        "rhs": null,
-        "rhs_refs": [],
-        "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 161
-        }
-       }
-      ]
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "capture_start",
-      "dir": "in",
-      "simple": true,
-      "expr": "cs_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 222
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "s_axis_tdata",
-    "width": 32,
-    "class": "data",
-    "drivers": [
-     {
-      "kind": "port",
-      "port": "s_axis_tdata",
-      "dir": "in"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "s_axis_tdata",
-      "dir": "in",
-      "simple": true,
-      "expr": "s_axis_tdata",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 223
-      }
-     },
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "s_axis_tdata",
-      "dir": "in",
-      "simple": true,
-      "expr": "s_axis_tdata",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 248
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "vld_a",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "logic",
-      "port": "vld_a",
-      "assigns": [
-       {
-        "kind": "comb",
-        "rhs": "and(s_axis_tvalid, __VdfgRegularize_h22a3ac63_0_1)",
-        "rhs_refs": [
-         "s_axis_tvalid",
-         "__VdfgRegularize_h22a3ac63_0_1"
-        ],
-        "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 100
-        }
-       }
-      ]
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "s_axis_tvalid",
-      "dir": "in",
-      "simple": true,
-      "expr": "vld_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 224
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "tready_a",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "s_axis_tready",
-      "dir": "out",
-      "simple": true,
-      "expr": "tready_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 225
-      }
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "logic",
-      "port": "tready_a",
-      "feeds": [
-       "s_axis_tready"
-      ]
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "eff_tlast",
-    "width": 1,
-    "class": "axis",
-    "drivers": [
-     {
-      "kind": "logic",
-      "port": "eff_tlast",
-      "assigns": [
-       {
-        "kind": "comb",
-        "rhs": "or(s_axis_tlast, and(neq(2'h0, cstate), eq(14'h103f, cap_cnt)))",
-        "rhs_refs": [
-         "s_axis_tlast",
-         "cstate",
-         "cap_cnt"
-        ],
-        "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 121
-        }
-       }
-      ]
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "s_axis_tlast",
-      "dir": "in",
-      "simple": true,
-      "expr": "eff_tlast",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 226
-      }
-     },
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "s_axis_tlast",
-      "dir": "in",
-      "simple": true,
-      "expr": "eff_tlast",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 251
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": null,
-    "width": null,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "const",
-      "expr": "1'h0"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "const",
-      "inst": "u_buf_a",
-      "port": "wb_en",
-      "dir": "in",
-      "expr": "1'h0",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 227
-      },
-      "simple": false
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": null,
-    "width": null,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "const",
-      "expr": "13'h0"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "const",
-      "inst": "u_buf_a",
-      "port": "wb_addr",
-      "dir": "in",
-      "expr": "13'h0",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 228
-      },
-      "simple": false
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": null,
-    "width": null,
-    "class": "data",
-    "drivers": [
-     {
-      "kind": "const",
-      "expr": "32'h0"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "const",
-      "inst": "u_buf_a",
-      "port": "wb_data",
-      "dir": "in",
-      "expr": "32'h0",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 229
-      },
-      "simple": false
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "rden_a",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "logic",
-      "port": "rden_a",
-      "assigns": [
-       {
-        "kind": "comb",
-        "rhs": "and(__VdfgRegularize_h22a3ac63_0_0, rd_en)",
-        "rhs_refs": [
-         "__VdfgRegularize_h22a3ac63_0_0",
-         "rd_en"
-        ],
-        "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 135
-        }
-       }
-      ]
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "rd_en",
-      "dir": "in",
-      "simple": true,
-      "expr": "rden_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 230
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "rd_addr",
-    "width": 13,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "port",
-      "port": "rd_addr",
-      "dir": "in"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "rd_addr",
-      "dir": "in",
-      "simple": true,
-      "expr": "rd_addr",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 231
-      }
-     },
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "rd_addr",
-      "dir": "in",
-      "simple": true,
-      "expr": "rd_addr",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 256
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "rdd_a",
-    "width": 32,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "rd_data",
-      "dir": "out",
-      "simple": true,
-      "expr": "rdd_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 232
-      }
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "logic",
-      "port": "rdd_a",
-      "feeds": [
-       "rd_data"
-      ]
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "wrp_a",
-    "width": 13,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "wr_ptr",
-      "dir": "out",
-      "simple": true,
-      "expr": "wrp_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 233
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "scnt_a",
-    "width": 14,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "sample_count",
-      "dir": "out",
-      "simple": true,
-      "expr": "scnt_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 234
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "cdone_a",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "capture_done",
-      "dir": "out",
-      "simple": true,
-      "expr": "cdone_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 235
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "busy_a",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "busy",
-      "dir": "out",
-      "simple": true,
-      "expr": "busy_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 236
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "full_a",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_a",
-      "port": "full",
-      "dir": "out",
-      "simple": true,
-      "expr": "full_a",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 237
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "cs_b",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "logic",
-      "port": "cs_b",
-      "assigns": [
-       {
-        "kind": "seq",
-        "rhs": null,
-        "rhs_refs": [],
-        "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 162
-        }
-       }
-      ]
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "capture_start",
-      "dir": "in",
-      "simple": true,
-      "expr": "cs_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 247
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "vld_b",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "logic",
-      "port": "vld_b",
-      "assigns": [
-       {
-        "kind": "comb",
-        "rhs": "and(s_axis_tvalid, __VdfgRegularize_h22a3ac63_0_2)",
-        "rhs_refs": [
-         "s_axis_tvalid",
-         "__VdfgRegularize_h22a3ac63_0_2"
-        ],
-        "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 101
-        }
-       }
-      ]
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "s_axis_tvalid",
-      "dir": "in",
-      "simple": true,
-      "expr": "vld_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 249
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "tready_b",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "s_axis_tready",
-      "dir": "out",
-      "simple": true,
-      "expr": "tready_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 250
-      }
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "logic",
-      "port": "tready_b",
-      "feeds": [
-       "s_axis_tready"
-      ]
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": null,
-    "width": null,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "const",
-      "expr": "1'h0"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "const",
-      "inst": "u_buf_b",
-      "port": "wb_en",
-      "dir": "in",
-      "expr": "1'h0",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 252
-      },
-      "simple": false
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": null,
-    "width": null,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "const",
-      "expr": "13'h0"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "const",
-      "inst": "u_buf_b",
-      "port": "wb_addr",
-      "dir": "in",
-      "expr": "13'h0",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 253
-      },
-      "simple": false
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": null,
-    "width": null,
-    "class": "data",
-    "drivers": [
-     {
-      "kind": "const",
-      "expr": "32'h0"
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "const",
-      "inst": "u_buf_b",
-      "port": "wb_data",
-      "dir": "in",
-      "expr": "32'h0",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 254
-      },
-      "simple": false
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "rden_b",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "logic",
-      "port": "rden_b",
-      "assigns": [
-       {
-        "kind": "comb",
-        "rhs": "and(proc_sel, rd_en)",
-        "rhs_refs": [
-         "proc_sel",
-         "rd_en"
-        ],
-        "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 136
-        }
-       }
-      ]
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "rd_en",
-      "dir": "in",
-      "simple": true,
-      "expr": "rden_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 255
-      }
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "rdd_b",
-    "width": 32,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "rd_data",
-      "dir": "out",
-      "simple": true,
-      "expr": "rdd_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 257
-      }
-     }
-    ],
-    "sinks": [
-     {
-      "kind": "logic",
-      "port": "rdd_b",
-      "feeds": [
-       "rd_data"
-      ]
-     }
-    ],
-    "direction_resolved": true
-   },
-   {
-    "net": "wrp_b",
-    "width": 13,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "wr_ptr",
-      "dir": "out",
-      "simple": true,
-      "expr": "wrp_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 258
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "scnt_b",
-    "width": 14,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "sample_count",
-      "dir": "out",
-      "simple": true,
-      "expr": "scnt_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 259
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "cdone_b",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "capture_done",
-      "dir": "out",
-      "simple": true,
-      "expr": "cdone_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 260
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "busy_b",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "busy",
-      "dir": "out",
-      "simple": true,
-      "expr": "busy_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 261
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
-   {
-    "net": "full_b",
-    "width": 1,
-    "class": "control",
-    "drivers": [
-     {
-      "kind": "inst",
-      "inst": "u_buf_b",
-      "port": "full",
-      "dir": "out",
-      "simple": true,
-      "expr": "full_b",
-      "loc": {
-       "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-       "line": 262
-      }
-     }
-    ],
-    "sinks": [],
-    "direction_resolved": false
-   },
    {
     "net": "s_axis_tready",
     "width": 1,
@@ -30965,16 +30518,15 @@
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "cond(__VdfgRegularize_h22a3ac63_0_1, tready_a, and(__VdfgRegularize_h22a3ac63_0_2, tready_b))",
+        "rhs": "and(cap_active_v, arraysel(tready_n, cap_active))",
         "rhs_refs": [
-         "__VdfgRegularize_h22a3ac63_0_1",
-         "tready_a",
-         "__VdfgRegularize_h22a3ac63_0_2",
-         "tready_b"
+         "cap_active_v",
+         "tready_n",
+         "cap_active"
         ],
         "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 102
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 136
         }
        }
       ]
@@ -31000,16 +30552,15 @@
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "and(not(proc_busy), cond(proc_next, occ_b, occ_a))",
+        "rhs": "and(not(ana_busy), occ[ana_next +: 1])",
         "rhs_refs": [
-         "proc_busy",
-         "proc_next",
-         "occ_b",
-         "occ_a"
+         "ana_busy",
+         "occ",
+         "ana_next"
         ],
         "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 140
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 154
         }
        }
       ]
@@ -31035,15 +30586,14 @@
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "cond(proc_next, len_b, len_a)",
+        "rhs": "arraysel(len, ana_next)",
         "rhs_refs": [
-         "proc_next",
-         "len_b",
-         "len_a"
+         "len",
+         "ana_next"
         ],
         "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 141
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 155
         }
        }
       ]
@@ -31059,25 +30609,24 @@
     "direction_resolved": true
    },
    {
-    "net": "rd_data",
-    "width": 32,
-    "class": "data",
+    "net": "play_ready",
+    "width": 1,
+    "class": "axis",
     "drivers": [
      {
       "kind": "logic",
-      "port": "rd_data",
+      "port": "play_ready",
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "cond(proc_sel, rdd_b, rdd_a)",
+        "rhs": "and(not(play_busy), pass_v)",
         "rhs_refs": [
-         "proc_sel",
-         "rdd_b",
-         "rdd_a"
+         "play_busy",
+         "pass_v"
         ],
         "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 137
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 156
         }
        }
       ]
@@ -31086,31 +30635,31 @@
     "sinks": [
      {
       "kind": "port",
-      "port": "rd_data",
+      "port": "play_ready",
       "dir": "out"
      }
     ],
     "direction_resolved": true
    },
    {
-    "net": "both_full",
-    "width": 1,
-    "class": "control",
+    "net": "a_rd_data",
+    "width": 32,
+    "class": "data",
     "drivers": [
      {
       "kind": "logic",
-      "port": "both_full",
+      "port": "a_rd_data",
       "assigns": [
        {
         "kind": "comb",
-        "rhs": "and(occ_a, occ_b)",
+        "rhs": "arraysel(ardd_n, ana_bank)",
         "rhs_refs": [
-         "occ_a",
-         "occ_b"
+         "ardd_n",
+         "ana_bank"
         ],
         "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 139
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 252
         }
        }
       ]
@@ -31119,7 +30668,72 @@
     "sinks": [
      {
       "kind": "port",
-      "port": "both_full",
+      "port": "a_rd_data",
+      "dir": "out"
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "b_rd_data",
+    "width": 32,
+    "class": "data",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "b_rd_data",
+      "assigns": [
+       {
+        "kind": "comb",
+        "rhs": "arraysel(brdd_n, play_bank)",
+        "rhs_refs": [
+         "brdd_n",
+         "play_bank"
+        ],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 253
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "port",
+      "port": "b_rd_data",
+      "dir": "out"
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "all_full",
+    "width": 1,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "all_full",
+      "assigns": [
+       {
+        "kind": "comb",
+        "rhs": "not(cap_active_v)",
+        "rhs_refs": [
+         "cap_active_v"
+        ],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 157
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "port",
+      "port": "all_full",
       "dir": "out"
      }
     ],
@@ -31139,8 +30753,8 @@
         "rhs": null,
         "rhs_refs": [],
         "loc": {
-         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-         "line": 163
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 182
         }
        }
       ]
@@ -31154,693 +30768,283 @@
      }
     ],
     "direction_resolved": true
+   },
+   {
+    "net": "dbg_active_bank",
+    "width": 2,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "dbg_active_bank",
+      "assigns": [
+       {
+        "kind": "comb",
+        "rhs": "cap_active",
+        "rhs_refs": [
+         "cap_active"
+        ],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 158
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "port",
+      "port": "dbg_active_bank",
+      "dir": "out"
+     }
+    ],
+    "direction_resolved": true
+   },
+   {
+    "net": "dbg_bank_busy",
+    "width": 4,
+    "class": "control",
+    "drivers": [
+     {
+      "kind": "logic",
+      "port": "dbg_bank_busy",
+      "assigns": [
+       {
+        "kind": "comb",
+        "rhs": "{play_busy, {pass_v, {ana_busy, cap_active_v}}}",
+        "rhs_refs": [
+         "play_busy",
+         "pass_v",
+         "ana_busy",
+         "cap_active_v"
+        ],
+        "loc": {
+         "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+         "line": 89
+        }
+       }
+      ]
+     }
+    ],
+    "sinks": [
+     {
+      "kind": "port",
+      "port": "dbg_bank_busy",
+      "dir": "out"
+     }
+    ],
+    "direction_resolved": true
    }
   ],
-  "pinmap": {
-   "u_buf_a": {
-    "aclk": {
-     "expr": "aclk",
-     "refs": [
-      "aclk"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 220
-     }
-    },
-    "aresetn": {
-     "expr": "aresetn",
-     "refs": [
-      "aresetn"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 221
-     }
-    },
-    "capture_start": {
-     "expr": "cs_a",
-     "refs": [
-      "cs_a"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 222
-     }
-    },
-    "s_axis_tdata": {
-     "expr": "s_axis_tdata",
-     "refs": [
-      "s_axis_tdata"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 223
-     }
-    },
-    "s_axis_tvalid": {
-     "expr": "vld_a",
-     "refs": [
-      "vld_a"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 224
-     }
-    },
-    "s_axis_tready": {
-     "expr": "tready_a",
-     "refs": [
-      "tready_a"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 225
-     }
-    },
-    "s_axis_tlast": {
-     "expr": "eff_tlast",
-     "refs": [
-      "eff_tlast"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 226
-     }
-    },
-    "wb_en": {
-     "expr": "1'h0",
-     "refs": [],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 227
-     }
-    },
-    "wb_addr": {
-     "expr": "13'h0",
-     "refs": [],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 228
-     }
-    },
-    "wb_data": {
-     "expr": "32'h0",
-     "refs": [],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 229
-     }
-    },
-    "rd_en": {
-     "expr": "rden_a",
-     "refs": [
-      "rden_a"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 230
-     }
-    },
-    "rd_addr": {
-     "expr": "rd_addr",
-     "refs": [
-      "rd_addr"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 231
-     }
-    },
-    "rd_data": {
-     "expr": "rdd_a",
-     "refs": [
-      "rdd_a"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 232
-     }
-    },
-    "wr_ptr": {
-     "expr": "wrp_a",
-     "refs": [
-      "wrp_a"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 233
-     }
-    },
-    "sample_count": {
-     "expr": "scnt_a",
-     "refs": [
-      "scnt_a"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 234
-     }
-    },
-    "capture_done": {
-     "expr": "cdone_a",
-     "refs": [
-      "cdone_a"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 235
-     }
-    },
-    "busy": {
-     "expr": "busy_a",
-     "refs": [
-      "busy_a"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 236
-     }
-    },
-    "full": {
-     "expr": "full_a",
-     "refs": [
-      "full_a"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 237
-     }
-    }
-   },
-   "u_buf_b": {
-    "aclk": {
-     "expr": "aclk",
-     "refs": [
-      "aclk"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 245
-     }
-    },
-    "aresetn": {
-     "expr": "aresetn",
-     "refs": [
-      "aresetn"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 246
-     }
-    },
-    "capture_start": {
-     "expr": "cs_b",
-     "refs": [
-      "cs_b"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 247
-     }
-    },
-    "s_axis_tdata": {
-     "expr": "s_axis_tdata",
-     "refs": [
-      "s_axis_tdata"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 248
-     }
-    },
-    "s_axis_tvalid": {
-     "expr": "vld_b",
-     "refs": [
-      "vld_b"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 249
-     }
-    },
-    "s_axis_tready": {
-     "expr": "tready_b",
-     "refs": [
-      "tready_b"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 250
-     }
-    },
-    "s_axis_tlast": {
-     "expr": "eff_tlast",
-     "refs": [
-      "eff_tlast"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 251
-     }
-    },
-    "wb_en": {
-     "expr": "1'h0",
-     "refs": [],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 252
-     }
-    },
-    "wb_addr": {
-     "expr": "13'h0",
-     "refs": [],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 253
-     }
-    },
-    "wb_data": {
-     "expr": "32'h0",
-     "refs": [],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 254
-     }
-    },
-    "rd_en": {
-     "expr": "rden_b",
-     "refs": [
-      "rden_b"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 255
-     }
-    },
-    "rd_addr": {
-     "expr": "rd_addr",
-     "refs": [
-      "rd_addr"
-     ],
-     "direction": "in",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 256
-     }
-    },
-    "rd_data": {
-     "expr": "rdd_b",
-     "refs": [
-      "rdd_b"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 257
-     }
-    },
-    "wr_ptr": {
-     "expr": "wrp_b",
-     "refs": [
-      "wrp_b"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 258
-     }
-    },
-    "sample_count": {
-     "expr": "scnt_b",
-     "refs": [
-      "scnt_b"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 259
-     }
-    },
-    "capture_done": {
-     "expr": "cdone_b",
-     "refs": [
-      "cdone_b"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 260
-     }
-    },
-    "busy": {
-     "expr": "busy_b",
-     "refs": [
-      "busy_b"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 261
-     }
-    },
-    "full": {
-     "expr": "full_b",
-     "refs": [
-      "full_b"
-     ],
-     "direction": "out",
-     "loc": {
-      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-      "line": 262
-     }
-    }
-   }
-  },
+  "pinmap": {},
   "internal_nets": [
    {
-    "name": "cstate",
+    "name": "occ",
+    "width": 3,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 86
+    }
+   },
+   {
+    "name": "cap_active",
     "width": 2,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 73
-    }
-   },
-   {
-    "name": "last_cap",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 74
-    }
-   },
-   {
-    "name": "proc_next",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 75
-    }
-   },
-   {
-    "name": "proc_sel",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 76
-    }
-   },
-   {
-    "name": "proc_busy",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 77
-    }
-   },
-   {
-    "name": "occ_a",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 78
-    }
-   },
-   {
-    "name": "occ_b",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 78
-    }
-   },
-   {
-    "name": "len_a",
-    "width": 14,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 79
-    }
-   },
-   {
-    "name": "len_b",
-    "width": 14,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 79
-    }
-   },
-   {
-    "name": "tready_a",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 82
-    }
-   },
-   {
-    "name": "tready_b",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 82
-    }
-   },
-   {
-    "name": "cdone_a",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 83
-    }
-   },
-   {
-    "name": "cdone_b",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 83
-    }
-   },
-   {
-    "name": "busy_a",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 84
-    }
-   },
-   {
-    "name": "busy_b",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 84
-    }
-   },
-   {
-    "name": "full_a",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 85
-    }
-   },
-   {
-    "name": "full_b",
-    "width": 1,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 85
-    }
-   },
-   {
-    "name": "scnt_a",
-    "width": 14,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 86
-    }
-   },
-   {
-    "name": "scnt_b",
-    "width": 14,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 86
-    }
-   },
-   {
-    "name": "wrp_a",
-    "width": 13,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 87
-    }
-   },
-   {
-    "name": "wrp_b",
-    "width": 13,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 87
-    }
-   },
-   {
-    "name": "rdd_a",
-    "width": 32,
-    "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 88
     }
    },
    {
-    "name": "rdd_b",
-    "width": 32,
+    "name": "cap_active_v",
+    "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 88
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 89
     }
    },
    {
-    "name": "a_avail",
+    "name": "cap_armed",
+    "width": 2,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 90
+    }
+   },
+   {
+    "name": "cap_armed_v",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 91
+    }
+   },
+   {
+    "name": "ana_next",
+    "width": 2,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 92
     }
    },
    {
-    "name": "b_avail",
-    "width": 1,
+    "name": "ana_bank",
+    "width": 2,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 93
     }
    },
    {
-    "name": "cs_a",
+    "name": "ana_busy",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 94
+    }
+   },
+   {
+    "name": "pass_bank",
+    "width": 2,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 95
+    }
+   },
+   {
+    "name": "pass_v",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 96
     }
    },
    {
-    "name": "cs_b",
-    "width": 1,
+    "name": "play_bank",
+    "width": 2,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 96
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 97
     }
    },
    {
-    "name": "vld_a",
+    "name": "play_busy",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 100
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 98
     }
    },
    {
-    "name": "vld_b",
+    "name": "cs",
+    "width": 3,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 107
+    }
+   },
+   {
+    "name": "bank_free",
+    "width": 3,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 110
+    }
+   },
+   {
+    "name": "gb",
+    "width": 32,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 111
+    }
+   },
+   {
+    "name": "vld0",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 101
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 133
+    }
+   },
+   {
+    "name": "vld1",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 134
+    }
+   },
+   {
+    "name": "vld2",
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 135
     }
    },
    {
     "name": "cap_accept",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 115
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 139
     }
    },
    {
     "name": "cap_cnt",
     "width": 14,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 116
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 140
     }
    },
    {
     "name": "eff_tlast",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 121
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 144
     }
    },
    {
-    "name": "rden_a",
+    "name": "frame_end",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 135
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 145
     }
    },
    {
-    "name": "rden_b",
-    "width": 1,
+    "name": "i",
+    "width": 32,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 136
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 162
     }
    },
    {
-    "name": "__VdfgRegularize_h22a3ac63_0_0",
-    "width": 1,
+    "name": "gk",
+    "width": 32,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 92
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 260
     }
    },
    {
-    "name": "__VdfgRegularize_h22a3ac63_0_1",
+    "name": "_unused",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 100
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 298
     }
    },
    {
-    "name": "__VdfgRegularize_h22a3ac63_0_2",
+    "name": "__VdfgRegularize_ha05d94c8_0_0",
     "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 101
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 133
     }
    }
   ]

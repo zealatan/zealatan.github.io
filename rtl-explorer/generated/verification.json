@@ -23,13 +23,13 @@
    "tx_data_max_abs_iq_err_lsb": 1.0,
    "latency_from_start_cycles": {
     "tx_first_from_start": 4,
-    "tx_last_from_start": 4046,
-    "sync_first_from_start": 8986,
-    "fx_first_from_start": 10112,
-    "bits_first_from_start": 10649,
-    "bits_last_from_start": 14070
+    "tx_last_from_start": 4035,
+    "sync_first_from_start": 8976,
+    "fx_first_from_start": 10102,
+    "bits_first_from_start": 10639,
+    "bits_last_from_start": 14060
    },
-   "latency_bits_last_us_at_250mhz": 56.28,
+   "latency_bits_last_us_at_250mhz": 56.24,
    "source_report": "reports/tier2_ofdm_qam16_tier1.json"
   },
   {
@@ -41,13 +41,13 @@
    "tx_data_max_abs_iq_err_lsb": 2.0,
    "latency_from_start_cycles": {
     "tx_first_from_start": 4,
-    "tx_last_from_start": 4046,
-    "sync_first_from_start": 8986,
-    "fx_first_from_start": 10112,
-    "bits_first_from_start": 10649,
-    "bits_last_from_start": 14070
+    "tx_last_from_start": 4035,
+    "sync_first_from_start": 8976,
+    "fx_first_from_start": 10102,
+    "bits_first_from_start": 10639,
+    "bits_last_from_start": 14060
    },
-   "latency_bits_last_us_at_250mhz": 56.28,
+   "latency_bits_last_us_at_250mhz": 56.24,
    "source_report": "reports/tier2_ofdm_qpsk_tier1.json"
   }
  ],
@@ -178,16 +178,10 @@
    "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
    "source_report": "reports/TIER2_OFDM_REPORT.md"
   },
-  "iq_capture_pingpong": {
+  "iq_capture_multibank": {
    "status": "Integration Tested",
    "detail": "Exercised via the tier-2 top-level loopback/RX scenarios (cocotb+Verilator, 6/6 PASS) only - no independent tier-2 unit gate for this module.",
-   "source_report": "reports/TIER2_OFDM_REPORT.md",
-   "parent_testbenches": {
-    "note": "Testbenches found in the parent repo tb/ that instantiate this module (xsim flow; NOT executed in tier-2 - presence only).",
-    "files": [
-     "iq_capture_pingpong_unit_tb.sv"
-    ]
-   }
+   "source_report": "reports/TIER2_OFDM_REPORT.md"
   },
   "iq_frame_buffer": {
    "status": "Integration Tested",

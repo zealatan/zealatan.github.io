@@ -1111,9 +1111,9 @@
     }
    }
   ],
-  "net_count": 33,
+  "net_count": 34,
   "source_scan": {
-   "reg_decls": 14,
+   "reg_decls": 15,
    "wire_decls": 18,
    "always_blocks": 3,
    "assign_statements": 6,
@@ -5591,7 +5591,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 331
+     "line": 342
     }
    },
    {
@@ -5601,7 +5601,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 366
+     "line": 377
     }
    },
    {
@@ -5611,7 +5611,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 388
+     "line": 399
     }
    },
    {
@@ -5621,7 +5621,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 415
+     "line": 426
     }
    },
    {
@@ -5631,7 +5631,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/phase3_sync_top.v",
-     "line": 437
+     "line": 448
     }
    }
   ]
@@ -7329,12 +7329,12 @@
   "base": "frac_cfo_frame_corrector_top",
   "variant": "frac_cfo_frame_corrector_top__pi2",
   "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-  "line": 42,
+  "line": 55,
   "vendor_ip": false,
   "vendor_note": null,
   "summary": "Frame-buffered fractional-CFO corrector: replays the captured frame through the rotator.",
   "summary_kind": "conceptual (curated from RTL header comments)",
-  "header_comment": "frac_cfo_frame_corrector_top: AXI-Stream capture \u2192 frame detection \u2192\nCP timing sync \u2192 fractional CFO estimation \u2192 fractional CFO correction.\n\nIntegrates (all sharing one iq_frame_buffer via FSM-muxed read port):\niq_frame_buffer      \u2014 AXI-Stream fill + random-access read\nframe_detector       \u2014 sliding-window energy frame start\ntiming_frac_cfo_top  \u2014 CP autocorr + timing metric + CORDIC atan2\nfrac_cfo_corrector_top \u2014 NCO + complex_rotator (frac CFO removal)\n\nC reference (synchronization()):\nframe_index  = frame_detector(...)\npeak_lag     = VanDeBeekAutoCorrelation(...)\nfrac_phase   = -atan2(Q[peak_lag], I[peak_lag]) / (2\u03c0) [Q1.15]\ncorrected[n] = raw[slot_start+n] \u00d7 exp(-j\u00b72\u03c0\u00b7frac_phase\u00b7n)\n\nslot_start = frame_index + peak_lag (CP start, timing-corrected)\nOutput: TOTAL_SAMPLES = NSC+CP_LEN corrected IQ samples, tlast on last.\n\nNCO step word: step = -frac_phase \u00d7 2^8  [A-FIX2]\nfrac_phase Q1.15: per-symbol total phase. Per-sample step = phase / NSC (NSC=256=2^8).\nstep = sign_ext({-frac_phase, 8'b0})\n\nNCO sequencing in S_LOAD_NCO (counted by nco_cnt, combinatorial decode):\nnco_cnt=0: load_step=1 (latch step_word into NCO)\nnco_cnt=1: phase_reset=1 (clear NCO accumulator)\nnco_cnt=2..LATENCY+1: enable=1, wait for sincos_valid\nnco_cnt=LATENCY+2: sincos_valid high \u2192 enter S_CORRECT\n\nBuffer playback (S_CORRECT): 1-cycle registered read latency, 1-deep hold\nFIFO with back-pressure from m_axis.  can_issue fires when hold is free\n(or being freed) and a pending read is not outstanding.\nThroughput: 1 sample per 2 clocks (limited by buffer latency pipeline).\n\ndone fires 1 clock after last corrector-input sample is accepted.\nSince axis_complex_mult has 1-cycle output latency, m_axis_tlast fires\nat the same clock as done (when m_axis_tready=1 throughout S_CORRECT).\n\nFSM: IDLE \u2192 FILL \u2192 FRAME_DET \u2192 TIMING_CFO \u2192 LOAD_NCO \u2192 CORRECT \u2192 DONE",
+  "header_comment": "frac_cfo_frame_corrector_top: AXI-Stream capture \u2192 frame detection \u2192\nCP timing sync \u2192 fractional CFO estimation \u2192 fractional CFO correction.\n\nIntegrates:\niq_capture_multibank \u2014 3-bank continuous capture (gapless ingest)\nframe_detector       \u2014 sliding-window energy frame start\ntiming_frac_cfo_top  \u2014 CP autocorr + timing metric + CORDIC atan2\nfrac_cfo_corrector_top \u2014 NCO + complex_rotator (frac CFO removal)\n\nC reference (synchronization()):\nframe_index  = frame_detector(...)\npeak_lag     = VanDeBeekAutoCorrelation(...)\nfrac_phase   = -atan2(Q[peak_lag], I[peak_lag]) / (2\u03c0) [Q1.15]\ncorrected[n] = raw[slot_start+n] \u00d7 exp(-j\u00b72\u03c0\u00b7frac_phase\u00b7n)\n\nslot_start = frame_index + peak_lag (CP start, timing-corrected)\nOutput: TOTAL_SAMPLES corrected IQ samples, tlast on last.\n\nSTREAMING FIX (2026-11-19, from reports/THROUGHPUT_AUDIT.md)\nThe original single FSM serialized capture \u2192 analysis \u2192 4032-sample replay\nper frame; (analysis + replay) > one 4160-sample frame period, so with\nback-to-back frames the input was refused for 645-650 cycles every frame\n(measured). This version splits the module into TWO engines pipelined over\nthe 3-bank capture front-end (iq_capture_multibank):\n\nANALYSIS FSM (this module's `state`):\nS_IDLE -> S_FILL(wait/claim bank) -> S_FRAME_DET -> S_TIMING_CFO\n-> S_PASS(queue playback job, hand bank over) -> S_DONE -> S_IDLE\n`done`/`busy` now signal ANALYSIS completion: the parent re-arms `start`\nfor frame k+1 while frame k is still being replayed.\n\nPLAYBACK engine (`pstate`, independent):\nP_IDLE(pop job) -> P_NCO(load/reset/warm-up) -> P_PLAY(4032-sample\nreplay through the rotator, H1b 2-deep FIFO, 1 sample/clock)\n-> P_FREE(release bank) -> P_IDLE\n\n1-deep job queue between them: {slot_start, frac_phase}. Bank ownership\nfollows the job (ana_pass/play_take/play_free), so no bank is ever\nrecycled before its replay has fully consumed it, and analysis(k+1)\nreads its bank through capture port A while playback(k) streams from\nport B concurrently.\n\nNCO step word: step = -frac_phase \u00d7 2^8  [A-FIX2]  (unchanged math)\nPlayback FIFO (H1b) and all DSP paths are unchanged; only the scheduling\nmoved. Synchronization is still fully estimated per frame \u2014 no oracle\ntiming/CFO values are involved.\n\nFSM: see above. done fires at analysis completion (frame k's corrected\noutput completes later, exactly TOTAL_SAMPLES beats with tlast on last).",
   "params": [
    {
     "name": "NSC",
@@ -7342,7 +7342,7 @@
     "raw": "32'sh100",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 43
+     "line": 56
     }
    },
    {
@@ -7351,7 +7351,7 @@
     "raw": "32'sh20",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 44
+     "line": 57
     }
    },
    {
@@ -7360,7 +7360,7 @@
     "raw": "32'hfc0",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 45
+     "line": 58
     }
    },
    {
@@ -7369,7 +7369,7 @@
     "raw": "32'shc",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 46
+     "line": 59
     }
    },
    {
@@ -7378,7 +7378,7 @@
     "raw": "32'sh28",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 47
+     "line": 60
     }
    },
    {
@@ -7387,7 +7387,7 @@
     "raw": "32'sh20",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 48
+     "line": 61
     }
    },
    {
@@ -7396,7 +7396,7 @@
     "raw": "32'sh9",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 49
+     "line": 62
     }
    },
    {
@@ -7405,7 +7405,7 @@
     "raw": "32'sh20",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 50
+     "line": 63
     }
    },
    {
@@ -7414,7 +7414,7 @@
     "raw": "32'sh10",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 51
+     "line": 64
     }
    },
    {
@@ -7423,7 +7423,7 @@
     "raw": "32'sh21",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 52
+     "line": 65
     }
    },
    {
@@ -7432,7 +7432,7 @@
     "raw": "32'sh28",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 53
+     "line": 66
     }
    },
    {
@@ -7441,7 +7441,7 @@
     "raw": "32'sh19",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 54
+     "line": 67
     }
    },
    {
@@ -7450,7 +7450,7 @@
     "raw": "32'sha",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 55
+     "line": 68
     }
    },
    {
@@ -7459,7 +7459,7 @@
     "raw": "32'sh9c40",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 56
+     "line": 69
     }
    },
    {
@@ -7468,7 +7468,7 @@
     "raw": "32'sh20",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 57
+     "line": 70
     }
    },
    {
@@ -7477,7 +7477,7 @@
     "raw": "32'shf",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 58
+     "line": 71
     }
    },
    {
@@ -7486,7 +7486,7 @@
     "raw": "32'sh0",
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 64
+     "line": 72
     }
    }
   ],
@@ -7497,7 +7497,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 66
+     "line": 74
     },
     "dir": "in",
     "declared": "1 bit",
@@ -7510,7 +7510,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 67
+     "line": 75
     },
     "dir": "in",
     "declared": "1 bit",
@@ -7523,7 +7523,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 70
+     "line": 78
     },
     "dir": "in",
     "declared": "[31:0]",
@@ -7536,7 +7536,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 71
+     "line": 79
     },
     "dir": "in",
     "declared": "1 bit",
@@ -7549,7 +7549,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 72
+     "line": 80
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7562,7 +7562,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 73
+     "line": 81
     },
     "dir": "in",
     "declared": "1 bit",
@@ -7575,7 +7575,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 76
+     "line": 84
     },
     "dir": "in",
     "declared": "1 bit",
@@ -7588,7 +7588,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 77
+     "line": 85
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7601,7 +7601,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 78
+     "line": 86
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7614,7 +7614,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 79
+     "line": 87
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7627,7 +7627,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 82
+     "line": 88
     },
     "dir": "out",
     "declared": "[3:0]",
@@ -7640,7 +7640,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 85
+     "line": 91
     },
     "dir": "in",
     "declared": "[ENERGY_WIDTH-1:0]",
@@ -7653,7 +7653,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 86
+     "line": 92
     },
     "dir": "in",
     "declared": "[6:0]",
@@ -7666,7 +7666,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 87
+     "line": 93
     },
     "dir": "in",
     "declared": "[3:0]",
@@ -7679,7 +7679,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 90
+     "line": 96
     },
     "dir": "out",
     "declared": "[BUF_AW-1:0]",
@@ -7692,7 +7692,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 91
+     "line": 97
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7705,7 +7705,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 92
+     "line": 98
     },
     "dir": "out",
     "declared": "[INDEX_WIDTH-1:0]",
@@ -7718,7 +7718,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 93
+     "line": 99
     },
     "dir": "out",
     "declared": "[METRIC_WIDTH-1:0]",
@@ -7731,7 +7731,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 94
+     "line": 100
     },
     "dir": "out",
     "declared": "[PHASE_WIDTH-1:0]",
@@ -7744,7 +7744,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 95
+     "line": 101
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7757,7 +7757,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 98
+     "line": 104
     },
     "dir": "out",
     "declared": "[31:0]",
@@ -7770,7 +7770,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 99
+     "line": 105
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7783,7 +7783,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 100
+     "line": 106
     },
     "dir": "in",
     "declared": "1 bit",
@@ -7796,7 +7796,7 @@
     "signed": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 101
+     "line": 107
     },
     "dir": "out",
     "declared": "1 bit",
@@ -7805,24 +7805,24 @@
    }
   ],
   "memories": [],
-  "net_count": 48,
+  "net_count": 62,
   "source_scan": {
-   "reg_decls": 23,
-   "wire_decls": 26,
+   "reg_decls": 33,
+   "wire_decls": 31,
    "always_blocks": 4,
-   "assign_statements": 3,
+   "assign_statements": 5,
    "readmemh_files": [],
-   "case_statements": 2
+   "case_statements": 3
   },
   "instances": [
    {
     "name": "u_cap",
-    "module": "iq_capture_pingpong",
-    "module_base": "iq_capture_pingpong",
+    "module": "iq_capture_multibank",
+    "module_base": "iq_capture_multibank",
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 257
+     "line": 262
     }
    },
    {
@@ -7832,7 +7832,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 287
+     "line": 301
     }
    },
    {
@@ -7842,7 +7842,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 321
+     "line": 335
     }
    },
    {
@@ -7852,7 +7852,7 @@
     "vendor_ip": false,
     "loc": {
      "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/frac_cfo_frame_corrector_top.v",
-     "line": 352
+     "line": 366
     }
    }
   ]
@@ -8541,24 +8541,24 @@
    }
   ]
  },
- "iq_capture_pingpong": {
-  "base": "iq_capture_pingpong",
+ "iq_capture_multibank": {
+  "base": "iq_capture_multibank",
   "variant": null,
-  "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-  "line": 33,
+  "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+  "line": 40,
   "vendor_ip": false,
   "vendor_note": null,
-  "summary": "Ping-pong IQ capture buffer.",
+  "summary": null,
   "summary_kind": "conceptual (curated from RTL header comments)",
-  "header_comment": "iq_capture_pingpong.v   (H1a \u2014 continuous multi-slot front-end)\n\nPURPOSE\nDecouple AXI-Stream acquisition from the (slow) frac+meyr processing so the\nsync chain can run CONTINUOUS back-to-back slots without going deaf. Owns\nthe AXI ingest port and TWO iq_frame_buffer instances (A/B) in ping-pong:\none buffer captures slot N+1 while the other is being processed for slot N.\n\ns_axis_tready stays HIGH as long as at least one buffer is free; it drops\nonly when BOTH buffers hold un-processed frames (processing fell behind \u2014\nthe expected ~50% duty backpressure, since frac S_CORRECT is ~2 clk/sample).\n\nALIGNMENT\nEach capture ends on s_axis_tlast (NOT buffer-full) because DEPTH (2^CAP_AW\n= 8192) >= the stim frame (4160). So every buffer holds exactly one whole,\ncorrectly-bounded frame -> the downstream frame_detector / slot arithmetic\nline up identically slot-to-slot.\n\nHANDOFF PROTOCOL (to the processing FSM in frac_cfo_frame_corrector_top)\nbuf_ready : level \u2014 the next-in-order captured buffer is waiting + proc idle\nbuf_len   : sample_count of that ready buffer\nproc_take : 1-cyc \u2014 processor claims the ready buffer (latches proc_sel)\nproc_free : 1-cyc \u2014 processor done; buffer returns to the free pool\nrd_en/rd_addr/rd_data : random-access read of the buffer the processor owns\n\nCapture order (A,B,A,B,...) == process order (A,B,A,B,...) so the two\ncap_sel / proc_next pointers each just toggle; with 2 buffers this is FIFO.\n\nSynthesizable Verilog-2001.",
+  "header_comment": "iq_capture_multibank.v   (STREAMING FIX \u2014 three-bank capture front-end)\n\nPURPOSE\nSuccessor to iq_capture_pingpong for TRUE sustained 1-sample/clock ingest\nof back-to-back frames. The 2026-11-18 throughput audit measured two input\nstall mechanisms in the ping-pong front-end:\n(a) 2-4 idle cycles at every frame boundary (capture FSM IDLE round trip\nbefore the next buffer is armed);\n(b) 645-650 idle cycles per frame because a bank stayed owned through\nBOTH analysis (frame det + timing/CFO) AND the 4032-sample replay -\nbank lifetime ~2.13 frame periods > what 2 banks can hide.\nFixes here:\n(a) the NEXT free bank is PRE-ARMED while the current one captures; the\nactive bank switches on the tlast beat itself -> 0-cycle handover.\n(b) THREE banks with a split ownership pipeline and TWO read ports:\nFREE -> CAPTURING -> OCCUPIED -> ANALYSIS -> PLAYBACK -> FREE\nso capture(k+2), analysis(k+1) and playback(k) proceed concurrently\n(each in its own bank, each with its own read path).\n\nOWNERSHIP / HANDOFF PROTOCOL (frac_cfo_frame_corrector_top)\nbuf_ready  : level - next-in-order captured bank waiting, analysis idle\nbuf_len    : sample count of that bank\nana_take   : 1-cyc - analysis claims the ready bank (read port A follows)\nana_pass   : 1-cyc - analysis done; bank ownership moves to the playback\nstage (1-deep pass queue) WITHOUT freeing it\nana_abort  : 1-cyc - analysis failed (no frame); bank returns to the pool\nplay_ready : level - a passed bank is waiting for the playback engine\nplay_take  : 1-cyc - playback engine claims it (read port B follows)\nplay_free  : 1-cyc - playback finished reading; bank returns to the pool\n\nA bank is never recycled for capture while owned by analysis, the pass\nqueue, or playback, so no frame can be overwritten before it is consumed;\nif processing ever falls behind, s_axis_tready drops (no silent loss).\n\nCapture order == analysis order == playback order (FIFO, mod-3 pointers +\nthe 1-deep pass queue). Synthesizable Verilog-2001.",
   "params": [
    {
     "name": "DATA_WIDTH",
     "value": 32,
     "raw": "32'sh20",
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 34
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 41
     }
    },
    {
@@ -8566,8 +8566,8 @@
     "value": 13,
     "raw": "32'shd",
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 35
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 42
     }
    },
    {
@@ -8575,7 +8575,7 @@
     "value": 4160,
     "raw": "32'sh1040",
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 43
     }
    }
@@ -8586,7 +8586,7 @@
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 45
     },
     "dir": "in",
@@ -8599,7 +8599,7 @@
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 46
     },
     "dir": "in",
@@ -8612,7 +8612,7 @@
     "width": 32,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 49
     },
     "dir": "in",
@@ -8625,7 +8625,7 @@
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 50
     },
     "dir": "in",
@@ -8638,7 +8638,7 @@
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 51
     },
     "dir": "out",
@@ -8651,7 +8651,7 @@
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 52
     },
     "dir": "in",
@@ -8664,7 +8664,7 @@
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 55
     },
     "dir": "out",
@@ -8677,7 +8677,7 @@
     "width": 14,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 56
     },
     "dir": "out",
@@ -8686,11 +8686,11 @@
     "pinIndex": 8
    },
    {
-    "name": "proc_take",
+    "name": "ana_take",
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 57
     },
     "dir": "in",
@@ -8699,11 +8699,11 @@
     "pinIndex": 9
    },
    {
-    "name": "proc_free",
+    "name": "ana_pass",
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
      "line": 58
     },
     "dir": "in",
@@ -8712,12 +8712,12 @@
     "pinIndex": 10
    },
    {
-    "name": "rd_en",
+    "name": "ana_abort",
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 61
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 59
     },
     "dir": "in",
     "declared": "1 bit",
@@ -8725,90 +8725,250 @@
     "pinIndex": 11
    },
    {
-    "name": "rd_addr",
+    "name": "play_ready",
+    "width": 1,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 62
+    },
+    "dir": "out",
+    "declared": "1 bit",
+    "class": "axis",
+    "pinIndex": 12
+   },
+   {
+    "name": "play_take",
+    "width": 1,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 63
+    },
+    "dir": "in",
+    "declared": "1 bit",
+    "class": "control",
+    "pinIndex": 13
+   },
+   {
+    "name": "play_free",
+    "width": 1,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 64
+    },
+    "dir": "in",
+    "declared": "1 bit",
+    "class": "control",
+    "pinIndex": 14
+   },
+   {
+    "name": "a_rd_en",
+    "width": 1,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 67
+    },
+    "dir": "in",
+    "declared": "1 bit",
+    "class": "control",
+    "pinIndex": 15
+   },
+   {
+    "name": "a_rd_addr",
     "width": 13,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 62
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 68
     },
     "dir": "in",
     "declared": "[CAP_AW-1:0]",
     "class": "control",
-    "pinIndex": 12
+    "pinIndex": 16
    },
    {
-    "name": "rd_data",
+    "name": "a_rd_data",
     "width": 32,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 63
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 69
     },
     "dir": "out",
     "declared": "[DATA_WIDTH-1:0]",
     "class": "data",
-    "pinIndex": 13
+    "pinIndex": 17
    },
    {
-    "name": "both_full",
+    "name": "b_rd_en",
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 66
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 72
+    },
+    "dir": "in",
+    "declared": "1 bit",
+    "class": "control",
+    "pinIndex": 18
+   },
+   {
+    "name": "b_rd_addr",
+    "width": 13,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 73
+    },
+    "dir": "in",
+    "declared": "[CAP_AW-1:0]",
+    "class": "control",
+    "pinIndex": 19
+   },
+   {
+    "name": "b_rd_data",
+    "width": 32,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 74
+    },
+    "dir": "out",
+    "declared": "[DATA_WIDTH-1:0]",
+    "class": "data",
+    "pinIndex": 20
+   },
+   {
+    "name": "all_full",
+    "width": 1,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 77
     },
     "dir": "out",
     "declared": "1 bit",
     "class": "control",
-    "pinIndex": 14
+    "pinIndex": 21
    },
    {
     "name": "cap_overflow",
     "width": 1,
     "signed": false,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 67
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 78
     },
     "dir": "out",
     "declared": "1 bit",
     "class": "control",
-    "pinIndex": 15
+    "pinIndex": 22
+   },
+   {
+    "name": "dbg_active_bank",
+    "width": 2,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 79
+    },
+    "dir": "out",
+    "declared": "[1:0]",
+    "class": "control",
+    "pinIndex": 23
+   },
+   {
+    "name": "dbg_bank_busy",
+    "width": 4,
+    "signed": false,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 80
+    },
+    "dir": "out",
+    "declared": "[3:0]",
+    "class": "control",
+    "pinIndex": 24
    }
   ],
-  "memories": [],
-  "net_count": 37,
-  "source_scan": {
-   "reg_decls": 9,
-   "wire_decls": 16,
-   "always_blocks": 2,
-   "assign_statements": 5,
-   "readmemh_files": [],
-   "case_statements": 1
-  },
-  "instances": [
+  "memories": [
    {
-    "name": "u_buf_a",
-    "module": "iq_frame_buffer__Ad_DB2000",
-    "module_base": "iq_frame_buffer",
-    "vendor_ip": false,
+    "name": "len",
+    "depth": 3,
+    "width": 14,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 219
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 87
     }
    },
    {
-    "name": "u_buf_b",
-    "module": "iq_frame_buffer__Ad_DB2000",
-    "module_base": "iq_frame_buffer",
-    "vendor_ip": false,
+    "name": "tready_n",
+    "depth": 3,
+    "width": 1,
     "loc": {
-     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_pingpong.v",
-     "line": 244
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 101
+    }
+   },
+   {
+    "name": "cdone_n",
+    "depth": 3,
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 102
+    }
+   },
+   {
+    "name": "busy_n",
+    "depth": 3,
+    "width": 1,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 103
+    }
+   },
+   {
+    "name": "scnt_n",
+    "depth": 3,
+    "width": 14,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 104
+    }
+   },
+   {
+    "name": "ardd_n",
+    "depth": 3,
+    "width": 32,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 105
+    }
+   },
+   {
+    "name": "brdd_n",
+    "depth": 3,
+    "width": 32,
+    "loc": {
+     "file": "/home/messi/realtime-Gbps-OFDM-for-Wideband/RTL_SYNC_PHASE5/rtl/iq_capture_multibank.v",
+     "line": 106
     }
    }
-  ]
+  ],
+  "net_count": 26,
+  "source_scan": {
+   "reg_decls": 15,
+   "wire_decls": 19,
+   "always_blocks": 2,
+   "assign_statements": 12,
+   "readmemh_files": [],
+   "case_statements": 0
+  },
+  "instances": []
  },
  "meyr_Rm_dut": {
   "base": "meyr_Rm_dut",

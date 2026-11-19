@@ -47,12 +47,13 @@ export const projects = [
     badge: "RTL Explorer",
     title: "Interactive RTL Architecture Explorer — OFDM Transceiver",
     summary:
-      "Source-accurate, recursively navigable schematic explorer for the FPGA OFDM transceiver RTL (52 modules, 64 instances, 9 hierarchy levels, 824 ports). Generated from a real Verilator elaboration — resolved bus widths, parameter overrides, and actual instance-to-instance connectivity — with drill-down block diagrams, search, deep links, AXI-Stream timing reference, and per-module digital-twin verification status.",
-    tags: ["Verilog RTL", "Verilator Elaboration", "Interactive SVG", "AXI-Stream", "Digital Twin"],
+      "Source-accurate, recursively navigable schematic explorer for the FPGA OFDM transceiver RTL (52 modules, 65 instances, 9 hierarchy levels), generated from a real Verilator elaboration — resolved bus widths, parameter overrides, actual connectivity, measured cycle-accurate streaming traces. Includes Design Insights: ten interactive engineering chapters (pipelining, AXI-Stream backpressure, multi-bank memory scheduling, fixed-point/BFP, verification methodology, FPGA resources) built on this design's real measured before/after throughput story, with interview-prep Q&A per chapter.",
+    tags: ["Verilog RTL", "Verilator Elaboration", "Interactive SVG", "Throughput Audit", "Interview Prep"],
     image: null,
     detailUrl: null,
     links: [
       { label: "Open RTL Explorer →", href: "rtl-explorer/index.html" },
+      { label: "Design Insights →", href: "rtl-explorer/index.html#/insights/pipelining" },
       { label: "RTL GitHub →", href: "https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband" },
     ],
   },

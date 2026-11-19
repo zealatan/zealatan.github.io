@@ -8,6 +8,7 @@ import { DiagramView } from './components/diagram.js';
 import { TreeView } from './components/tree.js';
 import { DetailsView } from './components/details.js';
 import { TimingView } from './components/timing.js';
+import { InsightsView } from './insights/insights.js';
 
 const $ = sel => document.querySelector(sel);
 
@@ -19,9 +20,12 @@ async function main() {
   const details = new DetailsView($('#details'), store);
   const timing = new TimingView($('#timing'), store);
   const index = buildIndex(store);
+  const insights = new InsightsView($('#insights-view'), store,
+    { navigate: (p, s) => navigate(p, s), encodeHash });
   const expanded = new Map();          // path -> Set(inst) expanded in place
   let showClocks = false;
   let current = { path: '', sel: null };
+  let lastExplorerPath = '';
 
   function expandSet(path) {
     if (!expanded.has(path)) expanded.set(path, new Set());
@@ -30,6 +34,27 @@ async function main() {
 
   function renderAll() {
     const { path, sel } = current;
+    const isInsights = path.startsWith('insights');
+    document.body.classList.toggle('insights-active', isInsights);
+    $('#tab-explorer').classList.toggle('active', !isInsights);
+    $('#tab-insights').classList.toggle('active', isInsights);
+    if (isInsights) {
+      const ch = insights.show(path.split('/')[1] || 'pipelining');
+      const bc = $('#crumbs');
+      bc.innerHTML = '';
+      const a = document.createElement('a');
+      a.textContent = 'Design Insights';
+      a.href = '#/insights/pipelining';
+      a.onclick = ev => { ev.preventDefault(); navigate('insights/pipelining'); };
+      bc.appendChild(a);
+      bc.appendChild(document.createTextNode(` › ${ch.title}`));
+      $('#btn-back').disabled = !nav.canBack();
+      $('#btn-fwd').disabled = !nav.canForward();
+      document.title = `${ch.title} - Design Insights`;
+      return;
+    }
+    insights.hide();
+    lastExplorerPath = path;
     const node = store.nodeAt(path) || store.nodeAt('');
     const d = buildDiagram(store, node, {
       showClocks, expanded: expandSet(path),
@@ -159,13 +184,19 @@ async function main() {
     if (!sr.contains(ev.target) && ev.target !== si) sr.style.display = 'none';
   });
 
+  // ---- tabs ----
+  $('#tab-explorer').onclick = () => navigate(lastExplorerPath || '');
+  $('#tab-insights').onclick = () => navigate(
+    insights.active ? `insights/${insights.active}` : 'insights/pipelining');
+
   // ---- deep link on load + hash navigation ----
+  const validPath = p => p.startsWith('insights') || store.nodeAt(p);
   window.addEventListener('hashchange', () => {
     const { path, sel } = decodeHash(location.hash);
-    if (store.nodeAt(path)) navigate(path, sel);
+    if (validPath(path)) navigate(path, sel);
   });
   const init = decodeHash(location.hash);
-  navigate(store.nodeAt(init.path) ? init.path : '', init.sel);
+  navigate(validPath(init.path) ? init.path : '', init.sel);
 
   // ---- header stats ----
   const rep = store.report;
