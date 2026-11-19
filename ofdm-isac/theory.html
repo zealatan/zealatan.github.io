@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OFDM E2E Simulator — Math Reference</title>
+<meta name="description" content="The equations actually implemented by the sample-level OFDM E2E engine: every stage maps equation → implementation → intermediate signal → visualization.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]});"></script>
+<style>
+  :root { --bg:#0e1117; --panel:#161b22; --fg:#e6edf3; --mut:#8b949e;
+          --acc:#2f81f7; --grid:#30363d; --warn:#f0883e; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); line-height:1.6;
+         font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  header { position:sticky; top:0; z-index:5; background:rgba(14,17,23,0.95);
+           border-bottom:1px solid var(--grid); padding:10px 18px;
+           display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+  header h1 { font-size:17px; margin:0; }
+  header .sub { font-size:12px; color:var(--mut); }
+  header a.btn { margin-left:auto; background:var(--acc); color:#fff; text-decoration:none;
+                 border-radius:7px; padding:5px 12px; font-size:13px; }
+  main { max-width:980px; margin:0 auto; padding:22px 18px 80px; }
+  nav.toc { background:var(--panel); border:1px solid var(--grid); border-radius:10px;
+            padding:14px 18px; font-size:13.5px; columns:2; column-gap:28px; }
+  nav.toc a { color:var(--acc); text-decoration:none; display:block; padding:1.5px 0; }
+  @media (max-width:700px){ nav.toc{columns:1} }
+  h2 { font-size:19px; border-bottom:1px solid var(--grid); padding-bottom:6px; margin:46px 0 10px; }
+  h2 small { font-size:12px; color:var(--mut); font-weight:400; margin-left:8px; }
+  section.block { background:var(--panel); border:1px solid var(--grid); border-radius:10px;
+                  padding:14px 18px; margin:14px 0; }
+  section.block h3 { font-size:15px; margin:0 0 6px; }
+  .eq { overflow-x:auto; padding:4px 0; }
+  .map { font-size:12.5px; color:var(--mut); border-top:1px dashed var(--grid);
+         margin-top:10px; padding-top:8px; }
+  .map b { color:var(--fg); } .map .ui { color:var(--warn); }
+  .map code { background:#0b0f14; border:1px solid var(--grid); border-radius:5px;
+              padding:1px 6px; font-size:11.5px; color:#79c0ff; }
+  p { font-size:14px; }
+  table { border-collapse:collapse; font-size:13px; margin:8px 0; width:100%; }
+  th,td { border:1px solid var(--grid); padding:5px 10px; text-align:center; }
+  th { background:#0b0f14; color:var(--mut); font-weight:600; }
+  td:first-child { text-align:left; }
+  .note { font-size:12.5px; color:var(--mut); }
+</style>
+</head>
+<body>
+<header>
+  <h1>OFDM E2E Simulator — Math Reference</h1>
+  <span class="sub">equations as IMPLEMENTED by the sample-level engine — each block names its
+    source file, the intermediate signal it produces, and the dashboard view that shows it</span>
+  <a class="btn" href="index.html">▶ Open the simulator</a>
+</header>
+<main>
+
+<p>
+Unlike an educational visualization, the <a href="index.html" style="color:var(--acc)">E2E
+simulator</a> runs a complete complex-IQ sample chain for every frame you see. This page
+documents exactly those computations. Numerical verification lives in
+<code>tests/test_phy.mjs</code> (32 checks) and <code>tests/test_verify.mjs</code> (126 checks; run both with <code>npm test</code>). Results and open failures: <code>docs/VERIFICATION_REPORT.md</code>.
+</p>
+
+<nav class="toc">
+  <a href="#conv">1. Conventions: bins, normalization, RNG</a>
+  <a href="#qam">2. Bit source &amp; Gray QAM</a>
+  <a href="#grid">3. Resource grid &amp; pilots</a>
+  <a href="#ifft">4. Unitary IFFT/FFT &amp; cyclic prefix</a>
+  <a href="#pre">5. Preambles P1 (S&amp;C) and P2 (known)</a>
+  <a href="#snr">6. SNR definitions: sample SNR, Es/N0, Eb/N0</a>
+  <a href="#chan">7. Channel: FIR multipath with real ISI</a>
+  <a href="#rf">8. RF impairments on IQ samples</a>
+  <a href="#sync">9. Synchronization: S&amp;C + known-preamble xcorr</a>
+  <a href="#ce">10. Channel estimation on received pilots</a>
+  <a href="#eq">11. Equalization ZF / MMSE</a>
+  <a href="#met">12. Metrics: BER, EVM, MSE</a>
+  <a href="#ver">13. Verification results &amp; export schema</a>
+</nav>
+
+<!-- 1 -->
+<h2 id="conv">1. Conventions <small>engine.js header</small></h2>
+<section class="block">
+<h3>Bin ordering, normalization, determinism</h3>
+<p>FFT bins use natural order \(k=0..N-1\): \(k=0\) is DC, \(k\ge N/2\) are negative
+frequencies (\(f_k=k-N\)); the guard band straddles Nyquist. Both transforms are
+<b>unitary</b> (\(1/\sqrt N\) each direction), so Parseval holds exactly and per-bin noise
+variance equals per-sample noise variance — this is what makes the SNR definitions in §6
+one-liners. All randomness (bits, noise, channel draws, phase noise) flows through one
+seeded generator (mulberry32 + Box–Muller): identical config + seed ⇒ identical samples
+(verified, Test G).</p>
+<div class="map"><code>js/phy/engine.js</code> — <code>makeRng()</code>, <code>fftRadix2()</code> · exported in every JSON dump</div>
+</section>
+
+<!-- 2 -->
+<h2 id="qam">2. Bit source &amp; Gray QAM <small>Layer A</small></h2>
+<section class="block">
+<h3>Mapping</h3>
+<p>Per axis, \(L=\sqrt M\) levels \(v_i=2i-(L-1)\) with Gray code \(g(i)=i\oplus(i\!\gg\!1)\),
+normalized to \(E_s=1\):</p>
+<div class="eq">$$ c=\Big(2\cdot\tfrac1L\sum_i v_i^2\Big)^{-1/2},\qquad
+s=c\,(v_I+jv_Q),\qquad M\in\{4,16,64,256\} $$</div>
+<p>Hard demapping slices each axis to the nearest level and re-emits the Gray bits —
+the exact inverse of the mapper (Test B: 0 errors for all four modulations).</p>
+<div class="map"><code>qamMap()</code> <code>qamDemap()</code> <code>randomBits()</code> ·
+signal <b>qamSymbols</b> · view <span class="ui">TX constellation</span></div>
+</section>
+
+<!-- 3 -->
+<h2 id="grid">3. Resource grid <small>N=128, CP=16 default (configurable)</small></h2>
+<section class="block">
+<h3>Active / pilot / data partition</h3>
+<p>Active bins = all \(k\in[1,N)\) except the guard band \(k\in[53,75]\) — the Nyquist bin \(k=64\) plus 11 bins on each side, 23 bins in total (the configuration value <code>guard=22</code> sets the 11+11 side bins). DC (\(k=0\)) is nulled.
+Pilots take every 8th active bin plus the forced upper edge (14 pilots); the remaining
+90 bins carry data. Pilot values are BPSK from an m-sequence LFSR
+(\(x_i=x_{i-3}\oplus x_{i-7}\)), independent of the data RNG and known to the receiver.
+Pilot and data sets are disjoint by construction.</p>
+<div class="map"><code>makeGrid()</code> <code>pilotSequence()</code> ·
+signal <b>resourceGrid[sym]</b> · readout <span class="ui">grid info line</span> (counts + overheads)</div>
+</section>
+
+<!-- 4 -->
+<h2 id="ifft">4. OFDM modulation <small>unitary IFFT + CP</small></h2>
+<section class="block">
+<h3>Per-symbol synthesis</h3>
+<div class="eq">$$ x[n]=\frac{1}{\sqrt N}\sum_{k=0}^{N-1}X[k]\,e^{j2\pi kn/N},\qquad
+x_{cp}=\big[x[N-N_{cp}..N-1],\;x\big] $$</div>
+<p>The forward FFT applies the matching \(1/\sqrt N\), so
+\(\mathrm{FFT}(\mathrm{IFFT}(X))=X\) to \(10^{-14}\) and energy is preserved (Test A).
+All symbols are serialized into one continuous IQ stream
+[P1, P2, data 0..13], each \(N_{cp}+N\) samples.</p>
+<div class="map"><code>ifft()</code> <code>transmit()</code> · signals <b>ifftOut[sym]</b>,
+<b>txIQ</b> · view <span class="ui">TX IQ</span></div>
+</section>
+
+<!-- 5 -->
+<h2 id="pre">5. Preambles <small>frame = [P1 | P2 | data…]</small></h2>
+<section class="block">
+<h3>P1 — Schmidl &amp; Cox symbol</h3>
+<p>Only even active bins are loaded (QPSK at power 2 from a dedicated fixed-seed RNG), so
+the time body consists of two identical halves of period \(N/2\) — the structure the S&amp;C
+detector exploits.</p>
+<h3>P2 — fully known symbol</h3>
+<p>Every active bin carries the m-sequence BPSK value: the full \(N_{cp}+N\) waveform is
+known at the receiver and used for fine timing and integer-CFO resolution.</p>
+<div class="map"><code>buildPreambles()</code> · signals <b>pre.t1/t2</b> · visible at the
+start of <span class="ui">TX IQ / RX IQ</span></div>
+</section>
+
+<!-- 6 -->
+<h2 id="snr">6. SNR definitions <small>engine snrHelpers()</small></h2>
+<section class="block">
+<h3>Three calibrated definitions</h3>
+<p>With unitary transforms and unit-power constellations, time-domain complex-noise
+variance \(\sigma^2\) equals per-bin variance, so:</p>
+<div class="eq">$$ E_s/N_0 = -10\log_{10}\sigma^2,\qquad
+E_b/N_0 = E_s/N_0 - 10\log_{10}(\log_2 M) $$</div>
+<div class="eq">$$ \mathrm{SNR}_{sample} = E_s/N_0 + 10\log_{10}\frac{N_{act}}{N}
+\quad\text{(data-symbol body: only } N_{act}\text{ of } N \text{ bins carry power)} $$</div>
+<p>CP and pilot overheads are reported explicitly rather than silently folded in:
+\(10\log_{10}\frac{N+N_{cp}}{N}=0.51\) dB and
+\(10\log_{10}\frac{N_{act}}{N_{data}}=0.63\) dB for the defaults. In <code>sample</code>
+mode the noise power is calibrated against the <i>measured</i> frame power.</p>
+<div class="map"><code>snrHelpers()</code>, noise injection in <code>applyChannel()</code> ·
+<span class="ui">SNR slider + Es/N0 / Eb/N0 / sample selector</span> ·
+verified by Test D: QPSK empirical BER matches \(Q(\sqrt{2E_b/N_0})\) at 2–8 dB
+(e.g. 1.915×10⁻⁴ vs 1.909×10⁻⁴ over 2.1 M bits)</div>
+</section>
+
+<!-- 7 -->
+<h2 id="chan">7. Multipath channel <small>Layer B — real convolution, real ISI</small></h2>
+<section class="block">
+<h3>Complex FIR</h3>
+<div class="eq">$$ y[n]=\sum_{\ell=0}^{L-1}h[\ell]\,x[n-\ell]+w[n] $$</div>
+<p>Taps are drawn per realization: Rayleigh complex gains on the preset
+\(\{d_\ell,P_\ell\}\) profiles (EPA / EVA / ETU shapes at 20 Msps; Rician adds a K-factor
+LOS to tap 0), normalized to \(\sum|h|^2=1\). The convolution runs over the whole frame —
+when the excess delay exceeds the CP (ETU's 100-sample tap vs CP = 16), inter-symbol
+interference genuinely appears and no per-subcarrier equalizer can remove it
+(Test E: 9.1×10⁻² vs 6.3×10⁻⁴ within-CP). Nothing multiplies QAM symbols by random
+per-symbol coefficients.</p>
+<div class="map"><code>drawChannel()</code> <code>firConvolve()</code>, presets
+<code>CHANNEL_PRESETS</code> · signal <b>channelImpulseResponse</b> ·
+views <span class="ui">Channel impulse response, |H| true vs est</span></div>
+</section>
+
+<!-- 8 -->
+<h2 id="rf">8. RF impairments <small>fixed, documented ordering</small></h2>
+<section class="block">
+<h3>Order: PA → FIR → CFO → phase noise → SFO → AWGN → IQ → DC</h3>
+<div class="eq">$$ \text{CFO: } y[n]\leftarrow y[n]e^{j2\pi\epsilon n/N}
+\;\;(\text{continuous } n \text{ across the frame}) $$</div>
+<div class="eq">$$ \text{PN: } \phi_{n+1}=\phi_n+w_n,\;
+w_n\sim\mathcal N(0,\,2\pi\beta/F_s) \qquad
+\text{PA: } G(|x|)=\big(1+(|x|/A)^{2p}\big)^{-1/(2p)} $$</div>
+<div class="eq">$$ \text{SFO: } y[k]=x\big(k(1+\delta)\big)\ \text{via linear interpolation}
+\qquad \text{IQ: } Q'=g(\sin\varphi\, I+\cos\varphi\, Q),\ I'=I \qquad
+\text{DC: } y\leftarrow y+dc $$</div>
+<div class="eq">$$ \text{PA (output back-off } B \text{ relative to the measured mean power } P_{avg}\text{ of the frame):}\quad
+A=\sqrt{P_{avg}}\,10^{B/20} $$</div>
+<p class="note">SFO is an actual resampling of the sample stream (linear interpolation —
+limitation: first-order kernel), not a constellation rotation. PA acts at the TX; AWGN,
+IQ imbalance and DC are receiver-side. A constant DC offset lands only on FFT bin 0, which is
+a null, so it does not change data-bin EVM (Test F). The <code>AWGN</code> preset is
+\(h=[1]\) (no fading and no phase); the fading presets are Rayleigh/Rician realizations.
+Every impairment is validated against its own signal-domain property in Test F and in
+<code>tests/test_verify.mjs</code>, section F.</p>
+<div class="map"><code>js/channel/channel.js</code> — <code>applyCfo() applyPhaseNoise()
+applySfo() applyPa() applyIqImbalance() applyDcOffset() addAwgn()</code> ·
+<span class="ui">CFO/SFO/PN sliders, IQ/PA/DC toggles</span> · Test F: 0.3-subcarrier CFO
+uncorrected EVM 107% → corrected 4.0%</div>
+</section>
+
+<!-- 9 -->
+<h2 id="sync">9. Synchronization <small>practical vs oracle (labeled)</small></h2>
+<section class="block">
+<h3>Stage 1 — Schmidl &amp; Cox on P1</h3>
+<div class="eq">$$ P(d)=\sum_{n=0}^{N/2-1} r^*[d+n]\,r[d+n+N/2],\qquad
+M(d)=\frac{|P(d)|^2}{R_1(d)R_2(d)}\le 1 $$</div>
+<div class="eq">$$ \hat\epsilon_{frac}=\frac{\angle P(d_{max})}{\pi}\in(-1,1)
+\ \text{subcarriers} $$</div>
+<p class="note">Normalizing by BOTH half-window energies (Cauchy–Schwarz bound) plus an
+energy gate kills the 0/0 false peaks that plague the classic \(|P|^2/R^2\) form in
+silent regions — a real bug found and fixed by Test C.</p>
+<h3>Stage 2 — known-P2 cross-correlation with integer-CFO hypotheses</h3>
+<div class="eq">$$ (\hat k,\hat d)=\arg\max_{k\in[-K,K],\,d}
+\Big|\sum_n p_2^*[n]\,r_k[d+n]\Big|,\qquad r_k = r\,e^{-j2\pi(\hat\epsilon_{frac}+k)n/N} $$</div>
+<p>First-path refinement walks back from the argmax (≤ one CP) to the earliest lag above
+50% of the peak, then a 2-sample backoff into the CP guards against locking late on a
+strong tap; the resulting known linear phase is absorbed by channel estimation (§10).
+<b>Oracle mode</b> instead hands the receiver the true delay and CFO from the channel
+metadata — always labeled in the UI, used for baselines (Tests D/E).</p>
+<div class="map"><code>js/receiver/receiver.js</code> — <code>schmidlCox()
+synchronize()</code> · view <span class="ui">Sync metric</span> (true vs detected markers)
+· readouts <span class="ui">sync err, CFO err</span></div>
+</section>
+
+<!-- 10 -->
+<h2 id="ce">10. Channel estimation <small>on the actual received pilots</small></h2>
+<section class="block">
+<h3>LS + delay-compensated linear interpolation (default)</h3>
+<div class="eq">$$ \hat H_p[i]=\frac{Y[k_i]}{X_p[k_i]},\qquad
+\hat\psi=\frac{1}{\Delta k}\angle\sum_i \hat H_p[i\!+\!1]\hat H_p^*[i] $$</div>
+<p>A timing offset \(\tau\) makes \(H[k]\) spiral as \(e^{j2\pi k\tau/N}\); linearly
+interpolating that spiral between pilots is badly biased. So the dominant per-bin phase
+slope \(\hat\psi\) is estimated from adjacent-pilot products (pilots only — no oracle),
+the pilots are derotated, the slowly-varying residual is linearly interpolated, and the
+ramp is re-applied. This is what lets the deliberate sync backoff cost nothing
+(Test C: EVM 10⁻¹³ with a −2-sample offset).</p>
+<h3>Alternatives</h3>
+<p><b>perfect</b> — oracle: \(H_s[k]=\sum_\ell h[\ell]e^{-j2\pi k\ell/N}\cdot
+e^{j2\pi k\tau/N}\cdot e^{j2\pi(\epsilon_{true}-\hat\epsilon)(n_s+\tfrac{N-1}{2})/N}\), with the
+receiver's actual window offset \(\tau\), the residual CFO \(\epsilon_{true}-\hat\epsilon\)
+taken at the window centre of symbol \(s\) (\(n_s\) = window start). This makes the oracle
+valid when practical sync is used (Test G4: 0 errors, same as oracle sync).
+<b>ls-dft</b> — pilot-axis IDFT, keep the CP-supported taps, DFT back (band-limited
+smoothing; the pilot axis spans only the active band, noted limitation).
+<b>lmmse</b> — ls-dft with per-tap Wiener weights \(p_\ell/(p_\ell+\sigma^2/P)\),
+prior \(p_\ell\propto e^{-0.5\ell}\) (normalized; this is an assumed PDP, not the channel's own
+profile), genie \(\sigma^2\) (labeled).</p>
+<div class="map"><code>linInterp() dftInterp() demodulate()</code> · signal
+<b>channelEstimates[sym]</b> · view <span class="ui">|H| true vs est</span> (orange dots =
+received pilot LS values) · metric <span class="ui">MSE(Ĥ)</span></div>
+</section>
+
+<!-- 11 -->
+<h2 id="eq">11. Equalization <small>per subcarrier</small></h2>
+<section class="block">
+<h3>ZF and MMSE with fade protection</h3>
+<div class="eq">$$ \hat X_{ZF}=\frac{Y\,\hat H^*}{\max(|\hat H|^2,10^{-12})},\qquad
+\hat X_{MMSE}=\frac{Y\,\hat H^*}{|\hat H|^2+\sigma^2} $$</div>
+<p>On frequency-selective realizations, ZF noise enhancement on deep-faded bins is real
+physics. Test E checks the measured BER against the per-bin Rayleigh theory with oracle CSI
+(3/8·erfc√(γ_k/10), \(\gamma_k=|H_k|^2/\sigma^2\)) within 3 SE; the ZF noise-enhancement law
+\(\mathrm{EVM}^2=\mathrm{mean}_k\,\sigma^2/|H_k|^2\) is checked at 60 dB in Test H2 (measured/predicted = 1.003).</p>
+<div class="map"><code>demodulate()</code> equalization loop · signal
+<b>equalizedSymbols</b> · view <span class="ui">RX post-EQ</span></div>
+</section>
+
+<!-- 12 -->
+<h2 id="met">12. Metrics <small>computed from recovered symbols/bits</small></h2>
+<section class="block">
+<h3>BER / EVM / MSE</h3>
+<div class="eq">$$ \mathrm{BER}=\frac{\#\{\hat b\ne b\}}{N_{bits}},\quad
+\mathrm{EVM}=\sqrt{\frac{\sum|\hat X - X_{ideal}|^2}{\sum|X_{ideal}|^2}},\quad
+\mathrm{MSE}_{\hat H}=\frac{1}{|\mathcal A|}\sum_{k\in\mathcal A}|\hat H_k-H_k|^2 $$</div>
+<p>The BER/EVM-vs-SNR chart runs real Monte-Carlo frames in a Web Worker (configurable
+error target / bit cap per point; sample counts displayed). The dashed curve is the
+ANALYTIC Gray-QAM AWGN reference and is labeled "theory" — it is never substituted for
+simulation data. The TX→RX image panel pushes the image's actual bits through the full
+chain, frame by frame, and reconstructs from the recovered bits.</p>
+<div class="map"><code>js/experiments/mc_worker.js</code> · views
+<span class="ui">BER/EVM vs SNR, TX/RX image</span></div>
+</section>
+
+<!-- 13 -->
+<h2 id="ver">13. Verification &amp; export <small>tests/test_phy.mjs · export.js</small></h2>
+<section class="block">
+<h3>Test suites (see docs/VERIFICATION_REPORT.md for the full list and open failures)</h3>
+<table>
+<tr><th>Test</th><th>What it proves</th><th>Key number</th></tr>
+<tr><td>A FFT/IFFT</td><td>identity + Parseval, N=64/128/256</td><td>err ≤ 1.5×10⁻¹⁴</td></tr>
+<tr><td>B QAM</td><td>map→demap = identity, 4 modulations</td><td>0 bit errors</td></tr>
+<tr><td>C perfect channel</td><td>practical sync, BER=0, EVM≈0, boundary in CP</td><td>EVM ≈ 10⁻¹³</td></tr>
+<tr><td>D AWGN theory</td><td>QPSK vs \(Q(\sqrt{2E_b/N_0})\), 3σ binomial band (no extra tolerance)</td><td>1.917e-4 vs 1.909e-4</td></tr>
+<tr><td>E multipath</td><td>within-CP matches per-bin fading theory; beyond-CP degrades ≫</td><td>6.3e-4 / 9.1e-2</td></tr>
+<tr><td>F CFO</td><td>ICI degrades; S&amp;C+xcorr recovers (ε̂ err &lt; 0.02 sc)</td><td>EVM 107% → 4%</td></tr>
+<tr><td>G determinism</td><td>same seed ⇒ identical outputs</td><td>exact match</td></tr>
+</table>
+<h3>Export schema (<code>ofdm-e2e-signals</code> v1)</h3>
+<p>The ⇩ Export button dumps the CURRENT run: config (fs, N, CP, bin ordering, complex
+format, symbol indexing, pilot positions/values, normalization, seeds, channel + noise
+σ², receiver settings) and all intermediates (txBits → qamSymbols → resourceGrid →
+ifftOut → txIQ → h → rxIQ → fftOut → channelEstimates → equalizedSymbols → rxBits) plus
+metrics — the comparison contract for the RTL and ZedBoard/AD9361 digital-twin phases.
+Fixed-point constraints are deliberately NOT in this floating-point reference.</p>
+<div class="map"><code>js/experiments/export.js</code> — <code>buildExport()</code></div>
+</section>
+
+<p class="note" style="margin-top:40px">
+Every equation on this page is implemented in <code>js/phy/engine.js</code>,
+<code>js/channel/channel.js</code> or <code>js/receiver/receiver.js</code>, and every
+dashboard panel renders arrays produced by those functions in the same run. If a block
+exists in the simulator but not on this page (or vice versa), that is a bug.
+The legacy educational simulator and its own math page remain unchanged at
+<a href="../ofdm-sim/index.html" style="color:var(--acc)">/ofdm-sim/</a>.
+</p>
+
+</main>
+</body>
+</html>
