@@ -37,6 +37,29 @@ export function renderHero(container, profile) {
   `;
 }
 
+export function renderIsacFeature(container, feature) {
+  container.innerHTML = `
+    <h2 class="section-title">OFDM-ISAC</h2>
+    <div class="card isac-feature">
+      <div class="isac-feature-copy">
+        <span class="badge">${feature.eyebrow}</span>
+        <h3>${feature.title}</h3>
+        <p>${feature.summary}</p>
+        <ul>${feature.details.map((item) => `<li>${item}</li>`).join("\n")}</ul>
+        <a class="isac-feature-link" href="${feature.link.href}">${feature.link.label}</a>
+        <p class="isac-feature-note">${feature.note}</p>
+      </div>
+      <div class="isac-feature-flow" aria-label="Sensing processing flow">
+        ${feature.steps.map((step, index) => `
+          <div class="isac-flow-step">
+            <span>${String(index + 1).padStart(2, "0")}</span>
+            <strong>${step}</strong>
+          </div>`).join("\n")}
+      </div>
+    </div>
+  `;
+}
+
 export function renderProjects(container, projects) {
   const cards = projects
     .map((project) => {

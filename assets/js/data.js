@@ -12,9 +12,21 @@ export const profile = {
 
 export const nav = [
   { label: "Portfolio", href: "index.html" },
+  { label: "ISAC", href: "index.html#isac" },
   { label: "Demos", href: "demos.html" },
   { label: "GitHub", href: profile.github },
 ];
+
+export const isacFeature = {
+  eyebrow: "Interactive research prototype",
+  title: "OFDM Integrated Sensing and Communication",
+  summary:
+    "Explore how a known OFDM communication waveform can also estimate target range and radial velocity. The independent simulator models monostatic target echoes, removes transmitted QAM symbols, and forms a two-dimensional range-Doppler map across coherent frames.",
+  steps: ["OFDM waveform", "Target echoes", "Range-Doppler map"],
+  details: ["Adjust target range, velocity, SNR, and carrier frequency", "Compare one or two targets", "Extend coherent processing across frames"],
+  note: "Synthetic baseband model with ideal sensing timing; no physical RF validation is claimed.",
+  link: { label: "Open OFDM-ISAC Simulator →", href: "ofdm-isac/index.html" },
+};
 
 export const projects = [
   {

@@ -202,6 +202,7 @@ p {
    ========================= */
 
 section#projects,
+section#isac,
 section#experience,
 section#skills,
 section#education,
@@ -227,6 +228,84 @@ section#demos {
   border: 1px solid var(--rule);
   border-radius: var(--radius);
   padding: 20px;
+}
+
+/* =========================
+   OFDM-ISAC Feature
+   ========================= */
+
+.isac-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+  gap: 28px;
+  align-items: center;
+  border-color: #cbd6e2;
+  background: linear-gradient(120deg, #ffffff 48%, #f0f5fa);
+}
+
+.isac-feature-copy h3 {
+  margin: 0 0 10px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.isac-feature-copy > p {
+  color: var(--navy-soft);
+  font-size: 14px;
+  max-width: 670px;
+}
+
+.isac-feature-copy ul {
+  margin: 0 0 18px;
+  padding-left: 19px;
+  color: var(--navy-soft);
+  font-size: 13.5px;
+}
+
+.isac-feature-link {
+  display: inline-block;
+  padding: 9px 16px;
+  border-radius: 7px;
+  background: var(--navy);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.isac-feature-link:hover { background: var(--navy-soft); color: #ffffff; }
+
+.isac-feature-copy .isac-feature-note {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.isac-feature-flow {
+  display: grid;
+  gap: 8px;
+}
+
+.isac-flow-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid #d8e2eb;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.isac-flow-step span {
+  color: #50749d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.isac-flow-step strong { font-size: 14px; font-weight: 600; }
+
+@media (max-width: 760px) {
+  .isac-feature { grid-template-columns: 1fr; }
 }
 
 /* =========================

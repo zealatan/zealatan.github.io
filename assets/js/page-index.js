@@ -1,6 +1,7 @@
 import {
   profile,
   nav,
+  isacFeature,
   projects,
   experience,
   skills,
@@ -13,6 +14,7 @@ import {
   renderNav,
   renderFooter,
   renderHero,
+  renderIsacFeature,
   renderProjects,
   renderExperience,
   renderSkillGrid,
@@ -21,6 +23,7 @@ import {
 
 renderNav(document.getElementById("nav"), { siteTitle: profile.name, items: nav });
 renderHero(document.getElementById("hero-text"), profile);
+renderIsacFeature(document.getElementById("isac"), isacFeature);
 renderProjects(document.getElementById("projects"), projects);
 renderExperience(document.getElementById("experience"), experience);
 renderSkillGrid(document.getElementById("skills"), skills);
