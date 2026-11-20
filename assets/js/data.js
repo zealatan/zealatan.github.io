@@ -43,6 +43,16 @@ export const projects = [
     ],
   },
   {
+    badge: "Hardware RF Loopback",
+    title: "ZedBoard + AD9361 — OFDM over a Real Radio",
+    summary:
+      "The sample-level E2E chain, taken to real silicon. A ZedBoard + FMCOMMS3 (AD9361) was brought up entirely over JTAG on an aarch64 host — no SD card, no Vivado: program the PL bitstream, run ps7_init, load and launch the ADI no-OS AD9361 application. A 16-QAM OFDM waveform is then transmitted through the actual RF chain — DAC → TX1A → SMA cable → RX1A → ADC — and recovered at BER 0 / 4420 bits, link EVM 1.8% (34.8 dB SNR). Control runs through a from-scratch libiio serial backend speaking the no-OS IIOD protocol over UART, with a live constellation / spectrum / BER monitoring GUI.",
+    tags: ["AD9361 / FMCOMMS3", "JTAG bring-up", "libiio / IIOD", "OFDM RF Loopback", "BER = 0"],
+    image: "assets/zedboard-ofdm-loopback.png",
+    detailUrl: null,
+    links: [],
+  },
+  {
     badge: "Live Simulator",
     title: "OFDM Live Dashboard — In-Browser PHY Simulator",
     summary:
