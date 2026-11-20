@@ -56,7 +56,8 @@ export const projects = [
     badge: "ISAC / RF Sensing",
     title: "OFDM Range-Doppler — Communication Waveform as Radar",
     summary:
-      "Integrated sensing on top of the same OFDM link: the communication waveform is reused unchanged as a radar illuminator. Reciprocal filtering (received / transmitted symbols per subcarrier) followed by a subcarrier-axis IFFT (range) and a frame-axis FFT (Doppler) yields a Range-Doppler map. Two synthetic targets — near/approaching and far/receding — are recovered with their detected peaks landing exactly on the theoretical range/velocity bins (0-bin offset, correct Doppler sign), validated at both the 20 MHz config rate and the 30.72 MSPS AD9361 hardware rate, and surviving down to 10 dB SNR. Judged by the injected-vs-detected-vs-theoretical number table, not by the picture.",
+      "A communication OFDM waveform reused as radar: dividing out the data symbols leaves a pure 2-D linear phase whose range/Doppler peaks are recovered by a 2-D FFT. Validated on a hardware loopback with synthetic targets (offset-0 bins, correct Doppler sign, SNR 20/10 dB)." +
+      "<img src='assets/isac-eqs.png' alt='OFDM radar signal model: frequency-domain channel and reciprocal filtering' style='display:block;width:100%;max-width:560px;margin-top:.8em;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:#fff;' />",
     tags: ["OFDM ISAC", "Range-Doppler", "Reciprocal Filtering", "20M / 30.72M verified"],
     image: "assets/isac-range-doppler.png",
     detailUrl: null,
