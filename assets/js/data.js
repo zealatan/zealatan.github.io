@@ -10,14 +10,6 @@ export const profile = {
   resumeUrl: "assets/resume.pdf",
 };
 
-export const heroStats = [
-  { value: "BER 0 / 4420", label: "16-QAM OFDM over a real AD9361 radio" },
-  { value: "34.8 dB", label: "measured link SNR · EVM 1.8%" },
-  { value: "+15.9 dB", label: "live walking human sensed (ISAC, on hardware)" },
-  { value: "bit-exact", label: "C ↔ NumPy ↔ RTL golden-model match" },
-  { value: "RFSoC silicon", label: "OFDM PHY verified at BER 0 on ZCU216" },
-];
-
 export const nav = [
   { label: "Portfolio", href: "index.html" },
   { label: "ISAC", href: "index.html#isac" },

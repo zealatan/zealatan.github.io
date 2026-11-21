@@ -37,18 +37,6 @@ export function renderHero(container, profile) {
   `;
 }
 
-export function renderHeroStats(container, stats) {
-  container.innerHTML = stats
-    .map(
-      (s) => `
-      <div class="hero-stat">
-        <span class="hero-stat-value">${s.value}</span>
-        <span class="hero-stat-label">${s.label}</span>
-      </div>`
-    )
-    .join("\n");
-}
-
 export function renderIsacFeature(container, feature) {
   container.innerHTML = `
     <h2 class="section-title">OFDM-ISAC</h2>
