@@ -56,9 +56,9 @@ export const projects = [
     badge: "ISAC / RF Sensing",
     title: "OFDM Range-Doppler — Communication Waveform as Radar & Human Motion Sensing",
     summary:
-      "A communication OFDM waveform reused unchanged as radar, validated on real AD9361 hardware with live human-walking detection. Reciprocal filtering divides out the data symbols; a 2-D FFT forms the Range-Doppler map. Monostatic + shared-LO (CFO ≈ 0) pins the direct TX→RX leakage to a deep 0-Doppler null, so it is removed by a simple empty-room reference subtraction — no adaptive SIC — and a walking person is isolated at +15.9 dB over a 4-capture static control. (A 1st-order MTI alone only gives +4.7 dB — it nulls the slow walker with the leakage — so reference subtraction, not MTI, is the robust detector.)" +
+      "A communication OFDM waveform reused unchanged as radar, validated on real AD9361 hardware with live human-walking detection. Reciprocal filtering divides out the data symbols; a 2-D FFT forms the Range-Doppler map. Monostatic + shared-LO (CFO ≈ 0) pins the direct TX→RX leakage to a deep 0-Doppler null, so it is removed by a simple empty-room reference subtraction — no adaptive SIC — and a walking person is isolated at +15.9 dB over a 4-capture static control. (A 1st-order MTI alone only gives +4.7 dB — it nulls the slow walker with the leakage — so reference subtraction, not MTI, is the robust detector.) Frame sync is unified on the communication preamble correlator — the comm PHY and the radar share one timebase (equivalence verified on hardware)." +
       "<img src='assets/isac-eqs.png' alt='OFDM radar signal model: frequency-domain channel and reciprocal filtering' style='display:block;width:100%;max-width:560px;margin-top:.8em;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:#fff;' />",
-    tags: ["OFDM ISAC", "Range-Doppler", "+15.9 dB walking detection", "LO-coherent leakage · ref-subtraction"],
+    tags: ["unified comm/radar timebase", "Range-Doppler", "+15.9 dB walking detection", "LO-coherent leakage · ref-subtraction"],
     image: "assets/isac-walking-detection.png",
     detailUrl: null,
     links: [],
