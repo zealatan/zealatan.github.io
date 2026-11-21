@@ -1,9 +1,9 @@
 export const profile = {
   name: "Bumhee Lee",
-  subtitle: "FPGA & Wireless Systems Engineer",
-  tagline: "Real-Time PHY Architecture · RFSoC Prototyping · Hardware-Aware AI",
+  subtitle: "Wireless PHY Engineer — Algorithm to Verified Silicon",
+  tagline: "RF/DSP Algorithm Design · FPGA/RFSoC Implementation · Bit-Exact Hardware Verification",
   intro:
-    "I design, implement, and validate real-time wireless systems — combining industry experience in FPGA-based SoC validation and cellular modems with hands-on research in RFSoC prototyping, mmWave MIMO, and AI-assisted PHY design.",
+    "I take wireless PHY from DSP algorithm to verified silicon — designing synchronization, channel-estimation and OFDM radar-sensing algorithms, implementing them on FPGA/RFSoC, and validating them end-to-end against bit-exact golden models and on real radios. Backed by industry experience in FPGA-based SoC validation and cellular modems.",
   email: "zealatan@gmail.com",
   linkedin: "https://www.linkedin.com/in/bumhee-lee-357417138/",
   github: "https://github.com/zealatan",
@@ -18,14 +18,21 @@ export const nav = [
 ];
 
 export const isacFeature = {
-  eyebrow: "Interactive research prototype",
-  title: "OFDM Integrated Sensing and Communication",
+  eyebrow: "Flagship · hardware-verified end-to-end",
+  title: "OFDM ISAC — Communication Waveform as Radar, Verified on AD9361 Hardware",
   summary:
-    "Explore how a known OFDM communication waveform can also estimate target range and radial velocity. The independent simulator models monostatic target echoes, removes transmitted QAM symbols, and forms a two-dimensional range-Doppler map across coherent frames.",
-  steps: ["OFDM waveform", "Target echoes", "Range-Doppler map"],
-  details: ["Adjust target range, velocity, SNR, and carrier frequency", "Compare one or two targets", "Extend coherent processing across frames"],
-  note: "Synthetic baseband model with ideal sensing timing; no physical RF validation is claimed.",
-  link: { label: "Open OFDM-ISAC Simulator →", href: "ofdm-isac/index.html" },
+    "The same OFDM waveform that carries data is reused, unchanged, as a radar — and the full chain is validated on a real ZedBoard + FMCOMMS3 (AD9361) radio, not only in simulation. Reciprocal filtering divides out the QAM symbols, a 2-D FFT forms a Range-Doppler map, and a live walking person is isolated at +15.9 dB over a static control. Frame sync is unified on the communication preamble correlator, so the comm PHY and the radar share one timebase (equivalence measured on hardware)." +
+    "<img src='assets/isac-walking-detection.png' alt='Measured Range-Doppler map: live walking human detected at +15.9 dB over a static control' style='display:block;width:100%;max-width:620px;margin-top:.9em;border-radius:8px;border:1px solid rgba(0,0,0,.08);' />" +
+    "<img src='assets/isac-eqs.png' alt='OFDM radar signal model: frequency-domain channel and reciprocal filtering' style='display:block;width:100%;max-width:520px;margin-top:.8em;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:#fff;' />",
+  steps: ["OFDM RF loopback — BER 0", "Range-Doppler + MTI", "Live human detection +15.9 dB"],
+  details: [
+    "16-QAM OFDM RF loopback through the real radio at BER 0 / 4420 bits (link EVM 1.8%, 34.8 dB SNR)",
+    "Range-Doppler validated against ground truth at offset-0 bins (synthetic), then run on measured IQ",
+    "Live walking human detected +15.9 dB over a 4-capture static control; direct leakage nulled at 0-Doppler (CFO ≈ 0)",
+    "Timebase unified on the preamble correlator — comm-sync and full-buffer correlator agree to the sample on hardware",
+  ],
+  note: "The interactive simulator linked above is a synthetic baseband model (ideal sensing timing); the results described here are measured on an AD9361 radio.",
+  link: { label: "Open the interactive ISAC simulator (synthetic model) →", href: "ofdm-isac/index.html" },
 };
 
 export const projects = [
@@ -49,17 +56,6 @@ export const projects = [
       "The sample-level E2E chain, taken to real silicon. A ZedBoard + FMCOMMS3 (AD9361) was brought up entirely over JTAG on an aarch64 host — no SD card, no Vivado: program the PL bitstream, run ps7_init, load and launch the ADI no-OS AD9361 application. A 16-QAM OFDM waveform is then transmitted through the actual RF chain — DAC → TX1A → SMA cable → RX1A → ADC — and recovered at BER 0 / 4420 bits, link EVM 1.8% (34.8 dB SNR). Control runs through a from-scratch libiio serial backend speaking the no-OS IIOD protocol over UART, with a live constellation / spectrum / BER monitoring GUI.",
     tags: ["AD9361 / FMCOMMS3", "JTAG bring-up", "libiio / IIOD", "OFDM RF Loopback", "BER = 0"],
     image: "assets/zedboard-ofdm-loopback.png",
-    detailUrl: null,
-    links: [],
-  },
-  {
-    badge: "ISAC / RF Sensing",
-    title: "OFDM Range-Doppler — Communication Waveform as Radar & Human Motion Sensing",
-    summary:
-      "A communication OFDM waveform reused unchanged as radar, validated on real AD9361 hardware with live human-walking detection. Reciprocal filtering divides out the data symbols; a 2-D FFT forms the Range-Doppler map. Monostatic + shared-LO (CFO ≈ 0) pins the direct TX→RX leakage to a deep 0-Doppler null, so it is removed by a simple empty-room reference subtraction — no adaptive SIC — and a walking person is isolated at +15.9 dB over a 4-capture static control. (A 1st-order MTI alone only gives +4.7 dB — it nulls the slow walker with the leakage — so reference subtraction, not MTI, is the robust detector.) Frame sync is unified on the communication preamble correlator — the comm PHY and the radar share one timebase (equivalence verified on hardware)." +
-      "<img src='assets/isac-eqs.png' alt='OFDM radar signal model: frequency-domain channel and reciprocal filtering' style='display:block;width:100%;max-width:560px;margin-top:.8em;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:#fff;' />",
-    tags: ["unified comm/radar timebase", "Range-Doppler", "+15.9 dB walking detection", "LO-coherent leakage · ref-subtraction"],
-    image: "assets/isac-walking-detection.png",
     detailUrl: null,
     links: [],
   },
