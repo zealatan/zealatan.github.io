@@ -147,6 +147,43 @@ p {
 }
 
 /* =========================
+   Hero proof-point stats
+   ========================= */
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+  max-width: 820px;
+}
+
+.hero-stat {
+  flex: 1 1 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--paper-alt);
+}
+
+.hero-stat-value {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--navy);
+}
+
+.hero-stat-label {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* =========================
    Header Links
    ========================= */
 
