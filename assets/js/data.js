@@ -221,7 +221,7 @@ export const experience = [
     dateRange: "Aug 2023 – Aug 2026",
     description: null,
     highlights: [
-      "Developed multi-rate, Gbps-class high-speed OFDM transceiver systems on RFSoC.",
+      "Developed multi-rate, high-throughput OFDM transceiver systems on RFSoC (187.5 MHz silicon, BER 0; sustained-rate closure in progress).",
       "Designed an AI-native neural synchronizer on SDR.",
       "Built a programmable 28 GHz MU-MIMO testbed with real-time beam tracking.",
     ],
