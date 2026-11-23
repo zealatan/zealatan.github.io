@@ -7,7 +7,6 @@ export const profile = {
   email: "zealatan@gmail.com",
   linkedin: "https://www.linkedin.com/in/bumhee-lee-357417138/",
   github: "https://github.com/zealatan",
-  resumeUrl: "assets/resume.pdf",
 };
 
 export const nav = [

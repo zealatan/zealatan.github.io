@@ -31,9 +31,6 @@ export function renderHero(container, profile) {
       <a href="${profile.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       <a href="${profile.github}" target="_blank" rel="noopener noreferrer">GitHub</a>
     </div>
-    <a class="resume-button" href="${profile.resumeUrl}" target="_blank" rel="noopener noreferrer">
-      ↓ Download Resume PDF
-    </a>
   `;
 }
 
