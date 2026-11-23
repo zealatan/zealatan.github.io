@@ -11,114 +11,205 @@ export const profile = {
 
 export const nav = [
   { label: "Portfolio", href: "index.html" },
-  { label: "ISAC", href: "index.html#isac" },
+  { label: "Hardware", href: "index.html#hw" },
   { label: "Demos", href: "demos.html" },
   { label: "GitHub", href: profile.github },
 ];
 
-export const isacFeature = {
-  eyebrow: "Flagship · hardware-verified end-to-end",
-  title: "OFDM ISAC — Communication Waveform as Radar, Verified on AD9361 Hardware",
-  summary:
-    "The same OFDM waveform that carries data is reused, unchanged, as a radar — and the full chain is validated on a real ZedBoard + FMCOMMS3 (AD9361) radio, not only in simulation. Reciprocal filtering divides out the QAM symbols, a 2-D FFT forms a Range-Doppler map, and a live walking person is isolated at +15.9 dB over a static control. Frame sync is unified on the communication preamble correlator, so the comm PHY and the radar share one timebase (equivalence measured on hardware)." +
-    "<img src='assets/isac-walking-detection.png' alt='Measured Range-Doppler map: live walking human detected at +15.9 dB over a static control' style='display:block;width:100%;max-width:620px;margin-top:.9em;border-radius:8px;border:1px solid rgba(0,0,0,.08);' />" +
-    "<img src='assets/isac-eqs.png' alt='OFDM radar signal model: frequency-domain channel and reciprocal filtering' style='display:block;width:100%;max-width:520px;margin-top:.8em;border-radius:8px;border:1px solid rgba(0,0,0,.08);background:#fff;' />",
-  steps: ["OFDM RF loopback — BER 0", "Range-Doppler + MTI", "Live human detection +15.9 dB"],
-  details: [
-    "16-QAM OFDM RF loopback through the real radio at BER 0 / 4420 bits (link EVM 1.8%, 34.8 dB SNR)",
-    "Range-Doppler validated against ground truth at offset-0 bins (synthetic), then run on measured IQ",
-    "Live walking human detected +15.9 dB over a 4-capture static control; direct leakage nulled at 0-Doppler (CFO ≈ 0)",
-    "Timebase unified on the preamble correlator — comm-sync and full-buffer correlator agree to the sample on hardware",
-  ],
-  note: "The interactive simulator linked above is a synthetic baseband model (ideal sensing timing); the results described here are measured on an AD9361 radio.",
-  link: { label: "Open the interactive ISAC simulator (synthetic model) →", href: "ofdm-isac/index.html" },
-};
+// Small inline flow diagram for the ZedBoard sync-RTL verification card.
+const syncVerifySvg = `
+  <svg viewBox="0 0 900 120" role="img" aria-labelledby="sync-flow-title" class="card-svg">
+    <title id="sync-flow-title">Golden model to Verilator bit-exact verification flow</title>
+    <defs>
+      <marker id="sfarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 z" fill="#1c2b4a" />
+      </marker>
+    </defs>
+    <g font-family="IBM Plex Sans, sans-serif">
+      <rect x="6" y="34" width="180" height="52" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+      <text x="96" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Python golden</text>
+      <text x="96" y="74" text-anchor="middle" font-size="10" fill="#5b6472">cfo_golden.py</text>
 
-export const projects = [
+      <rect x="236" y="34" width="180" height="52" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+      <text x="326" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Test vectors</text>
+      <text x="326" y="74" text-anchor="middle" font-size="10" fill="#5b6472">vectors/*.npz + real capture</text>
+
+      <rect x="466" y="34" width="180" height="52" rx="6" fill="#f3f1ec" stroke="#1c2b4a" stroke-width="1.2" />
+      <text x="556" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#1c2b4a">Verilator 5.044</text>
+      <text x="556" y="74" text-anchor="middle" font-size="10" fill="#5b6472">full-length sim</text>
+
+      <rect x="696" y="34" width="198" height="52" rx="6" fill="#ffffff" stroke="#2c3e63" stroke-width="1.2" stroke-dasharray="4 3" />
+      <text x="795" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#2c3e63">Bit-exact ✓</text>
+      <text x="795" y="74" text-anchor="middle" font-size="10" fill="#5b6472">0-LSB on output ports</text>
+
+      <line x1="186" y1="60" x2="234" y2="60" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#sfarrow)" />
+      <line x1="416" y1="60" x2="464" y2="60" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#sfarrow)" />
+      <line x1="646" y1="60" x2="694" y2="60" stroke="#1c2b4a" stroke-width="1.2" marker-end="url(#sfarrow)" />
+    </g>
+  </svg>
+`;
+
+export const sections = [
   {
-    badge: "E2E PHY Reference",
-    title: "OFDM E2E Live Simulator — Sample-Level Transceiver",
-    summary:
-      "True end-to-end OFDM chain on complex IQ samples, entirely in the browser: Gray-QAM → pilot grid → unitary IFFT → CP → FIR multipath/CFO/SFO/phase-noise/PA/IQ channel → Schmidl-Cox + known-preamble sync → LS channel estimation → ZF/MMSE → recovered bits. 32-check numerical test suite (BER matches Q(√(2Eb/N0)) and per-bin fading theory), Monte-Carlo BER/EVM in a worker, real image transmission, and versioned IQ test-vector export for RTL/hardware digital-twin comparison.",
-    tags: ["OFDM", "Sample-Level IQ", "Schmidl-Cox", "Monte-Carlo BER", "Digital Twin"],
-    image: null,
-    detailUrl: null,
-    links: [
-      { label: "Open E2E Simulator →", href: "ofdm-e2e/index.html" },
-      { label: "Math Reference →", href: "ofdm-e2e/theory.html" },
+    id: "hw",
+    title: "Hardware-Verified (ZedBoard + AD9361)",
+    intro:
+      "One communication OFDM waveform, taken from algorithm to real radio: a BER-0 RF loopback, the same waveform reused as a radar for human-motion sensing, and the synchronization chain hardened into timing-closed, golden-verified RTL. Hardware brought up entirely over JTAG on an aarch64 host.",
+    layout: "grid",
+    cards: [
+      {
+        badge: "Hardware RF Loopback",
+        title: "ZedBoard + AD9361 — OFDM over a Real Radio",
+        result:
+          "16-QAM OFDM transmitted through the actual RF chain (DAC → TX1A → SMA → RX1A → ADC) and recovered with zero bit errors.",
+        metrics: ["BER 0 / 4420 bits", "link EVM 1.8%", "34.8 dB SNR"],
+        image: "assets/zedboard-ofdm-loopback.png",
+        imageAlt: "ZedBoard + FMCOMMS3 OFDM RF loopback monitoring GUI",
+        verify:
+          "Measured on the real radio. Brought up over JTAG only (no SD card, no Vivado); controlled through a from-scratch libiio serial backend speaking the no-OS IIOD protocol over UART, with a live constellation / spectrum / BER GUI.",
+        links: [],
+      },
+      {
+        badge: "ISAC — Comm Waveform as Radar",
+        title: "OFDM ISAC — Range-Doppler Human Sensing",
+        result:
+          "The same OFDM waveform is reused, unchanged, as a monostatic radar — a live walking person isolated over a static control on the real AD9361 radio.",
+        metrics: [
+          "walking human +15.9 dB @ +1.6 m/s",
+          "synthetic 2 targets at offset-0 bins",
+          "dR 4.88 m · dv 26.02 m/s @ 30.72 MSPS",
+        ],
+        image: "assets/isac-walking-detection.png",
+        imageAlt:
+          "Measured Range-Doppler map: live walking human detected at +15.9 dB over a static control",
+        verify:
+          "Reciprocal filtering divides out the QAM symbols; a 2-D FFT forms a Range-Doppler map. Validated against ground truth at offset-0 bins on synthetic IQ, then run on measured IQ; detection by 4-capture static-reference subtraction, with direct leakage nulled at 0-Doppler (CFO ≈ 0). Frame sync shares the communication preamble correlator (equivalence measured on hardware).",
+        note:
+          "The linked simulator is a synthetic, perfect-sync model; the numbers above are measured on an AD9361 radio.",
+        links: [
+          { label: "Range-Doppler simulator →", href: "ofdm-isac/index.html" },
+        ],
+      },
+      {
+        badge: "Sync RTL · Golden-Verified",
+        title: "ZedBoard Sync Chain RTL — Timing-Closed & Bit-Exact",
+        result:
+          "The timing / CFO synchronization chain implemented in Verilog, place-and-routed on the ZedBoard's xc7z020, and proven bit-exact against a Python golden model.",
+        metrics: ["post-route 123 MHz MET (fmax ≈ 146 MHz)", "DSP 9 · LUT 11.6%", "bit-exact to golden (Verilator)"],
+        svg: syncVerifySvg,
+        verify:
+          "golden (cfo_golden.py) → committed test vectors (vectors/*.npz: 11 CFO + 8 correlator + a real capture) → Verilator 5.044 full-length run, output-port stream equal to the integer golden sample-for-sample (0-LSB).",
+        note:
+          "L=2 (2 samples/clock) is verified at the detector-block level (peak_detect_l2), not as a full-path silicon closure.",
+        links: [],
+      },
     ],
   },
   {
-    badge: "Hardware RF Loopback",
-    title: "ZedBoard + AD9361 — OFDM over a Real Radio",
-    summary:
-      "The sample-level E2E chain, taken to real silicon. A ZedBoard + FMCOMMS3 (AD9361) was brought up entirely over JTAG on an aarch64 host — no SD card, no Vivado: program the PL bitstream, run ps7_init, load and launch the ADI no-OS AD9361 application. A 16-QAM OFDM waveform is then transmitted through the actual RF chain — DAC → TX1A → SMA cable → RX1A → ADC — and recovered at BER 0 / 4420 bits, link EVM 1.8% (34.8 dB SNR). Control runs through a from-scratch libiio serial backend speaking the no-OS IIOD protocol over UART, with a live constellation / spectrum / BER monitoring GUI.",
-    tags: ["AD9361 / FMCOMMS3", "JTAG bring-up", "libiio / IIOD", "OFDM RF Loopback", "BER = 0"],
-    image: "assets/zedboard-ofdm-loopback.png",
-    detailUrl: null,
-    links: [],
-  },
-  {
-    badge: "Live Simulator",
-    title: "OFDM Live Dashboard — In-Browser PHY Simulator",
-    summary:
-      "Real-time OFDM link simulator running entirely in the browser: synchronizer (preamble timing, coarse/fine CFO, CPE/SFO tracking) and channel estimator (LS/LMMSE with Linear/FFT/2D/CNN interpolation, BER-vs-SNR across AWGN/EPA/EVA/ETU/Rician, FEC) — plus live image transmission through the link.",
-    tags: ["OFDM", "CNN Channel Est.", "Synchronization", "BER / EVM", "Vanilla JS"],
-    image: null,
-    detailUrl: null,
-    links: [
-      { label: "Open Live Simulator →", href: "ofdm-sim/index.html" },
-      { label: "Math Reference →", href: "ofdm-sim/theory.html" },
+    id: "rfsoc",
+    title: "RFSoC / FPGA (ZCU216)",
+    intro:
+      "A wideband OFDM transceiver written in synthesizable Verilog for the AMD ZCU216 RFSoC — verified bit-exact against a C/NumPy golden model and proven on real silicon, with an interactive explorer over the elaborated RTL.",
+    layout: "grid",
+    cards: [
+      {
+        badge: "RFSoC Silicon · RTL",
+        title: "Real-Time FPGA OFDM PHY — ZCU216 RFSoC",
+        result:
+          "Mode-selectable OFDM transceiver, verified bit-exact against a C/NumPy golden model and running at full sample rate on ZCU216 silicon with zero bit errors.",
+        metrics: ["187.5 MHz silicon, BER 0 (16-QAM)", "post-route Fmax 232 MHz", "LUT 7.5% · DSP 7.8% · 1.27 W"],
+        image: "assets/project-fpga.jpg",
+        imageAlt: "ZCU216 RFSoC evaluation board with RF front-end on the bench",
+        verify:
+          "C reference → NumPy golden → RTL in xsim against the real Xilinx xfft IP on the locked target part → ZCU216 silicon (on-chip BER readback). The interactive RTL Explorer navigates the real Verilator elaboration (52 modules, 65 instances, 9 levels) with measured streaming traces.",
+        note:
+          "The 4-modulation (QPSK/16/64/256-QAM) result is simulation-only; silicon is 16-QAM. Sustained wideband throughput against the 200 Msps target is still in progress.",
+        links: [
+          { label: "Project details →", href: "project-ofdm-phy.html" },
+          { label: "RTL Explorer →", href: "rtl-explorer/index.html" },
+          { label: "GitHub →", href: "https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband" },
+        ],
+      },
     ],
   },
   {
-    badge: "RTL Explorer",
-    title: "Interactive RTL Architecture Explorer — OFDM Transceiver",
-    summary:
-      "Source-accurate, recursively navigable schematic explorer for the FPGA OFDM transceiver RTL (52 modules, 65 instances, 9 hierarchy levels), generated from a real Verilator elaboration — resolved bus widths, parameter overrides, actual connectivity, measured cycle-accurate streaming traces. Includes Design Insights: ten interactive engineering chapters (pipelining, AXI-Stream backpressure, multi-bank memory scheduling, fixed-point/BFP, verification methodology, FPGA resources) built on this design's real measured before/after throughput story, with interview-prep Q&A per chapter.",
-    tags: ["Verilog RTL", "Verilator Elaboration", "Interactive SVG", "Throughput Audit", "Interview Prep"],
-    image: null,
-    detailUrl: null,
-    links: [
-      { label: "Open RTL Explorer →", href: "rtl-explorer/index.html" },
-      { label: "Design Insights →", href: "rtl-explorer/index.html#/insights/pipelining" },
-      { label: "RTL GitHub →", href: "https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband" },
+    id: "sims",
+    title: "Interactive Simulators (in-browser)",
+    intro:
+      "Live PHY simulators that run entirely in the browser — one representative end-to-end transceiver, plus focused tools that each show something the others do not.",
+    layout: "feature-list",
+    cards: [
+      {
+        badge: "Representative · Browser E2E Transceiver",
+        title: "OFDM E2E Live Simulator — Sample-Level Transceiver",
+        result:
+          "A true end-to-end OFDM chain on complex IQ samples, entirely in the browser: Gray-QAM → pilots → unitary IFFT → CP → FIR multipath / CFO / SFO / phase-noise / PA / IQ channel → Schmidl-Cox + known-preamble sync → LS channel estimation → ZF/MMSE → recovered bits.",
+        metrics: ["32-check numerical test suite", "Monte-Carlo BER/EVM in a worker", "versioned IQ test-vector export"],
+        diff:
+          "What's different: sample-level IQ fidelity plus versioned test-vector export for RTL / hardware digital-twin comparison — the bridge to the silicon work above.",
+        links: [
+          { label: "Open E2E Simulator →", href: "ofdm-e2e/index.html" },
+          { label: "Math Reference →", href: "ofdm-e2e/theory.html" },
+        ],
+      },
+    ],
+    listItems: [
+      {
+        title: "OFDM Live Dashboard — In-Browser PHY Simulator",
+        diff:
+          "What's different: a channel-estimation algorithm playground — LS/LMMSE with Linear/FFT/2D/CNN interpolation, BER-vs-SNR across AWGN/EPA/EVA/ETU/Rician, FEC, and an interpolator comparison view.",
+        links: [
+          { label: "Open Live Simulator →", href: "ofdm-sim/index.html" },
+          { label: "Math Reference →", href: "ofdm-sim/theory.html" },
+        ],
+      },
+      {
+        title: "OFDM-ISAC Research Simulator",
+        diff:
+          "What's different: the only one that does radar sensing — a monostatic Range-Doppler sensing laboratory (synthetic, perfect-sync model behind the hardware ISAC result above).",
+        links: [{ label: "Open ISAC Simulator →", href: "ofdm-isac/index.html" }],
+      },
     ],
   },
   {
-    badge: "Real-Time PHY",
-    title: "Real-Time FPGA OFDM PHY",
-    summary:
-      "Mode-selectable OFDM transceiver in Verilog, verified bit-exact against a C/NumPy golden model and proven on ZCU216 RFSoC silicon.",
-    tags: ["RTL / Verilog", "RFSoC (ZCU216)", "Fixed-point DSP", "AXI-Stream"],
-    image: "assets/project-fpga.jpg",
-    detailUrl: "project-ofdm-phy.html",
-    links: [
-      { label: "GitHub →", href: "https://github.com/zealatan/realtime-Gbps-OFDM-for-Wideband" },
+    id: "research",
+    title: "SDR · mmWave Research & Publications",
+    intro:
+      "Over-the-air SDR and mmWave research from the RWTH Aachen Chair for Distributed Signal Processing.",
+    layout: "grid",
+    cards: [
+      {
+        badge: "mmWave MU-MIMO · WCNC 2025",
+        title: "28 GHz mmWave MU-MIMO Testbed",
+        result:
+          "A programmable multi-user MIMO prototype operated live over the air at 28 GHz with real-time beam tracking; first-author paper at IEEE WCNC 2025.",
+        metrics: ["28 GHz over-the-air", "2-user MIMO + real-time beam tracking", "IEEE WCNC 2025 (first author)"],
+        image: "assets/testbed-poster.jpg",
+        imageAlt: "28 GHz mmWave MU-MIMO testbed",
+        verify:
+          "Validated with a live two-user MIMO scenario over the air (not simulation only); system and demonstration presented at IEEE WCNC 2025, Milan.",
+        links: [
+          { label: "IEEE Paper →", href: "https://ieeexplore.ieee.org/document/10978370" },
+          { label: "Project details →", href: "project-mmwave-mimo.html" },
+          { label: "Demo →", href: "demos.html" },
+        ],
+      },
+      {
+        badge: "Hardware-Aware AI",
+        title: "Hardware-Aware ML for PHY Synchronization",
+        result:
+          "A two-stage CNN synchronizer — offline-trained filter plus online calibration — demonstrated on a USRP X410 SDR under harsh channel conditions.",
+        metrics: ["2-stage CNN (offline + online)", "USRP X410 SDR", "harsh-channel BER-vs-SNR measured"],
+        image: "assets/project-ber.jpg",
+        imageAlt: "Measured BER-vs-SNR comparison from the AI synchronizer",
+        verify:
+          "Demonstrated live on the X410 with training-loss logging. Note: the BER chart's curve legend is not yet labeled, and whether any of the inference path runs on the X410's FPGA fabric (vs. host) is unconfirmed — no FPGA deployment is claimed.",
+        links: [
+          { label: "Project details →", href: "project-ai-phy-sync.html" },
+          { label: "Demo →", href: "demos.html" },
+        ],
+      },
     ],
-  },
-  {
-    badge: "mmWave MIMO",
-    title: "28 GHz mmWave MU-MIMO Testbed",
-    summary:
-      "Programmable multi-user MIMO testbed with real-time beam tracking, built and demonstrated OTA; first-author paper at IEEE WCNC 2025.",
-    tags: ["28 GHz", "MU-MIMO", "Beam Tracking", "OTA Validation"],
-    image: "assets/testbed-poster.jpg",
-    detailUrl: "project-mmwave-mimo.html",
-    links: [
-      { label: "Paper →", href: "https://ieeexplore.ieee.org/document/10978370" },
-      { label: "Demo →", href: "demos.html" },
-    ],
-  },
-  {
-    badge: "Hardware-Aware AI",
-    title: "Hardware-Aware ML for PHY Synchronization",
-    summary:
-      "Two-stage CNN-based synchronizer with offline-trained filters and online calibration, demonstrated on a USRP X410 SDR under harsh channel conditions.",
-    tags: ["2-Stage CNN", "USRP X410", "Online Training"],
-    image: "assets/project-ber.jpg",
-    detailUrl: "project-ai-phy-sync.html",
-    links: [{ label: "Demo →", href: "demos.html" }],
   },
 ];
 

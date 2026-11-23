@@ -34,63 +34,85 @@ export function renderHero(container, profile) {
   `;
 }
 
-export function renderIsacFeature(container, feature) {
-  container.innerHTML = `
-    <h2 class="section-title">OFDM-ISAC</h2>
-    <div class="card isac-feature">
-      <div class="isac-feature-copy">
-        <span class="badge">${feature.eyebrow}</span>
-        <h3>${feature.title}</h3>
-        <p>${feature.summary}</p>
-        <ul>${feature.details.map((item) => `<li>${item}</li>`).join("\n")}</ul>
-        <a class="isac-feature-link" href="${feature.link.href}">${feature.link.label}</a>
-        <p class="isac-feature-note">${feature.note}</p>
+function renderCardLinks(links) {
+  if (!links || !links.length) return "";
+  const items = links
+    .map((link) => `<a class="card-link" href="${link.href}"${externalAttrs(link.href)}>${link.label}</a>`)
+    .join("\n");
+  return `<div class="card-link-row">${items}</div>`;
+}
+
+function renderMetrics(metrics) {
+  if (!metrics || !metrics.length) return "";
+  return `<div class="metric-row">${metrics.map((m) => `<span class="metric">${m}</span>`).join("")}</div>`;
+}
+
+function renderCard(card, { feature = false } = {}) {
+  const classes = ["card", "portfolio-card"];
+  if (feature) classes.push("portfolio-card-feature");
+  if (card.image) classes.push("card-with-image");
+  if (card.svg) classes.push("card-with-svg");
+
+  const media = card.image
+    ? `<img class="portfolio-card-image" src="${card.image}" alt="${card.imageAlt || card.title}" />`
+    : card.svg
+    ? `<div class="portfolio-card-svg">${card.svg}</div>`
+    : "";
+
+  return `
+    <article class="${classes.join(" ")}">
+      <div class="portfolio-card-body">
+        ${card.badge ? `<span class="badge">${card.badge}</span>` : ""}
+        <h3>${card.title}</h3>
+        ${card.result ? `<p class="card-result">${card.result}</p>` : ""}
+        ${renderMetrics(card.metrics)}
+        ${card.diff ? `<p class="card-diff">${card.diff}</p>` : ""}
+        ${card.verify ? `<p class="card-verify"><span class="card-verify-label">Verified</span> ${card.verify}</p>` : ""}
+        ${card.note ? `<p class="card-note">${card.note}</p>` : ""}
+        ${renderCardLinks(card.links)}
       </div>
-      <div class="isac-feature-flow" aria-label="Sensing processing flow">
-        ${feature.steps.map((step, index) => `
-          <div class="isac-flow-step">
-            <span>${String(index + 1).padStart(2, "0")}</span>
-            <strong>${step}</strong>
-          </div>`).join("\n")}
-      </div>
+      ${media}
+    </article>
+  `;
+}
+
+function renderSimListItem(item) {
+  return `
+    <div class="sim-list-item">
+      <h4>${item.title}</h4>
+      ${item.diff ? `<p class="card-diff">${item.diff}</p>` : ""}
+      ${renderCardLinks(item.links)}
     </div>
   `;
 }
 
-export function renderProjects(container, projects) {
-  const cards = projects
-    .map((project) => {
-      const detailLink = project.detailUrl
-        ? `<a class="card-link" href="${project.detailUrl}">View Details →</a>`
+function renderSection(section) {
+  const intro = section.intro ? `<p class="section-intro">${section.intro}</p>` : "";
+
+  let body;
+  if (section.layout === "feature-list") {
+    const feature = section.cards.map((card) => renderCard(card, { feature: true })).join("\n");
+    const list =
+      section.listItems && section.listItems.length
+        ? `<div class="sim-list">${section.listItems.map(renderSimListItem).join("\n")}</div>`
         : "";
-      const otherLinks = (project.links || [])
-        .map((link) => `<a class="card-link" href="${link.href}"${externalAttrs(link.href)}>${link.label}</a>`)
-        .join("\n");
+    body = feature + list;
+  } else {
+    const single = section.cards.length === 1 ? " single" : "";
+    body = `<div class="portfolio-grid${single}">${section.cards.map((card) => renderCard(card)).join("\n")}</div>`;
+  }
 
-      return `
-      <article class="card project-card">
-        <div class="project-card-body">
-          <span class="badge">${project.badge}</span>
-          <h3>${project.title}</h3>
-          <p class="project-card-summary">${project.summary}</p>
-          <div class="tag-list">
-            ${project.tags.map((tag) => `<span>${tag}</span>`).join("\n")}
-          </div>
-          <div class="card-link-row">
-            ${detailLink}
-            ${otherLinks}
-          </div>
-        </div>
-        ${project.image ? `<img class="project-card-image" src="${project.image}" alt="${project.title}" />` : ""}
-      </article>
-    `;
-    })
-    .join("\n");
-
-  container.innerHTML = `
-    <h2 class="section-title">Projects</h2>
-    <div class="project-grid">${cards}</div>
+  return `
+    <div class="portfolio-section" id="${section.id}">
+      <h2 class="section-title">${section.title}</h2>
+      ${intro}
+      ${body}
+    </div>
   `;
+}
+
+export function renderSections(container, sections) {
+  container.innerHTML = sections.map(renderSection).join("\n");
 }
 
 function renderRole(role) {
